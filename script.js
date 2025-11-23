@@ -1,22 +1,24 @@
-let apiKey = ""; 
+// --- КОНФІГУРАЦІЯ API ---
+const apiKey = "AIzaSyA5oYnLJnxuXThSkqk5kfbaQ3mw0XspcxQ"; 
+
 const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
 const getApiUrl = () => `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
 
 const TRANSLATIONS = {
     uk: {
-        langName: "Українська", modeDebug: "Виправити", modeOptimize: "Оптимізувати", modeExplain: "Пояснити", inputLabel: "Вхідний Код", outputLabel: "Рішення та Аналіз", clearBtn: "Очистити", runBtn: "Запуск", copyBtn: "Копіювати", analysisHeader: "Аналіз", changesHeader: "Що було зроблено:", emptyTitle: "Готовий до роботи", emptyDesc: "Вставте код та оберіть дію.", loading: "ШІ аналізує...", placeholder: "// Вставте сюди код...", clearHistory: "Очистити історію", historyEmpty: "Історія порожня", confirmClear: "Ви впевнені?", apiKeyPrompt: "Введіть Google Gemini API Key:", errorKey: "Потрібен API ключ", errorEmpty: "Введіть код"
+        langName: "Українська", modeDebug: "Виправити", modeOptimize: "Оптимізувати", modeExplain: "Пояснити", inputLabel: "Вхідний Код", outputLabel: "Рішення та Аналіз", clearBtn: "Очистити", runBtn: "Запуск", copyBtn: "Копіювати", analysisHeader: "Аналіз", changesHeader: "Що було зроблено:", emptyTitle: "Готовий до роботи", emptyDesc: "Вставте код та оберіть дію.", loading: "ШІ аналізує...", placeholder: "// Вставте сюди код...", clearHistory: "Очистити історію", historyEmpty: "Історія порожня", confirmClear: "Ви впевнені?", errorKey: "Помилка ключа API", errorEmpty: "Введіть код"
     },
     en: {
-        langName: "English", modeDebug: "Fix Code", modeOptimize: "Optimize", modeExplain: "Explain", inputLabel: "Input Code", outputLabel: "Solution & Analysis", clearBtn: "Clear", runBtn: "Run", copyBtn: "Copy", analysisHeader: "Analysis", changesHeader: "Key Changes:", emptyTitle: "Ready to help", emptyDesc: "Paste code and select an action.", loading: "AI is thinking...", placeholder: "// Paste your code here...", clearHistory: "Clear History", historyEmpty: "History empty", confirmClear: "Are you sure?", apiKeyPrompt: "Enter Google Gemini API Key:", errorKey: "API Key required", errorEmpty: "Please enter code"
+        langName: "English", modeDebug: "Fix Code", modeOptimize: "Optimize", modeExplain: "Explain", inputLabel: "Input Code", outputLabel: "Solution & Analysis", clearBtn: "Clear", runBtn: "Run", copyBtn: "Copy", analysisHeader: "Analysis", changesHeader: "Key Changes:", emptyTitle: "Ready to help", emptyDesc: "Paste code and select an action.", loading: "AI is thinking...", placeholder: "// Paste your code here...", clearHistory: "Clear History", historyEmpty: "History empty", confirmClear: "Are you sure?", errorKey: "API Key Error", errorEmpty: "Please enter code"
     },
     pl: {
-        langName: "Polski", modeDebug: "Napraw", modeOptimize: "Optymalizuj", modeExplain: "Wyjaśnij", inputLabel: "Kod Wejściowy", outputLabel: "Rozwiązanie i Analiza", clearBtn: "Wyczyść", runBtn: "Uruchom", copyBtn: "Kopiuj", analysisHeader: "Analiza", changesHeader: "Kluczowe zmiany:", emptyTitle: "Gotowy do pracy", emptyDesc: "Wklej kod i wybierz akcję.", loading: "AI analizuje...", placeholder: "// Wklej tutaj swój kod...", clearHistory: "Wyczyść historię", historyEmpty: "Pusta historia", confirmClear: "Jesteś pewien?", apiKeyPrompt: "Wprowadź klucz API Google Gemini:", errorKey: "Wymagany klucz API", errorEmpty: "Wprowadź kod"
+        langName: "Polski", modeDebug: "Napraw", modeOptimize: "Optymalizuj", modeExplain: "Wyjaśnij", inputLabel: "Kod Wejściowy", outputLabel: "Rozwiązanie i Analiza", clearBtn: "Wyczyść", runBtn: "Uruchom", copyBtn: "Kopiuj", analysisHeader: "Analiza", changesHeader: "Kluczowe zmiany:", emptyTitle: "Gotowy do pracy", emptyDesc: "Wklej kod i wybierz akcję.", loading: "AI analizuje...", placeholder: "// Wklej tutaj swój kod...", clearHistory: "Wyczyść historię", historyEmpty: "Pusta historia", confirmClear: "Jesteś pewien?", errorKey: "Błąd klucza API", errorEmpty: "Wprowadź kod"
     },
     es: {
-        langName: "Español", modeDebug: "Corregir", modeOptimize: "Optimizar", modeExplain: "Explicar", inputLabel: "Código de Entrada", outputLabel: "Solución y Análisis", clearBtn: "Borrar", runBtn: "Ejecutar", copyBtn: "Copiar", analysisHeader: "Análisis", changesHeader: "Cambios clave:", emptyTitle: "Listo para trabajar", emptyDesc: "Pega el código y selecciona una acción.", loading: "IA pensando...", placeholder: "// Pega tu código aquí...", clearHistory: "Borrar historial", historyEmpty: "Historial vacío", confirmClear: "¿Estás seguro?", apiKeyPrompt: "Introduce la clave API de Google Gemini:", errorKey: "Se requiere clave API", errorEmpty: "Por favor, introduce código"
+        langName: "Español", modeDebug: "Corregir", modeOptimize: "Optimizar", modeExplain: "Explicar", inputLabel: "Código de Entrada", outputLabel: "Solución y Análisis", clearBtn: "Borrar", runBtn: "Ejecutar", copyBtn: "Copiar", analysisHeader: "Análisis", changesHeader: "Cambios clave:", emptyTitle: "Listo para trabajar", emptyDesc: "Pega el código y selecciona una acción.", loading: "IA pensando...", placeholder: "// Pega tu código aquí...", clearHistory: "Borrar historial", historyEmpty: "Historial vacío", confirmClear: "¿Estás seguro?", errorKey: "Error de clave API", errorEmpty: "Por favor, introduce código"
     },
     de: {
-        langName: "Deutsch", modeDebug: "Korrigieren", modeOptimize: "Optimieren", modeExplain: "Erklären", inputLabel: "Eingabecode", outputLabel: "Lösung & Analyse", clearBtn: "Löschen", runBtn: "Ausführen", copyBtn: "Kopieren", analysisHeader: "Analyse", changesHeader: "Wichtige Änderungen:", emptyTitle: "Bereit", emptyDesc: "Code einfügen und Aktion wählen.", loading: "KI denkt nach...", placeholder: "// Code hier einfügen...", clearHistory: "Verlauf löschen", historyEmpty: "Verlauf leer", confirmClear: "Sind Sie sicher?", apiKeyPrompt: "Google Gemini API-Schlüssel eingeben:", errorKey: "API-Schlüssel erforderlich", errorEmpty: "Bitte Code eingeben"
+        langName: "Deutsch", modeDebug: "Korrigieren", modeOptimize: "Optimieren", modeExplain: "Erklären", inputLabel: "Eingabecode", outputLabel: "Lösung & Analyse", clearBtn: "Löschen", runBtn: "Ausführen", copyBtn: "Kopieren", analysisHeader: "Analyse", changesHeader: "Wichtige Änderungen:", emptyTitle: "Bereit", emptyDesc: "Code einfügen und Aktion wählen.", loading: "KI denkt nach...", placeholder: "// Code hier einfügen...", clearHistory: "Verlauf löschen", historyEmpty: "Verlauf leer", confirmClear: "Sind Sie sicher?", errorKey: "API-Schlüssel Fehler", errorEmpty: "Bitte Code eingeben"
     }
 };
 
@@ -48,25 +50,9 @@ const elements = {
 document.addEventListener('DOMContentLoaded', () => {
     elements.interfaceLangSelect.value = currentLang;
     updateInterfaceLanguage(currentLang);
-    checkApiKey();
     renderHistory();
     setupEventListeners();
 });
-
-function checkApiKey() {
-    if (apiKey && apiKey.length > 10) return;
-    const storedKey = localStorage.getItem('gemini_api_key');
-    if (storedKey) { apiKey = storedKey; return; }
-    
-    setTimeout(() => {
-        const t = TRANSLATIONS[currentLang];
-        const userKey = prompt(t.apiKeyPrompt);
-        if (userKey && userKey.trim().length > 0) {
-            apiKey = userKey.trim();
-            localStorage.setItem('gemini_api_key', apiKey);
-        }
-    }, 500);
-}
 
 function setupEventListeners() {
     elements.runBtn.addEventListener('click', runCodeMedic);
@@ -121,10 +107,9 @@ function safeJSONParse(str) {
 
 async function runCodeMedic() {
     const t = TRANSLATIONS[currentLang];
-    if (!apiKey) { checkApiKey(); if (!apiKey) return showError(t.errorKey); }
-    
     const code = elements.input.value.trim();
     if (!code) return showError(t.errorEmpty);
+    if (!apiKey || apiKey.includes("ТУТ_ВСТАВТЕ")) return showError("Помилка API ключа");
 
     const lang = elements.langSelect.value;
     showError(null);
