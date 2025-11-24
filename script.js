@@ -71,6 +71,7 @@ let isDark = localStorage.getItem('fixly_theme') !== 'light';
 let history = [];
 let currentSidebarTab = 'history'; 
 let currentTourStep = 0; 
+let tooltipHideTimeout; // 💡 FIX 2: Таймер для затримки приховування тултіпа
 
 // БЕЗПЕЧНЕ ЗАВАНТАЖЕННЯ ІСТОРІЇ
 try {
@@ -160,9 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
     switchSidebarTab(currentSidebarTab); 
     if(localStorage.getItem('fixly_draft')) els.input.value = localStorage.getItem('fixly_draft');
 
-    // 4. Event Listeners
+    // 💡 FIX 1: Простіша та надійніша прив'язка кнопки "Старт"
     if (els.startBtn) {
-        els.startBtn.addEventListener('click', handleStartClick); // USING NAMED FUNCTION
+        els.startBtn.addEventListener('click', () => {
+            closeWelcomeScreen();
+            if (!localStorage.getItem('fixly_tour_seen')) setTimeout(startTour, 600); 
+        });
     }
     
     els.runBtn.addEventListener('click', runAI);
@@ -198,30 +202,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-// --- FIX FOR START BUTTON ---
-function handleStartClick() {
-    closeWelcomeScreen();
-    const tourSeen = localStorage.getItem('fixly_tour_seen');
-    if (!tourSeen) {
-        setTimeout(startTour, 600); 
-    }
-}
-// --- END FIX ---
-
-
-function toggleSidebar() {
-    if (els.sidebar.classList.contains('hidden')) {
-        els.sidebar.classList.remove('hidden');
-        els.sidebar.classList.add('flex', 'sidebar-animate-open');
-    } else {
-        els.sidebar.classList.add('hidden');
-        els.sidebar.classList.remove('flex', 'sidebar-animate-open');
-    }
-}
+// --- CORE FUNCTIONS ---
 
 function closeWelcomeScreen() {
     localStorage.setItem('fixly_welcome_seen', 'true');
+    // Додаємо pointer-events-none одразу
     els.welcomeScreen.classList.add('opacity-0', 'pointer-events-none');
     setTimeout(() => {
         els.welcomeScreen.classList.add('hidden');
@@ -243,6 +228,7 @@ function startTour() {
     showTourStep(0);
 }
 
+// (Tour steps remain the same)
 function showTourStep(index) {
     if (index >= tourSteps.length) return endTour();
     
@@ -294,7 +280,43 @@ function endTour() {
     localStorage.setItem('fixly_tour_seen', 'true');
 }
 
-// --- HELPER FUNCTIONS ---
+// --- UI UTILS ---
+
+function toggleSidebar() {
+    if (els.sidebar.classList.contains('hidden')) {
+        els.sidebar.classList.remove('hidden');
+        els.sidebar.classList.add('flex', 'sidebar-animate-open');
+    } else {
+        els.sidebar.classList.add('hidden');
+        els.sidebar.classList.remove('flex', 'sidebar-animate-open');
+    }
+}
+
+
+// 💡 FIX 2: Виправлена логіка тултіпів для запобігання мерехтінню
+function showTooltip(e) {
+    clearTimeout(tooltipHideTimeout); // Скасувати приховування, якщо курсор знову зайшов
+
+    const key = e.currentTarget.dataset.tooltipKey;
+    if(!key) return;
+    
+    els.tooltip.textContent = TRANSLATIONS[currentLang][key];
+    els.tooltip.classList.remove('hidden', 'opacity-0'); // Показати
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    els.tooltip.style.top = `${rect.bottom + 5}px`;
+    els.tooltip.style.left = `${rect.left + rect.width/2}px`;
+}
+
+function hideTooltip() {
+    // Встановити затримку перед початком приховування
+    tooltipHideTimeout = setTimeout(() => {
+        els.tooltip.classList.add('opacity-0'); // Запуск анімації зникнення
+        // Після завершення анімації (200мс) приховати елемент
+        setTimeout(() => els.tooltip.classList.add('hidden'), 200);
+    }, 150); // Затримка 150мс для стійкості
+}
+
 
 function animateScoreCount(targetEl, finalScore) {
     let start = 0;
@@ -310,22 +332,6 @@ function animateScoreCount(targetEl, finalScore) {
         else els.scoreText.textContent = finalScore > 80 ? "Excellent" : finalScore > 50 ? "Good" : "Issues";
     };
     window.requestAnimationFrame(step);
-}
-
-function showTooltip(e) {
-    const key = e.currentTarget.dataset.tooltipKey;
-    if(!key) return;
-    els.tooltip.textContent = TRANSLATIONS[currentLang][key];
-    els.tooltip.classList.remove('hidden');
-    const rect = e.currentTarget.getBoundingClientRect();
-    els.tooltip.style.top = `${rect.bottom + 5}px`;
-    els.tooltip.style.left = `${rect.left + rect.width/2}px`;
-    els.tooltip.classList.remove('opacity-0');
-}
-
-function hideTooltip() {
-    els.tooltip.classList.add('opacity-0');
-    setTimeout(() => els.tooltip.classList.add('hidden'), 200);
 }
 
 function toggleTheme() {
@@ -404,7 +410,9 @@ function loadFunFact() {
     els.funFactText.textContent = fact;
 }
 
-// --- CORE FUNCTIONALITY ---
+// --- CORE AI ---
+
+// (Functions runPreview, switchTab, runAI, renderOutput, newChat, copyCode, exportMarkdown, addToHistory, renderHistory, clearHistory remain the same)
 
 function switchTab(tab) {
     if (tab === 'code') {
@@ -614,13 +622,6 @@ function renderOutput(data, lang) {
     }
 }
 
-function exportMarkdown() {
-    const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``;
-    navigator.clipboard.writeText(md);
-    els.exportBtn.textContent = "Copied!";
-    setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${TRANSLATIONS[currentLang].exportBtn}`, 2000);
-}
-
 function newChat() {
     els.input.value = '';
     els.wishes.value = '';
@@ -635,6 +636,13 @@ function copyCode() {
     navigator.clipboard.writeText(els.outputCode.textContent);
     els.copyBtn.innerHTML = '<i class="fa-solid fa-check text-brand-500"></i>';
     setTimeout(() => els.copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>', 2000);
+}
+
+function exportMarkdown() {
+    const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``;
+    navigator.clipboard.writeText(md);
+    els.exportBtn.textContent = "Copied!";
+    setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${TRANSLATIONS[currentLang].exportBtn}`, 2000);
 }
 
 function addToHistory(item) {
@@ -668,43 +676,4 @@ function clearHistory() {
     history = [];
     localStorage.removeItem('fixly_history');
     renderHistory();
-}
-
-// UI UTILS
-function animateScoreCount(targetEl, finalScore) {
-    let start = 0;
-    const duration = 800;
-    const step = (timestamp) => {
-        if (!start) start = timestamp;
-        const progress = Math.min((timestamp - start) / duration, 1);
-        const current = Math.floor(progress * finalScore);
-        targetEl.textContent = current;
-        targetEl.style.color = current > 80 ? '#10b981' : current > 50 ? '#ca8a04' : '#dc2626';
-        targetEl.style.borderColor = targetEl.style.color;
-        if (progress < 1) window.requestAnimationFrame(step);
-        else els.scoreText.textContent = finalScore > 80 ? "Excellent" : finalScore > 50 ? "Good" : "Issues";
-    };
-    window.requestAnimationFrame(step);
-}
-
-function showTooltip(e) {
-    const key = e.currentTarget.dataset.tooltipKey;
-    if(!key) return;
-    els.tooltip.textContent = TRANSLATIONS[currentLang][key];
-    els.tooltip.classList.remove('hidden');
-    const rect = e.currentTarget.getBoundingClientRect();
-    els.tooltip.style.top = `${rect.bottom + 5}px`;
-    els.tooltip.style.left = `${rect.left + rect.width/2}px`;
-    els.tooltip.classList.remove('opacity-0');
-}
-
-function hideTooltip() {
-    els.tooltip.classList.add('opacity-0');
-    setTimeout(() => els.tooltip.classList.add('hidden'), 200);
-}
-
-function toggleTheme() {
-    isDark = !isDark;
-    els.html.classList.toggle('dark');
-    localStorage.setItem('fixly_theme', isDark ? 'dark' : 'light');
 }
