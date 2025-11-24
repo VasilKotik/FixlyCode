@@ -1,7 +1,7 @@
 const apiKey = "AIzaSyA5oYnLJnxuXThSkqk5kfbaQ3mw0XspcxQ"; 
 const getApiUrl = (model) => `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
-// --- DATA: LOCALIZED CONTENT ---
+// --- DATA: LOCARLIZED CONTENT ---
 const CONTENT_POOLS = {
     uk: {
         tips: [
@@ -13,8 +13,8 @@ const CONTENT_POOLS = {
             { title: "Іменування", desc: "Змінні мають бути зрозумілими без контексту (напр. userLoggedIn)." }
         ],
         facts: [
-            "Перший 'баг' був справжнім метеликом у реле комп'ютера Mark II (1947).",
-            "Python назвали на честь 'Летючого цирку Монті Пайтона', а не змії.",
+            "Перший комп'ютерний 'баг' був справжнім метеликом у реле комп'ютера Mark II (1947).",
+            "Python назвали на честь шоу 'Летючий цирк Монті Пайтона', а не змії.",
             "Перший сайт (info.cern.ch) запущений у 1991 і досі працює.",
             "JavaScript створили всього за 10 днів."
         ]
@@ -29,7 +29,7 @@ const CONTENT_POOLS = {
             { title: "Naming", desc: "Use descriptive variable names." }
         ],
         facts: [
-            "The first 'bug' was a real moth in 1947.",
+            "The first computer 'bug' was a real moth in 1947.",
             "Python is named after Monty Python, not the snake.",
             "The first website is still online (info.cern.ch).",
             "JavaScript was written in 10 days."
@@ -72,7 +72,7 @@ let history = [];
 let currentSidebarTab = 'history'; 
 let currentTourStep = 0; 
 
-// БЕЗПЕЧНЕ ЗАВАНТАЖЕННЯ ІСТОРІЇ (FIXED ERROR)
+// БЕЗПЕЧНЕ ЗАВАНТАЖЕННЯ ІСТОРІЇ
 try {
     history = JSON.parse(localStorage.getItem('fixly_history')) || [];
 } catch (e) {
@@ -160,7 +160,11 @@ document.addEventListener('DOMContentLoaded', () => {
     switchSidebarTab(currentSidebarTab); 
     if(localStorage.getItem('fixly_draft')) els.input.value = localStorage.getItem('fixly_draft');
 
-    // Listeners
+    // 4. Event Listeners
+    if (els.startBtn) {
+        els.startBtn.addEventListener('click', handleStartClick); // USING NAMED FUNCTION
+    }
+    
     els.runBtn.addEventListener('click', runAI);
     els.newChatBtn.addEventListener('click', newChat);
     els.themeToggle.addEventListener('click', toggleTheme);
@@ -170,10 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('clear-input-btn').addEventListener('click', () => { els.input.value = ''; els.input.focus(); localStorage.removeItem('fixly_draft'); });
     els.clearHistoryBtn.addEventListener('click', clearHistory);
     
-    els.startBtn.addEventListener('click', () => {
-        closeWelcomeScreen();
-        if (!localStorage.getItem('fixly_tour_seen')) setTimeout(startTour, 600); 
-    });
     els.tourNextBtn.addEventListener('click', nextTourStep);
     els.toggleSidebarBtn.addEventListener('click', toggleSidebar);
     if(els.closeSidebarBtn) els.closeSidebarBtn.addEventListener('click', toggleSidebar);
@@ -198,7 +198,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- FUNCTIONS ---
+
+// --- FIX FOR START BUTTON ---
+function handleStartClick() {
+    closeWelcomeScreen();
+    const tourSeen = localStorage.getItem('fixly_tour_seen');
+    if (!tourSeen) {
+        setTimeout(startTour, 600); 
+    }
+}
+// --- END FIX ---
+
 
 function toggleSidebar() {
     if (els.sidebar.classList.contains('hidden')) {
@@ -257,14 +267,12 @@ function showTourStep(index) {
         let top = rect.bottom + 15;
         let left = rect.left;
         
-        // Simple Positioning Logic
         if (step.pos === 'top') top = rect.top - tooltipRect.height - 15;
         if (step.pos === 'right' && window.innerWidth > 768) {
             top = rect.top;
             left = rect.right + 15;
         }
 
-        // Boundary checks
         if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 20;
         if (left < 10) left = 10;
 
@@ -286,127 +294,7 @@ function endTour() {
     localStorage.setItem('fixly_tour_seen', 'true');
 }
 
-// --- CORE AI ---
-
-async function runAI() {
-    const t = TRANSLATIONS[currentLang];
-    const code = els.input.value.trim();
-    const wishes = els.wishes.value.trim();
-    
-    if (!code) { 
-        els.errorMsg.textContent = t.errorEmpty; 
-        els.errorMsg.classList.remove('hidden'); 
-        els.errorMsg.classList.add('animate-shake');
-        setTimeout(() => els.errorMsg.classList.remove('animate-shake'), 300);
-        return; 
-    }
-    els.errorMsg.classList.add('hidden');
-    els.loadingText.textContent = t.loading;
-    els.loadingOverlay.classList.remove('hidden');
-    els.runBtn.classList.add('run-btn-glowing'); 
-
-    const lang = els.langSelect.value;
-    const taskMap = {
-        'debug': 'Fix bugs, explain fixes.',
-        'optimize': 'Refactor for Clean Code & Speed.',
-        'explain': 'Explain logic simply.',
-        'convert': 'Convert code to best practice.',
-        'test': 'Generate Unit Tests.',
-        'complexity': 'Analyze Big O complexity.'
-    };
-    let taskDesc = taskMap[currentMode];
-    if(wishes) taskDesc += ` USER WISHES: ${wishes}`;
-    
-    const systemPrompt = `
-        Role: Senior Tech Lead.
-        Task: ${taskDesc}
-        Context: Language ${lang}.
-        Format: JSON ONLY. Escape characters properly (e.g. \\n, \\t).
-        Structure:
-        {
-            "fixedCode": "STRING (CODE ONLY)",
-            "explanation": "STRING (Markdown ok)",
-            "tip": "Short pro tip",
-            "score": 0-100,
-            "smells": ["List issues or 'None'"]
-        }
-    `;
-
-    try {
-        const response = await fetch(getApiUrl(els.modelSelect.value), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: code }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: { responseMimeType: "application/json" }
-            })
-        });
-
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error?.message || response.statusText);
-
-        let rawText = data.candidates[0].content.parts[0].text;
-        // CLEANUP JSON
-        rawText = rawText.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/, '').trim();
-        
-        let result;
-        try {
-            result = JSON.parse(rawText);
-        } catch (e) {
-            console.warn("JSON Parse failed, attempting repair...", e);
-            // Attempt to fix bad newlines in strings
-            const fixedText = rawText.replace(/(?<!\\)\n/g, "\\n");
-            result = JSON.parse(fixedText);
-        }
-
-        renderOutput(result, lang);
-        addToHistory({ mode: currentMode, lang, input: code, output: result, time: new Date().toLocaleTimeString() });
-
-    } catch (error) {
-        console.error(error);
-        els.errorMsg.textContent = "AI Error: " + error.message;
-        els.errorMsg.classList.remove('hidden');
-    } finally {
-        els.loadingOverlay.classList.add('hidden');
-        els.runBtn.classList.remove('run-btn-glowing');
-    }
-}
-
-function renderOutput(data, lang) {
-    els.emptyState.classList.add('hidden');
-    els.outputContainer.classList.remove('hidden');
-    
-    els.outputExpl.innerHTML = (data.explanation || "").replace(/\n/g, '<br>');
-    els.outputTip.textContent = data.tip || "Code better!";
-    animateScoreCount(els.scoreCircle, data.score || 85);
-
-    if(data.smells && data.smells.length && data.smells[0] !== 'None') {
-        els.smellsSection.classList.remove('hidden');
-        els.smellsList.innerHTML = data.smells.map(s => `<li>• ${s}</li>`).join('');
-    } else {
-        els.smellsSection.classList.add('hidden');
-    }
-
-    const codeBlock = els.outputCode;
-    codeBlock.className = 'code-font text-sm';
-    codeBlock.textContent = data.fixedCode || "// Error generating code";
-    
-    const langMap = { 'JavaScript':'javascript', 'Python':'python', 'HTML/CSS':'html', 'Java':'java', 'C++':'cpp', 'PHP':'php', 'SQL':'sql' };
-    codeBlock.classList.add(`language-${langMap[lang] || 'plaintext'}`);
-    
-    if (window.Prism) try { Prism.highlightElement(codeBlock); } catch(e){}
-
-    if (['HTML/CSS', 'JavaScript'].includes(lang)) {
-        els.tabPreview.classList.remove('hidden');
-        if (currentMode !== 'explain') switchTab('preview');
-    } else {
-        els.tabPreview.classList.add('hidden');
-        if (!els.viewPreview.classList.contains('hidden')) switchTab('code');
-    }
-}
-
-// --- UI UTILS ---
+// --- HELPER FUNCTIONS ---
 
 function animateScoreCount(targetEl, finalScore) {
     let start = 0;
@@ -419,9 +307,31 @@ function animateScoreCount(targetEl, finalScore) {
         targetEl.style.color = current > 80 ? '#10b981' : current > 50 ? '#ca8a04' : '#dc2626';
         targetEl.style.borderColor = targetEl.style.color;
         if (progress < 1) window.requestAnimationFrame(step);
-        else els.scoreText.textContent = finalScore > 80 ? "Good" : "Avg";
+        else els.scoreText.textContent = finalScore > 80 ? "Excellent" : finalScore > 50 ? "Good" : "Issues";
     };
     window.requestAnimationFrame(step);
+}
+
+function showTooltip(e) {
+    const key = e.currentTarget.dataset.tooltipKey;
+    if(!key) return;
+    els.tooltip.textContent = TRANSLATIONS[currentLang][key];
+    els.tooltip.classList.remove('hidden');
+    const rect = e.currentTarget.getBoundingClientRect();
+    els.tooltip.style.top = `${rect.bottom + 5}px`;
+    els.tooltip.style.left = `${rect.left + rect.width/2}px`;
+    els.tooltip.classList.remove('opacity-0');
+}
+
+function hideTooltip() {
+    els.tooltip.classList.add('opacity-0');
+    setTimeout(() => els.tooltip.classList.add('hidden'), 200);
+}
+
+function toggleTheme() {
+    isDark = !isDark;
+    els.html.classList.toggle('dark');
+    localStorage.setItem('fixly_theme', isDark ? 'dark' : 'light');
 }
 
 function updateTexts(lang) {
@@ -494,6 +404,239 @@ function loadFunFact() {
     els.funFactText.textContent = fact;
 }
 
+// --- CORE FUNCTIONALITY ---
+
+function switchTab(tab) {
+    if (tab === 'code') {
+        els.viewCode.classList.remove('hidden'); els.viewPreview.classList.add('hidden');
+        els.tabCode.classList.add('bg-white', 'dark:bg-slate-700', 'text-brand-600', 'dark:text-brand-400', 'shadow-sm');
+        els.tabCode.classList.remove('text-slate-500');
+        els.tabPreview.classList.remove('bg-white', 'dark:bg-slate-700', 'text-brand-600', 'dark:text-brand-400', 'shadow-sm');
+    } else {
+        els.viewCode.classList.add('hidden'); els.viewPreview.classList.remove('hidden');
+        els.tabPreview.classList.add('bg-white', 'dark:bg-slate-700', 'text-brand-600', 'dark:text-brand-400', 'shadow-sm');
+        els.tabPreview.classList.remove('text-slate-500');
+        els.tabCode.classList.remove('bg-white', 'dark:bg-slate-700', 'text-brand-600', 'dark:text-brand-400', 'shadow-sm');
+        runPreview();
+    }
+}
+
+function runPreview() {
+    const code = els.outputCode.textContent;
+    const lang = els.langSelect.value;
+    const frame = els.previewFrame.contentWindow.document;
+
+    frame.open();
+
+    const baseStyles = `
+        <style>
+            body { font-family: 'Segoe UI', sans-serif; padding: 20px; color: #333; }
+            .console-log { font-family: monospace; background: #f1f5f9; padding: 4px 8px; border-radius: 4px; margin-bottom: 4px; border-left: 3px solid #cbd5e1; font-size: 12px; }
+            .console-error { background: #fef2f2; color: #dc2626; border-left-color: #dc2626; }
+            .console-warn { background: #fffbeb; color: #d97706; border-left-color: #d97706; }
+        </style>
+    `;
+
+    const consoleInterceptor = `
+        <script>
+            const logContainer = document.createElement('div');
+            logContainer.style.marginTop = '20px';
+            logContainer.style.borderTop = '1px solid #eee';
+            logContainer.style.paddingTop = '10px';
+            document.body.appendChild(logContainer);
+
+            function appendLog(msg, type) {
+                const div = document.createElement('div');
+                div.className = 'console-log ' + (type || '');
+                div.textContent = '> ' + msg;
+                logContainer.appendChild(div);
+            }
+
+            const originalLog = console.log;
+            const originalErr = console.error;
+            const originalWarn = console.warn;
+
+            console.log = (...args) => { originalLog(...args); appendLog(args.join(' ')); };
+            console.error = (...args) => { originalErr(...args); appendLog(args.join(' '), 'console-error'); };
+            console.warn = (...args) => { originalWarn(...args); appendLog(args.join(' '), 'console-warn'); };
+            
+            window.onerror = function(message, source, lineno, colno, error) {
+                appendLog('Error: ' + message, 'console-error');
+            };
+        </script>
+    `;
+
+    if (lang === 'HTML/CSS') {
+        frame.write(code);
+    } 
+    else if (lang === 'JavaScript') {
+        frame.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>${baseStyles}</head>
+            <body>
+                <h3 style="margin-top:0; color:#64748b; font-size:14px; font-weight:bold; text-transform:uppercase;">JS Console Output</h3>
+                <div id="app"></div>
+                ${consoleInterceptor}
+                <script>
+                    try { ${code} } catch(e) { console.error(e.message); }
+                </script>
+            </body>
+            </html>
+        `);
+    } 
+    else {
+        frame.write(`<html><body style="font-family:sans-serif; color:#666; padding:20px;"><h3>No Preview for ${lang}</h3></body></html>`);
+    }
+    frame.close();
+}
+
+async function runAI() {
+    const t = TRANSLATIONS[currentLang];
+    const code = els.input.value.trim();
+    const wishes = els.wishes.value.trim();
+    
+    if (!code) { 
+        els.errorMsg.textContent = t.errorEmpty; 
+        els.errorMsg.classList.remove('hidden'); 
+        els.errorMsg.classList.add('animate-shake');
+        setTimeout(() => els.errorMsg.classList.remove('animate-shake'), 300);
+        return; 
+    }
+    els.errorMsg.classList.add('hidden');
+    els.loadingText.textContent = t.loading;
+    els.loadingOverlay.classList.remove('hidden');
+    els.runBtn.classList.add('run-btn-glowing'); 
+
+    const lang = els.langSelect.value;
+    const targetLangName = t.langName || "English";
+    const selectedModel = els.modelSelect.value;
+
+    let taskDesc = "";
+    const taskMap = {
+        'debug': 'Fix bugs, explain fixes.',
+        'optimize': 'Refactor for Clean Code & Speed.',
+        'explain': 'Explain logic simply.',
+        'convert': 'Convert code to best practice.',
+        'test': 'Generate Unit Tests.',
+        'complexity': 'Analyze Big O complexity.'
+    };
+    taskDesc = taskMap[currentMode];
+
+    if(wishes) taskDesc += ` USER WISHES: ${wishes}`;
+    taskDesc += " IMPORTANT: If code is missing standard imports, ADD THEM.";
+
+    const systemPrompt = `
+        Role: Senior Tech Lead.
+        Task: ${taskDesc}
+        Context Language: ${lang}.
+        Output Language: ${targetLangName}.
+        
+        JSON OUTPUT ONLY (No Markdown):
+        {
+            "fixedCode": "STRING (CODE ONLY)",
+            "explanation": "STRING (Markdown ok)",
+            "tip": "Short pro tip",
+            "score": INTEGER (0-100),
+            "smells": ["List issues or 'None'"]
+        }
+    `;
+
+    try {
+        const response = await fetch(getApiUrl(selectedModel), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: code }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: { responseMimeType: "application/json" }
+            })
+        });
+
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error?.message || response.statusText);
+
+        let rawText = data.candidates[0].content.parts[0].text;
+        rawText = rawText.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/, '').trim();
+        
+        let result;
+        try {
+            result = JSON.parse(rawText);
+        } catch (e) {
+            console.warn("JSON Parse failed, attempting repair...", e);
+            const fixedText = rawText.replace(/(?<!\\)\n/g, "\\n");
+            result = JSON.parse(fixedText);
+        }
+
+        renderOutput(result, lang);
+        addToHistory({ mode: currentMode, lang, input: code, output: result, time: new Date().toLocaleTimeString() });
+
+    } catch (error) {
+        console.error(error);
+        els.errorMsg.textContent = "AI Error: " + error.message;
+        els.errorMsg.classList.remove('hidden');
+    } finally {
+        els.loadingOverlay.classList.add('hidden');
+        els.runBtn.classList.remove('run-btn-glowing');
+    }
+}
+
+function renderOutput(data, lang) {
+    els.emptyState.classList.add('hidden');
+    els.outputContainer.classList.remove('hidden');
+    
+    els.outputExpl.innerHTML = (data.explanation || "").replace(/\n/g, '<br>');
+    els.outputTip.textContent = data.tip || "Code better!";
+    animateScoreCount(els.scoreCircle, data.score || 85);
+
+    if(data.smells && data.smells.length && data.smells[0] !== 'None') {
+        els.smellsSection.classList.remove('hidden');
+        els.smellsList.innerHTML = data.smells.map(s => `<li>• ${s}</li>`).join('');
+    } else {
+        els.smellsSection.classList.add('hidden');
+    }
+
+    const codeBlock = els.outputCode;
+    codeBlock.className = 'code-font text-sm';
+    codeBlock.textContent = data.fixedCode || "// Error generating code";
+    
+    const langMap = { 'JavaScript':'javascript', 'Python':'python', 'HTML/CSS':'html', 'Java':'java', 'C++':'cpp', 'PHP':'php', 'SQL':'sql' };
+    codeBlock.classList.add(`language-${langMap[lang] || 'plaintext'}`);
+    
+    if (window.Prism) try { Prism.highlightElement(codeBlock); } catch(e){}
+
+    if (['HTML/CSS', 'JavaScript'].includes(lang)) {
+        els.tabPreview.classList.remove('hidden');
+        if (currentMode !== 'explain') switchTab('preview');
+    } else {
+        els.tabPreview.classList.add('hidden');
+        if (!els.viewPreview.classList.contains('hidden')) switchTab('code');
+    }
+}
+
+function exportMarkdown() {
+    const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``;
+    navigator.clipboard.writeText(md);
+    els.exportBtn.textContent = "Copied!";
+    setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${TRANSLATIONS[currentLang].exportBtn}`, 2000);
+}
+
+function newChat() {
+    els.input.value = '';
+    els.wishes.value = '';
+    els.outputContainer.classList.add('hidden');
+    els.emptyState.classList.remove('hidden');
+    els.tabPreview.classList.add('hidden');
+    localStorage.removeItem('fixly_draft');
+    switchTab('code');
+}
+
+function copyCode() {
+    navigator.clipboard.writeText(els.outputCode.textContent);
+    els.copyBtn.innerHTML = '<i class="fa-solid fa-check text-brand-500"></i>';
+    setTimeout(() => els.copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>', 2000);
+}
+
 function addToHistory(item) {
     history.unshift(item);
     if (history.length > 20) history.pop();
@@ -527,17 +670,21 @@ function clearHistory() {
     renderHistory();
 }
 
-function copyCode() {
-    navigator.clipboard.writeText(els.outputCode.textContent);
-    els.copyBtn.innerHTML = '<i class="fa-solid fa-check text-brand-500"></i>';
-    setTimeout(() => els.copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i>', 2000);
-}
-
-function exportMarkdown() {
-    const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``;
-    navigator.clipboard.writeText(md);
-    els.exportBtn.textContent = "Copied!";
-    setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${TRANSLATIONS[currentLang].exportBtn}`, 2000);
+// UI UTILS
+function animateScoreCount(targetEl, finalScore) {
+    let start = 0;
+    const duration = 800;
+    const step = (timestamp) => {
+        if (!start) start = timestamp;
+        const progress = Math.min((timestamp - start) / duration, 1);
+        const current = Math.floor(progress * finalScore);
+        targetEl.textContent = current;
+        targetEl.style.color = current > 80 ? '#10b981' : current > 50 ? '#ca8a04' : '#dc2626';
+        targetEl.style.borderColor = targetEl.style.color;
+        if (progress < 1) window.requestAnimationFrame(step);
+        else els.scoreText.textContent = finalScore > 80 ? "Excellent" : finalScore > 50 ? "Good" : "Issues";
+    };
+    window.requestAnimationFrame(step);
 }
 
 function showTooltip(e) {
