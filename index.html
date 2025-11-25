@@ -22,17 +22,9 @@
                     animation: {
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'float': 'float 6s ease-in-out infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }
                     }
                 }
             }
@@ -64,34 +56,12 @@
                     Fixly<span class="text-brand-500">Code</span> 
                 </h1>
                 <p class="text-lg text-slate-500 dark:text-slate-400 max-w-2xl mb-10 leading-relaxed" data-i18n="welcomeDesc">
-                    Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте в реальному часі.
+                    Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.
                 </p>
                 <button id="start-btn" class="px-12 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold text-lg rounded-xl shadow-xl shadow-brand-500/30 transition-all transform hover:scale-105 flex items-center mb-16 ring-4 ring-brand-500/20">
                     <span data-i18n="startBtn">Почати роботу</span> 
-                    <i class="fa-solid fa-arrow-right ml-3 animate-bounce-x"></i>
+                    <i class="fa-solid fa-arrow-right ml-3"></i>
                 </button>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-4xl text-left">
-                    <div class="p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700/50 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group">
-                        <div class="w-10 h-10 rounded-lg bg-red-100 dark:bg-red-900/30 text-red-500 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"> <i class="fa-solid fa-bug"></i> </div>
-                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-1" data-i18n="featDebugTitle">Розумний Дебаг</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="featDebugDesc">Автоматичний пошук та виправлення помилок з поясненням причин.</p>
-                    </div>
-                    <div class="p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700/50 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group">
-                        <div class="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/30 text-blue-500 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"> <i class="fa-solid fa-gauge-high"></i> </div>
-                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-1" data-i18n="featOptimizeTitle">Оптимізація</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="featOptimizeDesc">Покращення продуктивності та читабельності коду (Clean Code).</p>
-                    </div>
-                    <div class="p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700/50 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group">
-                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-500 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"> <i class="fa-solid fa-right-left"></i> </div>
-                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-1" data-i18n="featConvertTitle">Конвертація</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="featConvertDesc">Миттєвий переклад коду між мовами (напр. Python → JS).</p>
-                    </div>
-                    <div class="p-5 bg-white dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-slate-700/50 hover:border-brand-500 dark:hover:border-brand-500 transition-colors group">
-                        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-500 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform"> <i class="fa-solid fa-vial"></i> </div>
-                        <h3 class="font-bold text-slate-800 dark:text-slate-200 mb-1" data-i18n="featTestTitle">AI Тестування</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed" data-i18n="featTestDesc">Генерація юніт-тестів та перевірка граничних випадків.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -99,28 +69,23 @@
     <div id="tour-overlay" class="fixed inset-0 bg-black/60 z-[60] hidden opacity-0 transition-opacity duration-300"></div>
     <div id="tour-tooltip" class="fixed z-[70] hidden bg-white dark:bg-slate-800 p-5 rounded-xl shadow-2xl max-w-xs border-l-4 border-brand-500 transition-all duration-300 transform scale-95 opacity-0">
         <h4 id="tour-title" class="text-sm font-bold text-slate-800 dark:text-white mb-2">Title</h4>
-        <p id="tour-desc" class="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">Description goes here.</p>
+        <p id="tour-desc" class="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">Description.</p>
         <div class="flex justify-end">
             <button id="tour-next-btn" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition">Next</button>
         </div>
     </div>
 
     <aside class="hidden w-72 bg-white dark:bg-darkpanel border-r border-gray-200 dark:border-slate-800 flex-col absolute md:relative z-40 h-full shadow-2xl transition-all duration-500" id="sidebar">
-        
-        <div class="p-4 border-b border-gray-200 dark:border-slate-800">
-            <div class="flex items-center justify-between">
-                <div class="flex space-x-2">
-                    <button id="tab-history-btn" onclick="switchSidebarTab('history')" class="sidebar-tab active-sidebar-tab">
-                        <i class="fa-solid fa-clock-rotate-left mr-2"></i> 
-                        <span data-i18n="tabHistory">Історія</span>
-                    </button>
-                    <button id="tab-tips-btn" onclick="switchSidebarTab('tips')" class="sidebar-tab">
-                        <i class="fa-solid fa-lightbulb mr-2"></i> 
-                        <span data-i18n="tabTips">Поради AI</span>
-                    </button>
-                </div>
-                <button id="close-sidebar-btn" class="md:hidden text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <div class="p-4 border-b border-gray-200 dark:border-slate-800 flex justify-between">
+            <div class="flex space-x-2">
+                <button id="tab-history-btn" onclick="switchSidebarTab('history')" class="sidebar-tab active-sidebar-tab">
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> <span data-i18n="tabHistory">Історія</span>
+                </button>
+                <button id="tab-tips-btn" onclick="switchSidebarTab('tips')" class="sidebar-tab">
+                    <i class="fa-solid fa-lightbulb mr-2"></i> <span data-i18n="tabTips">Поради AI</span>
+                </button>
             </div>
+            <button id="close-sidebar-btn" class="md:hidden text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
         <div class="p-4 space-y-2">
@@ -131,17 +96,12 @@
         </div>
 
         <div class="flex-1 overflow-y-auto px-4 space-y-2 custom-scrollbar relative">
-            <div id="history-content" class="space-y-2">
-                <div id="history-list"></div>
-            </div>
-            
+            <div id="history-content" class="space-y-2"><div id="history-list"></div></div>
             <div id="tips-content" class="space-y-4 pt-2 hidden w-full">
                 <ul id="ai-tips-list" class="space-y-3"></ul>
-                
                 <div id="fun-fact-section" class="p-4 rounded-lg bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-100 dark:border-yellow-900/50 shadow-sm transition-all">
                     <h4 class="text-sm font-bold text-yellow-800 dark:text-yellow-200 mb-2 flex items-center">
-                        <i class="fa-solid fa-puzzle-piece mr-2"></i> 
-                        <span data-i18n="funFactHeader">Цікавий факт</span>
+                        <i class="fa-solid fa-puzzle-piece mr-2"></i> <span data-i18n="funFactHeader">Цікавий факт</span>
                     </h4>
                     <p class="text-xs text-yellow-700 dark:text-yellow-300 leading-relaxed" id="fun-fact-text"></p>
                 </div>
@@ -150,17 +110,12 @@
 
         <div class="p-4 border-t border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 space-y-3">
             <button id="export-md-btn" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-800 rounded-lg transition border border-transparent hover:border-gray-200 dark:hover:border-slate-700">
-                <i class="fa-brands fa-markdown text-lg mr-3"></i>
-                <span data-i18n="exportBtn">Експорт в Markdown</span>
+                <i class="fa-brands fa-markdown text-lg mr-3"></i> <span data-i18n="exportBtn">Експорт в Markdown</span>
             </button>
-
-            <a href="https://send.monobank.ua/jar/YOUR_JAR_ID" target="_blank" id="donate-btn" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 rounded-lg transition border border-transparent hover:border-red-200 dark:hover:border-red-900/30">
-                <i class="fa-solid fa-heart text-sm mr-3 text-red-400 animate-pulse"></i>
-                <span data-i18n="donateBtn">На каву розробнику</span>
+            <a href="#" id="donate-btn" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 rounded-lg transition border border-transparent hover:border-red-200 dark:hover:border-red-900/30">
+                <i class="fa-solid fa-heart text-sm mr-3 text-red-400 animate-pulse"></i> <span data-i18n="donateBtn">На каву розробнику</span>
             </a>
-            
             <div class="h-px bg-gray-200 dark:bg-slate-800 my-2"></div>
-            
             <button id="clear-history-btn" class="flex items-center justify-center w-full text-[10px] text-slate-400 hover:text-red-500 transition py-1">
                 <i class="fa-solid fa-trash-can-arrow-up mr-1.5"></i> <span data-i18n="clearHistory">Очистити все</span>
             </button>
@@ -182,8 +137,8 @@
                 <div class="hidden sm:flex items-center bg-gray-100 dark:bg-slate-800 rounded-lg p-1 border border-gray-200 dark:border-slate-700">
                     <div class="px-2 text-slate-400"><i class="fa-solid fa-brain text-xs"></i></div>
                     <select id="model-select" class="bg-transparent text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none cursor-pointer py-1 pr-2">
-                        <option value="gemini-2.5-flash-preview-09-2025">Gemini 2.5 Flash</option>
-                        <option value="gemini-pro">Gemini Pro</option>
+                        <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
                     </select>
                 </div>
             </div>
@@ -231,13 +186,13 @@
                     <button id="clear-input-btn" class="text-xs text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-eraser"></i></button>
                 </div>
 
-                <div class="flex-1 relative group">
-                    <textarea id="input-code" class="absolute inset-0 w-full h-full p-5 code-font text-sm resize-none focus:outline-none bg-transparent text-slate-800 dark:text-slate-300 placeholder-slate-300 dark:placeholder-slate-700 leading-relaxed" placeholder="// Paste your code here..." spellcheck="false"></textarea>
+                <div class="flex-1 relative group editor-wrapper">
+                    <div id="line-numbers" class="line-numbers">1</div>
+                    <textarea id="input-code" class="code-font" placeholder="// Paste your code here..." spellcheck="false"></textarea>
                 </div>
                 
                 <div class="p-3 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-darkpanel flex flex-col space-y-2">
                     <input type="text" id="custom-wishes" class="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-xs rounded-lg px-3 py-2 focus:border-brand-500 focus:outline-none dark:text-white transition" placeholder="Додаткові побажання...">
-                    
                     <button id="run-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-brand-500/20 transition-all transform active:scale-[0.98] flex items-center justify-center relative overflow-hidden group">
                         <span class="relative z-10 flex items-center">
                             <i class="fa-solid fa-wand-magic-sparkles mr-2 group-hover:animate-pulse"></i> 
@@ -269,7 +224,7 @@
                 </div>
 
                 <div id="output-container" class="flex-1 overflow-y-auto p-5 space-y-5 hidden custom-scrollbar">
-                    <div id="view-code" class="space-y-5 animate-fade-in">
+                    <div id="view-code" class="space-y-5">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-3 flex items-center shadow-sm">
                                 <div id="score-circle" class="w-10 h-10 rounded-full border-4 border-brand-500 flex items-center justify-center font-bold text-brand-600 dark:text-brand-400 text-sm mr-3">--</div>
@@ -290,7 +245,7 @@
 
                         <div class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
                             <h3 class="text-xs font-bold text-slate-400 uppercase mb-2 border-b border-gray-100 dark:border-slate-700 pb-2" data-i18n="analysisHeader">Analysis</h3>
-                            <div class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed" id="output-explanation"></div>
+                            <div class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed typing-cursor" id="output-explanation"></div>
                         </div>
 
                         <div class="relative group rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-md">
@@ -330,8 +285,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js](https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js)"></script>
     <script src="script.js"></script>
 </body>
 </html>
-
