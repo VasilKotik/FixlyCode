@@ -681,7 +681,7 @@ async function runAI() {
     if (API_CONFIG.useServer) {
         try {
             const serverUrl = API_CONFIG.serverUrl || window.location.origin;
-            const serverResponse = await fetch(`${serverUrl}/api/ai-request`, {
+            const serverResponse = await fetch(`${serverUrl}/`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
