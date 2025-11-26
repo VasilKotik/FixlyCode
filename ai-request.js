@@ -35,7 +35,8 @@ const authenticate = (req, res, next) => {
 };
 
 // Main API endpoint - handle both root and /api/ai-request paths for Vercel
-app.post(['/', '/api/ai-request'], authenticate, async (req, res) => {
+// Слухаємо корінь, бо Vercel вже привів нас у цей файл
+app.post('/', async (req, res) => {
     try {
         const { code, mode, lang, model, wishes } = req.body;
 
@@ -232,3 +233,4 @@ app.get(['/', '/api/ai-request'], (req, res) => {
 
 // Export for Vercel Serverless Functions
 module.exports = app;
+
