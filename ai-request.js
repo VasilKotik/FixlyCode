@@ -34,8 +34,8 @@ const authenticate = (req, res, next) => {
     next();
 };
 
-// Main API endpoint
-app.post('/', authenticate, async (req, res) => {
+// Main API endpoint - handle both root and /api/ai-request paths for Vercel
+app.post(['/', '/api/ai-request'], authenticate, async (req, res) => {
     try {
         const { code, mode, lang, model, wishes } = req.body;
 
@@ -222,8 +222,8 @@ app.post('/', authenticate, async (req, res) => {
     }
 });
 
-// Health check endpoint
-app.get('/', (req, res) => {
+// Health check endpoint - handle both paths
+app.get(['/', '/api/ai-request'], (req, res) => {
     res.json({ 
         status: 'ok',
         timestamp: new Date().toISOString()

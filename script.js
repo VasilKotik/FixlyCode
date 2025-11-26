@@ -2,7 +2,7 @@ const INTERNAL_TOKEN_CLIENT = "Якийсь_Дуже_Секретний_Рядо
 
 const API_CONFIG = {
     useServer: true,
-    serverUrl: "" // Використовуємо window.location.origin для Vercel
+    serverUrl: "" // Empty string for Vercel - uses relative path
 };
 const MODEL_CONFIG = {
     'gemini-2.5-flash': { provider: 'google', supportsJson: true, verified: true },
@@ -82,9 +82,9 @@ const TRANSLATIONS = {
         newFileTitle: "Створити новий файл", fileName: "Назва файлу", fileType: "Тип файлу", cancel: "Скасувати", create: "Створити",
         versionHistory: "Історія версій", close: "Закрити", restoreVersion: "Відновити версію", noVersions: "Немає збережених версій",
         changeLanguageConfirm: "Ви впевнені, що хочете змінити мову? Розширення файлу буде оновлено автоматично.", 
-        welcomeDesc: "Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.", startBtn: "Почати роботу", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
+        welcomeDesc: "Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.", startBtn: "Почати роботу", startTutorialBtn: "Почати навчання", skipBtn: "Пропустити", nextTour: "Далі", finishTour: "Завершити", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
         tabHistory: "Історія", tabTips: "Поради AI", historyEmptyDesc: "Тут з'являться ваші запити.", funFactHeader: "Цікавий факт",
-        tourStep1Title: "1. Введіть Код", tourStep1Desc: "Вставте код сюди.", tourStep2Title: "2. Оберіть Режим", tourStep2Desc: "Що зробити з кодом?", tourStep3Title: "3. Запустіть AI", tourStep3Desc: "Натисніть кнопку!"
+        tourStep1Title: "1. Введіть Код", tourStep1Desc: "Вставте ваш код сюди в текстове поле.", tourStep2Title: "2. Оберіть Мову", tourStep2Desc: "Виберіть мову програмування вашого коду.", tourStep3Title: "3. Оберіть Режим", tourStep3Desc: "Виберіть, що має зробити AI з вашим кодом (виправити, оптимізувати, пояснити тощо).", tourStep4Title: "4. Запустіть AI", tourStep4Desc: "Натисніть кнопку Запуск, щоб почати аналіз!"
     },
     en: {
         newChatBtn: "New Chat", donateBtn: "Buy me a coffee", runBtn: "Run", analysisHeader: "Analysis", emptyTitle: "FixlyCode", loading: "Thinking...", errorEmpty: "Enter code!", clearHistory: "Clear History", clearHistoryConfirm: "Are you sure you want to clear all history?", placeholder: "// Paste code here...", langName: "English", wishesPlaceholder: "Wishes...", exportBtn: "Export MD", scoreTitle: "Score",
@@ -99,9 +99,9 @@ const TRANSLATIONS = {
         newFileTitle: "Create New File", fileName: "File Name", fileType: "File Type", cancel: "Cancel", create: "Create",
         versionHistory: "Version History", close: "Close", restoreVersion: "Restore Version", noVersions: "No saved versions",
         changeLanguageConfirm: "Are you sure you want to change the language? File extension will be updated automatically.",
-        welcomeDesc: "Your AI coding assistant.", startBtn: "Get Started", emptyStatePrompt: "Ready to code.",
+        welcomeDesc: "Your AI coding assistant.", startBtn: "Get Started", startTutorialBtn: "Start Tutorial", skipBtn: "Skip", nextTour: "Next", finishTour: "Finish", emptyStatePrompt: "Ready to code.",
         tabHistory: "History", tabTips: "AI Tips", historyEmptyDesc: "No history yet.", funFactHeader: "Fun Fact",
-        tourStep1Title: "1. Input Code", tourStep1Desc: "Paste here.", tourStep2Title: "2. Select Mode", tourStep2Desc: "Select action.", tourStep3Title: "3. Run", tourStep3Desc: "Click to run!"
+        tourStep1Title: "1. Input Code", tourStep1Desc: "Paste your code here in the text area.", tourStep2Title: "2. Select Language", tourStep2Desc: "Choose the programming language of your code.", tourStep3Title: "3. Choose Mode", tourStep3Desc: "Select what AI should do with your code (debug, optimize, explain, etc.).", tourStep4Title: "4. Run AI", tourStep4Desc: "Click the Run button to start the analysis!"
     },
     pl: {
         newChatBtn: "Nowy czat", donateBtn: "Postaw kawę", runBtn: "Uruchom", analysisHeader: "Analiza", emptyTitle: "FixlyCode", loading: "Analizowanie...", errorEmpty: "Wprowadź kod!", clearHistory: "Wyczyść historię", clearHistoryConfirm: "Czy na pewno chcesz wyczyścić całą historię?", placeholder: "// Wklej kod tutaj...", tipHeader: "Wskazówka:", langName: "Polski", wishesPlaceholder: "Życzenia...", exportBtn: "Eksportuj MD", scoreTitle: "Ocena",
@@ -116,9 +116,9 @@ const TRANSLATIONS = {
         changeLanguageConfirm: "Czy na pewno chcesz zmienić język? Rozszerzenie pliku zostanie zaktualizowane automatycznie.",
         tipDebug: "Napraw błędy", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Code Review", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Testy",
         tipFormatCode: "Formatuj kod zgodnie ze standardami języka programowania", tipUploadFile: "Prześlij plik z komputera do edytora", tipDownloadFile: "Zapisz bieżący kod do pliku", tipVersionHistory: "Zobacz i przywróć poprzednie wersje pliku", tipCopyCode: "Skopiuj kod z edytora do schowka", tipClearEditor: "Wyczyść cały kod z edytora",
-        welcomeDesc: "Twój asystent AI do kodowania.", startBtn: "Rozpocznij", emptyStatePrompt: "Gotowy do kodowania.",
+        welcomeDesc: "Twój asystent AI do kodowania.", startBtn: "Rozpocznij", startTutorialBtn: "Rozpocznij samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Zakończ", emptyStatePrompt: "Gotowy do kodowania.",
         tabHistory: "Historia", tabTips: "Wskazówki AI", historyEmptyDesc: "Brak historii.", funFactHeader: "Ciekawostka",
-        tourStep1Title: "1. Wprowadź kod", tourStep1Desc: "Wklej tutaj.", tourStep2Title: "2. Wybierz tryb", tourStep2Desc: "Wybierz akcję.", tourStep3Title: "3. Uruchom", tourStep3Desc: "Kliknij, aby uruchomić!"
+        tourStep1Title: "1. Wprowadź kod", tourStep1Desc: "Wklej swój kod tutaj w obszarze tekstowym.", tourStep2Title: "2. Wybierz język", tourStep2Desc: "Wybierz język programowania swojego kodu.", tourStep3Title: "3. Wybierz tryb", tourStep3Desc: "Wybierz, co AI powinno zrobić z twoim kodem (debugowanie, optymalizacja, wyjaśnienie itp.).", tourStep4Title: "4. Uruchom AI", tourStep4Desc: "Kliknij przycisk Uruchom, aby rozpocząć analizę!"
     },
     de: {
         newChatBtn: "Neuer Chat", donateBtn: "Kaffee spenden", runBtn: "Ausführen", analysisHeader: "Analyse", emptyTitle: "FixlyCode", loading: "Analysiere...", errorEmpty: "Code eingeben!", clearHistory: "Verlauf löschen", clearHistoryConfirm: "Sind Sie sicher, dass Sie den gesamten Verlauf löschen möchten?", placeholder: "// Code hier einfügen...", tipHeader: "Tipp:", langName: "Deutsch", wishesPlaceholder: "Wünsche...", exportBtn: "Als MD exportieren", scoreTitle: "Bewertung",
@@ -133,9 +133,9 @@ const TRANSLATIONS = {
         changeLanguageConfirm: "Sind Sie sicher, dass Sie die Sprache ändern möchten? Die Dateierweiterung wird automatisch aktualisiert.",
         tipDebug: "Fehler beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Code Review", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Tests",
         tipFormatCode: "Code nach Programmierstandards formatieren", tipUploadFile: "Datei vom Computer in den Editor hochladen", tipDownloadFile: "Aktuellen Code in Datei speichern", tipVersionHistory: "Vorherige Dateiversionen anzeigen und wiederherstellen", tipCopyCode: "Code aus Editor in Zwischenablage kopieren", tipClearEditor: "Gesamten Code aus Editor löschen",
-        welcomeDesc: "Ihr KI-Code-Assistent.", startBtn: "Loslegen", emptyStatePrompt: "Bereit zum Codieren.",
+        welcomeDesc: "Ihr KI-Code-Assistent.", startBtn: "Loslegen", startTutorialBtn: "Tutorial starten", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Beenden", emptyStatePrompt: "Bereit zum Codieren.",
         tabHistory: "Verlauf", tabTips: "KI-Tipps", historyEmptyDesc: "Kein Verlauf.", funFactHeader: "Fun Fact",
-        tourStep1Title: "1. Code eingeben", tourStep1Desc: "Hier einfügen.", tourStep2Title: "2. Modus wählen", tourStep2Desc: "Aktion wählen.", tourStep3Title: "3. Ausführen", tourStep3Desc: "Klicken zum Ausführen!"
+        tourStep1Title: "1. Code eingeben", tourStep1Desc: "Fügen Sie Ihren Code hier in das Textfeld ein.", tourStep2Title: "2. Sprache wählen", tourStep2Desc: "Wählen Sie die Programmiersprache Ihres Codes.", tourStep3Title: "3. Modus wählen", tourStep3Desc: "Wählen Sie, was die KI mit Ihrem Code tun soll (Debuggen, Optimieren, Erklären usw.).", tourStep4Title: "4. KI ausführen", tourStep4Desc: "Klicken Sie auf die Schaltfläche Ausführen, um die Analyse zu starten!"
     },
     es: {
         newChatBtn: "Nuevo chat", donateBtn: "Invítame un café", runBtn: "Ejecutar", analysisHeader: "Análisis", emptyTitle: "FixlyCode", loading: "Analizando...", errorEmpty: "¡Ingresa código!", clearHistory: "Limpiar historial", clearHistoryConfirm: "¿Estás seguro de que quieres limpiar todo el historial?", placeholder: "// Pega el código aquí...", tipHeader: "Consejo:", langName: "Español", wishesPlaceholder: "Deseos...", exportBtn: "Exportar MD", scoreTitle: "Puntuación",
@@ -150,9 +150,9 @@ const TRANSLATIONS = {
         changeLanguageConfirm: "¿Estás seguro de que quieres cambiar el idioma? La extensión del archivo se actualizará automáticamente.",
         tipDebug: "Corregir errores", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Code Review", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Pruebas",
         tipFormatCode: "Formatear código según estándares del lenguaje de programación", tipUploadFile: "Subir un archivo desde tu computadora al editor", tipDownloadFile: "Guardar código actual en un archivo", tipVersionHistory: "Ver y restaurar versiones anteriores del archivo", tipCopyCode: "Copiar código del editor al portapapeles", tipClearEditor: "Limpiar todo el código del editor",
-        welcomeDesc: "Tu asistente de código con IA.", startBtn: "Comenzar", emptyStatePrompt: "Listo para codificar.",
+        welcomeDesc: "Tu asistente de código con IA.", startBtn: "Comenzar", startTutorialBtn: "Iniciar tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Finalizar", emptyStatePrompt: "Listo para codificar.",
         tabHistory: "Historial", tabTips: "Consejos IA", historyEmptyDesc: "Sin historial.", funFactHeader: "Dato curioso",
-        tourStep1Title: "1. Ingresa código", tourStep1Desc: "Pega aquí.", tourStep2Title: "2. Selecciona modo", tourStep2Desc: "Selecciona acción.", tourStep3Title: "3. Ejecutar", tourStep3Desc: "¡Haz clic para ejecutar!"
+        tourStep1Title: "1. Ingresa código", tourStep1Desc: "Pega tu código aquí en el área de texto.", tourStep2Title: "2. Selecciona idioma", tourStep2Desc: "Elige el lenguaje de programación de tu código.", tourStep3Title: "3. Elige modo", tourStep3Desc: "Selecciona qué debe hacer la IA con tu código (depurar, optimizar, explicar, etc.).", tourStep4Title: "4. Ejecutar IA", tourStep4Desc: "¡Haz clic en el botón Ejecutar para comenzar el análisis!"
     },
     ru: {
         newChatBtn: "Новый чат", donateBtn: "Купить кофе", runBtn: "Запуск", analysisHeader: "Анализ", emptyTitle: "FixlyCode", loading: "Анализ...", errorEmpty: "Введите код!", clearHistory: "Очистить историю", clearHistoryConfirm: "Вы уверены, что хотите очистить всю историю?", placeholder: "// Вставьте код здесь...", tipHeader: "Совет:", langName: "Русский", wishesPlaceholder: "Пожелания...", exportBtn: "Экспорт в Markdown", scoreTitle: "Рейтинг",
@@ -167,9 +167,9 @@ const TRANSLATIONS = {
         changeLanguageConfirm: "Вы уверены, что хотите изменить язык? Расширение файла будет обновлено автоматически.",
         tipDebug: "Исправить ошибки", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Code Review", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматирование", tipTest: "Тесты",
         tipFormatCode: "Форматировать код согласно стандартам языка программирования", tipUploadFile: "Загрузить файл с компьютера в редактор", tipDownloadFile: "Сохранить текущий код в файл", tipVersionHistory: "Просмотреть и восстановить предыдущие версии файла", tipCopyCode: "Копировать код из редактора в буфер обмена", tipClearEditor: "Очистить весь код из редактора",
-        welcomeDesc: "Ваш персональный AI-ассистент. Исправляйте баги, оптимизируйте код и тестируйте.", startBtn: "Начать работу", emptyStatePrompt: "Выберите режим и нажмите Запуск",
+        welcomeDesc: "Ваш персональный AI-ассистент. Исправляйте баги, оптимизируйте код и тестируйте.", startBtn: "Начать работу", startTutorialBtn: "Начать обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Завершить", emptyStatePrompt: "Выберите режим и нажмите Запуск",
         tabHistory: "История", tabTips: "Советы AI", historyEmptyDesc: "Здесь появятся ваши запросы.", funFactHeader: "Интересный факт",
-        tourStep1Title: "1. Введите код", tourStep1Desc: "Вставьте код сюда.", tourStep2Title: "2. Выберите режим", tourStep2Desc: "Что сделать с кодом?", tourStep3Title: "3. Запустите AI", tourStep3Desc: "Нажмите кнопку!"
+        tourStep1Title: "1. Введите код", tourStep1Desc: "Вставьте ваш код сюда в текстовое поле.", tourStep2Title: "2. Выберите язык", tourStep2Desc: "Выберите язык программирования вашего кода.", tourStep3Title: "3. Выберите режим", tourStep3Desc: "Выберите, что должен сделать AI с вашим кодом (исправить, оптимизировать, объяснить и т.д.).", tourStep4Title: "4. Запустите AI", tourStep4Desc: "Нажмите кнопку Запуск, чтобы начать анализ!"
     }
 };
 
@@ -281,9 +281,13 @@ const els = {
     activeModeDisplay: document.getElementById('active-mode-display'),
     modeIcon: document.getElementById('mode-icon'),
     modeName: document.getElementById('mode-name'),
-    targetInput: document.getElementById('input-section'),
+    targetInput: document.getElementById('input-code'),
+    targetLang: document.getElementById('language-select'),
     targetModes: document.getElementById('mode-buttons-container'),
     targetRun: document.getElementById('run-btn'),
+    helpBtn: document.getElementById('help-btn'),
+    startTutorialBtn: document.getElementById('start-tutorial-btn'),
+    skipBtn: document.getElementById('skip-btn'),
     fileTabsContainer: document.getElementById('file-tabs-container'),
     fileTabs: document.getElementById('file-tabs'),
     newFileBtn: document.getElementById('new-file-btn'),
@@ -334,6 +338,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     if (els.startBtn) els.startBtn.addEventListener('click', () => { closeWelcomeScreen(); if (!localStorage.getItem('fixly_tour_seen')) setTimeout(startTour, 600); });
+    if (els.startTutorialBtn) els.startTutorialBtn.addEventListener('click', () => { closeWelcomeScreen(); setTimeout(startTour, 600); });
+    if (els.skipBtn) els.skipBtn.addEventListener('click', () => { closeWelcomeScreen(); });
+    if (els.helpBtn) els.helpBtn.addEventListener('click', () => { startTour(); });
     if (els.runBtn) els.runBtn.addEventListener('click', runAI);
     if (els.newChatBtn) els.newChatBtn.addEventListener('click', newChat);
     if (els.themeToggle) els.themeToggle.addEventListener('click', toggleTheme);
@@ -949,9 +956,64 @@ function renderOutput(data, lang) {
 
 function nextTourStep() { currentTourStep++; showTourStep(currentTourStep); }
 function startTour() { currentTourStep = 0; els.tourOverlay.classList.remove('hidden'); requestAnimationFrame(() => els.tourOverlay.classList.remove('opacity-0')); showTourStep(0); }
-function showTourStep(index) { if (index >= tourSteps.length) return endTour(); const step = tourSteps[index]; const targetEl = els[step.target]; const t = TRANSLATIONS[currentLang]; document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight')); targetEl.classList.add('tour-highlight'); targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); els.tourTitle.textContent = t[step.titleKey]; els.tourDesc.textContent = t[step.descKey]; els.tourNextBtn.textContent = index === tourSteps.length - 1 ? "Finish" : "Next"; els.tourTooltip.classList.remove('hidden'); requestAnimationFrame(() => { els.tourTooltip.classList.remove('opacity-0', 'scale-95'); const rect = targetEl.getBoundingClientRect(); els.tourTooltip.style.top = `${rect.bottom + 15}px`; els.tourTooltip.style.left = `${rect.left}px`; }); }
+function showTourStep(index) {
+    if (index >= tourSteps.length) return endTour();
+    const step = tourSteps[index];
+    const targetEl = els[step.target];
+    if (!targetEl) return nextTourStep();
+    
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+    targetEl.classList.add('tour-highlight');
+    
+    // Scroll to element
+    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+    
+    // Update tooltip content
+    els.tourTitle.textContent = t[step.titleKey] || step.titleKey;
+    els.tourDesc.textContent = t[step.descKey] || step.descKey;
+    els.tourNextBtn.textContent = index === tourSteps.length - 1 ? (t.finishTour || "Finish") : (t.nextTour || "Next");
+    
+    // Show tooltip
+    els.tourTooltip.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        els.tourTooltip.classList.remove('opacity-0', 'scale-95');
+        const rect = targetEl.getBoundingClientRect();
+        const tooltipRect = els.tourTooltip.getBoundingClientRect();
+        
+        // Position tooltip based on step position preference
+        let top, left;
+        if (step.pos === 'top') {
+            top = `${rect.top - tooltipRect.height - 15}px`;
+            left = `${rect.left + (rect.width / 2) - (tooltipRect.width / 2)}px`;
+        } else if (step.pos === 'bottom') {
+            top = `${rect.bottom + 15}px`;
+            left = `${rect.left + (rect.width / 2) - (tooltipRect.width / 2)}px`;
+        } else if (step.pos === 'right') {
+            top = `${rect.top + (rect.height / 2) - (tooltipRect.height / 2)}px`;
+            left = `${rect.right + 15}px`;
+        } else {
+            top = `${rect.top + (rect.height / 2) - (tooltipRect.height / 2)}px`;
+            left = `${rect.left - tooltipRect.width - 15}px`;
+        }
+        
+        // Ensure tooltip stays within viewport
+        const maxLeft = window.innerWidth - tooltipRect.width - 20;
+        const maxTop = window.innerHeight - tooltipRect.height - 20;
+        left = Math.max(20, Math.min(parseInt(left), maxLeft)) + 'px';
+        top = Math.max(20, Math.min(parseInt(top), maxTop)) + 'px';
+        
+        els.tourTooltip.style.top = top;
+        els.tourTooltip.style.left = left;
+    });
+}
 function endTour() { document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight')); els.tourOverlay.classList.add('opacity-0'); els.tourTooltip.classList.add('opacity-0'); setTimeout(() => { els.tourOverlay.classList.add('hidden'); els.tourTooltip.classList.add('hidden'); }, 300); localStorage.setItem('fixly_tour_seen', 'true'); }
-const tourSteps = [ { target: 'targetInput', titleKey: 'tourStep1Title', descKey: 'tourStep1Desc', pos: 'right' }, { target: 'targetModes', titleKey: 'tourStep2Title', descKey: 'tourStep2Desc', pos: 'bottom' }, { target: 'targetRun', titleKey: 'tourStep3Title', descKey: 'tourStep3Desc', pos: 'top' } ];
+const tourSteps = [
+    { target: 'targetInput', titleKey: 'tourStep1Title', descKey: 'tourStep1Desc', pos: 'bottom' },
+    { target: 'targetLang', titleKey: 'tourStep2Title', descKey: 'tourStep2Desc', pos: 'bottom' },
+    { target: 'targetModes', titleKey: 'tourStep3Title', descKey: 'tourStep3Desc', pos: 'bottom' },
+    { target: 'targetRun', titleKey: 'tourStep4Title', descKey: 'tourStep4Desc', pos: 'top' }
+];
 
 function toggleSidebar() { 
     els.sidebar.classList.toggle('hidden'); 
