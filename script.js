@@ -680,7 +680,6 @@ async function runAI() {
 
     if (API_CONFIG.useServer) {
         try {
-            const serverUrl = API_CONFIG.serverUrl || window.location.origin;
             const serverResponse = await fetch('/api/ai-request', {
                 method: 'POST',
                 headers: { 
@@ -2414,11 +2413,10 @@ async function testAIModel(modelId) {
     const testCode = "console.log('test');";
     
     try {
-        const serverUrl = API_CONFIG.serverUrl || window.location.origin;
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout for test
         
-        const response = await fetch(`${serverUrl}/api/ai-request`, {
+        const response = await fetch('/api/ai-request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
