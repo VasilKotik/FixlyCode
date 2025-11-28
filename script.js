@@ -1907,10 +1907,12 @@ function handleLanguageChange() {
 }
 
 // Show change language confirmation dialog
-function showChangeLanguageDialog(currentLang, newLang) {
+function showChangeLanguageDialog(programmingLang, newLang) {
     if (!els.changeLanguageDialog || !els.changeLanguageDialogContent) return;
     
-    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    // Use UI language, not programming language
+    const uiLang = window.currentLang || localStorage.getItem('fixly_lang') || 'en';
+    const t = TRANSLATIONS[uiLang] || TRANSLATIONS.en;
     const langNames = {
         'JavaScript': 'JavaScript',
         'TypeScript': 'TypeScript',
@@ -1952,23 +1954,26 @@ function showChangeLanguageDialog(currentLang, newLang) {
         'Assembly': 'Assembly'
     };
     
-    const currentLangName = langNames[currentLang] || currentLang;
+    const currentLangName = langNames[programmingLang] || programmingLang;
     const newLangName = langNames[newLang] || newLang;
     
     // Update message with language names
     if (els.changeLanguageMessage) {
-        let message = t.changeLanguageConfirmMessage || 
-            `Are you sure you want to change the programming language? The file extension will be updated automatically.`;
-        
-        // Replace placeholders if they exist, or add language names
-        if (message.includes('${currentLang}') || message.includes('${newLang}')) {
-            message = message.replace('${currentLang}', currentLangName).replace('${newLang}', newLangName);
+        // Build message based on UI language
+        let message;
+        if (uiLang === 'uk') {
+            message = `Ви впевнені, що хочете змінити мову програмування з "${currentLangName}" на "${newLangName}"? Розширення файлу буде оновлено автоматично.`;
+        } else if (uiLang === 'ru') {
+            message = `Вы уверены, что хотите изменить язык программирования с "${currentLangName}" на "${newLangName}"? Расширение файла будет обновлено автоматически.`;
+        } else if (uiLang === 'pl') {
+            message = `Czy na pewno chcesz zmienić język programowania z "${currentLangName}" na "${newLangName}"? Rozszerzenie pliku zostanie zaktualizowane automatycznie.`;
+        } else if (uiLang === 'de') {
+            message = `Sind Sie sicher, dass Sie die Programmiersprache von "${currentLangName}" zu "${newLangName}" ändern möchten? Die Dateierweiterung wird automatisch aktualisiert.`;
+        } else if (uiLang === 'es') {
+            message = `¿Estás seguro de que quieres cambiar el lenguaje de programación de "${currentLangName}" a "${newLangName}"? La extensión del archivo se actualizará automáticamente.`;
         } else {
-            // Add language names to the message
-            message = message.replace(
-                'change the programming language',
-                `change the programming language from "${currentLangName}" to "${newLangName}"`
-            );
+            // English default
+            message = `Are you sure you want to change the programming language from "${currentLangName}" to "${newLangName}"? The file extension will be updated automatically.`;
         }
         
         els.changeLanguageMessage.textContent = message;
