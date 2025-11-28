@@ -81,7 +81,10 @@ const TRANSLATIONS = {
         changeLanguageConfirm: "Ви впевнені, що хочете змінити мову? Розширення файлу буде оновлено автоматично.",
         changeLanguageConfirmTitle: "Змінити мову програмування?",
         changeLanguageConfirmMessage: "Ви впевнені, що хочете змінити мову програмування? Розширення файлу буде оновлено автоматично.",
-        changeLanguage: "Змінити мову", 
+        changeLanguage: "Змінити мову",
+        deleteChatConfirmTitle: "Видалити чат?",
+        deleteChatConfirmMessage: "Ви впевнені, що хочете видалити цей чат? Цю дію неможливо скасувати.",
+        deleteChat: "Видалити чат", 
         welcomeDesc: "Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.", startBtn: "Почати роботу", startTutorialBtn: "Почати навчання", skipBtn: "Пропустити", nextTour: "Далі", finishTour: "Завершити", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
         tabHistory: "Історія", tabTips: "Поради AI", historyEmptyDesc: "Тут з'являться ваші запити.", funFactHeader: "Цікавий факт",
         tourStep1Title: "1. Введіть Код", tourStep1Desc: "Вставте ваш код сюди в текстове поле.", tourStep2Title: "2. Оберіть Мову", tourStep2Desc: "Виберіть мову програмування вашого коду.", tourStep3Title: "3. Оберіть Режим", tourStep3Desc: "Виберіть, що має зробити AI з вашим кодом (виправити, оптимізувати, пояснити тощо).", tourStep4Title: "4. Запустіть AI", tourStep4Desc: "Натисніть кнопку Запуск, щоб почати аналіз!"
@@ -102,6 +105,9 @@ const TRANSLATIONS = {
         changeLanguageConfirmTitle: "Change Programming Language?",
         changeLanguageConfirmMessage: "Are you sure you want to change the programming language? The file extension will be updated automatically.",
         changeLanguage: "Change Language",
+        deleteChatConfirmTitle: "Delete Chat?",
+        deleteChatConfirmMessage: "Are you sure you want to delete this chat? This action cannot be undone.",
+        deleteChat: "Delete Chat",
         welcomeDesc: "Your AI coding assistant.", startBtn: "Get Started", startTutorialBtn: "Start Tutorial", skipBtn: "Skip", nextTour: "Next", finishTour: "Finish", emptyStatePrompt: "Ready to code.",
         tabHistory: "History", tabTips: "AI Tips", historyEmptyDesc: "No history yet.", funFactHeader: "Fun Fact",
         tourStep1Title: "1. Input Code", tourStep1Desc: "Paste your code here in the text area.", tourStep2Title: "2. Select Language", tourStep2Desc: "Choose the programming language of your code.", tourStep3Title: "3. Choose Mode", tourStep3Desc: "Select what AI should do with your code (debug, optimize, explain, etc.).", tourStep4Title: "4. Run AI", tourStep4Desc: "Click the Run button to start the analysis!"
@@ -120,6 +126,9 @@ const TRANSLATIONS = {
         changeLanguageConfirmTitle: "Zmienić język programowania?",
         changeLanguageConfirmMessage: "Czy na pewno chcesz zmienić język programowania? Rozszerzenie pliku zostanie zaktualizowane automatycznie.",
         changeLanguage: "Zmienić język",
+        deleteChatConfirmTitle: "Usunąć czat?",
+        deleteChatConfirmMessage: "Czy na pewno chcesz usunąć ten czat? Tej akcji nie można cofnąć.",
+        deleteChat: "Usunąć czat",
         tipDebug: "Napraw błędy", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Code Review", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Testy",
         tipFormatCode: "Formatuj kod zgodnie ze standardami języka programowania", tipUploadFile: "Prześlij plik z komputera do edytora", tipDownloadFile: "Zapisz bieżący kod do pliku", tipVersionHistory: "Zobacz i przywróć poprzednie wersje pliku", tipCopyCode: "Skopiuj kod z edytora do schowka", tipClearEditor: "Wyczyść cały kod z edytora",
         welcomeDesc: "Twój asystent AI do kodowania.", startBtn: "Rozpocznij", startTutorialBtn: "Rozpocznij samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Zakończ", emptyStatePrompt: "Gotowy do kodowania.",
@@ -140,6 +149,9 @@ const TRANSLATIONS = {
         changeLanguageConfirmTitle: "Programmiersprache ändern?",
         changeLanguageConfirmMessage: "Sind Sie sicher, dass Sie die Programmiersprache ändern möchten? Die Dateierweiterung wird automatisch aktualisiert.",
         changeLanguage: "Sprache ändern",
+        deleteChatConfirmTitle: "Chat löschen?",
+        deleteChatConfirmMessage: "Sind Sie sicher, dass Sie diesen Chat löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+        deleteChat: "Chat löschen",
         tipDebug: "Fehler beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Code Review", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Tests",
         tipFormatCode: "Code nach Programmierstandards formatieren", tipUploadFile: "Datei vom Computer in den Editor hochladen", tipDownloadFile: "Aktuellen Code in Datei speichern", tipVersionHistory: "Vorherige Dateiversionen anzeigen und wiederherstellen", tipCopyCode: "Code aus Editor in Zwischenablage kopieren", tipClearEditor: "Gesamten Code aus Editor löschen",
         welcomeDesc: "Ihr KI-Code-Assistent.", startBtn: "Loslegen", startTutorialBtn: "Tutorial starten", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Beenden", emptyStatePrompt: "Bereit zum Codieren.",
@@ -160,6 +172,9 @@ const TRANSLATIONS = {
         changeLanguageConfirmTitle: "¿Cambiar lenguaje de programación?",
         changeLanguageConfirmMessage: "¿Estás seguro de que quieres cambiar el lenguaje de programación? La extensión del archivo se actualizará automáticamente.",
         changeLanguage: "Cambiar lenguaje",
+        deleteChatConfirmTitle: "¿Eliminar chat?",
+        deleteChatConfirmMessage: "¿Estás seguro de que quieres eliminar este chat? Esta acción no se puede deshacer.",
+        deleteChat: "Eliminar chat",
         tipDebug: "Corregir errores", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Code Review", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Pruebas",
         tipFormatCode: "Formatear código según estándares del lenguaje de programación", tipUploadFile: "Subir un archivo desde tu computadora al editor", tipDownloadFile: "Guardar código actual en un archivo", tipVersionHistory: "Ver y restaurar versiones anteriores del archivo", tipCopyCode: "Copiar código del editor al portapapeles", tipClearEditor: "Limpiar todo el código del editor",
         welcomeDesc: "Tu asistente de código con IA.", startBtn: "Comenzar", startTutorialBtn: "Iniciar tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Finalizar", emptyStatePrompt: "Listo para codificar.",
@@ -180,6 +195,9 @@ const TRANSLATIONS = {
         changeLanguageConfirmTitle: "Изменить язык программирования?",
         changeLanguageConfirmMessage: "Вы уверены, что хотите изменить язык программирования? Расширение файла будет обновлено автоматически.",
         changeLanguage: "Изменить язык",
+        deleteChatConfirmTitle: "Удалить чат?",
+        deleteChatConfirmMessage: "Вы уверены, что хотите удалить этот чат? Это действие нельзя отменить.",
+        deleteChat: "Удалить чат",
         tipDebug: "Исправить ошибки", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Code Review", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматирование", tipTest: "Тесты",
         tipFormatCode: "Форматировать код согласно стандартам языка программирования", tipUploadFile: "Загрузить файл с компьютера в редактор", tipDownloadFile: "Сохранить текущий код в файл", tipVersionHistory: "Просмотреть и восстановить предыдущие версии файла", tipCopyCode: "Копировать код из редактора в буфер обмена", tipClearEditor: "Очистить весь код из редактора",
         welcomeDesc: "Ваш персональный AI-ассистент. Исправляйте баги, оптимизируйте код и тестируйте.", startBtn: "Начать работу", startTutorialBtn: "Начать обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Завершить", emptyStatePrompt: "Выберите режим и нажмите Запуск",
@@ -331,6 +349,10 @@ const els = {
     changeLanguageMessage: document.getElementById('change-language-confirm-message'),
     changeLanguageCancel: document.getElementById('change-language-confirm-cancel'),
     changeLanguageOk: document.getElementById('change-language-confirm-ok'),
+    deleteChatDialog: document.getElementById('delete-chat-confirm-dialog'),
+    deleteChatDialogContent: document.getElementById('delete-chat-confirm-dialog-content'),
+    deleteChatCancel: document.getElementById('delete-chat-confirm-cancel'),
+    deleteChatOk: document.getElementById('delete-chat-confirm-ok'),
     clearHistoryConfirmDialog: document.getElementById('clear-history-confirm-dialog'),
     clearHistoryConfirmDialogContent: document.getElementById('clear-history-confirm-dialog-content'),
     clearHistoryConfirmCancel: document.getElementById('clear-history-confirm-cancel'),
@@ -426,6 +448,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Delete chat dialog handlers
+    if (els.deleteChatCancel) {
+        els.deleteChatCancel.addEventListener('click', closeDeleteChatDialog);
+    }
+    if (els.deleteChatOk) {
+        els.deleteChatOk.addEventListener('click', () => {
+            if (pendingDeleteChatIndex !== null) {
+                deleteHistoryItem(pendingDeleteChatIndex);
+                pendingDeleteChatIndex = null;
+            }
+            closeDeleteChatDialog();
+        });
+    }
+    if (els.deleteChatDialog) {
+        els.deleteChatDialog.addEventListener('click', (e) => {
+            if (e.target === els.deleteChatDialog) {
+                closeDeleteChatDialog();
+            }
+        });
+    }
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (els.clearConfirmDialog && !els.clearConfirmDialog.classList.contains('hidden')) {
@@ -436,6 +479,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (els.changeLanguageDialog && !els.changeLanguageDialog.classList.contains('hidden')) {
                 closeChangeLanguageDialog();
+            }
+            if (els.deleteChatDialog && !els.deleteChatDialog.classList.contains('hidden')) {
+                closeDeleteChatDialog();
             }
         }
     });
@@ -1184,6 +1230,14 @@ function updateTexts(lang) {
         if (els.changeLanguageCancel && t.cancel) els.changeLanguageCancel.textContent = t.cancel;
         if (els.changeLanguageOk && t.changeLanguage) els.changeLanguageOk.textContent = t.changeLanguage;
     }
+    if (els.deleteChatDialogContent) {
+        const titleEl = els.deleteChatDialogContent.querySelector('h3[data-i18n="deleteChatConfirmTitle"]');
+        const messageEl = els.deleteChatDialogContent.querySelector('p[data-i18n="deleteChatConfirmMessage"]');
+        if (titleEl && t.deleteChatConfirmTitle) titleEl.textContent = t.deleteChatConfirmTitle;
+        if (messageEl && t.deleteChatConfirmMessage) messageEl.textContent = t.deleteChatConfirmMessage;
+        if (els.deleteChatCancel && t.cancel) els.deleteChatCancel.textContent = t.cancel;
+        if (els.deleteChatOk && t.deleteChat) els.deleteChatOk.textContent = t.deleteChat;
+    }
     
     if (els.formatCodeBtn) els.formatCodeBtn.title = t.formatCode || 'Format Code';
     if (els.uploadFileBtn) els.uploadFileBtn.title = t.uploadFile || 'Upload File';
@@ -1461,7 +1515,7 @@ function renderHistory() {
         deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i>';
         deleteBtn.onclick = (e) => {
             e.stopPropagation();
-            deleteHistoryItem(index);
+            showDeleteChatDialog(index);
         };
         
         contentDiv.innerHTML = `
@@ -1502,6 +1556,62 @@ function clearHistory() {
     history = []; 
     localStorage.removeItem('fixly_history'); 
     renderHistory(); 
+}
+
+// Show delete chat confirmation dialog
+function showDeleteChatDialog(index) {
+    if (!els.deleteChatDialog || !els.deleteChatDialogContent) return;
+    
+    // Store the index for later deletion
+    pendingDeleteChatIndex = index;
+    
+    // Update translations
+    updateDeleteChatDialogTranslations();
+    
+    // Show dialog
+    els.deleteChatDialog.classList.remove('hidden');
+    els.deleteChatDialog.classList.add('flex');
+    
+    requestAnimationFrame(() => {
+        els.deleteChatDialogContent.classList.remove('opacity-0', 'scale-95');
+        els.deleteChatDialogContent.classList.add('dialog-open');
+    });
+}
+
+// Close delete chat dialog
+function closeDeleteChatDialog() {
+    if (!els.deleteChatDialog || !els.deleteChatDialogContent) return;
+    
+    els.deleteChatDialogContent.classList.remove('dialog-open');
+    
+    setTimeout(() => {
+        els.deleteChatDialog.classList.add('hidden');
+        els.deleteChatDialog.classList.remove('flex');
+        els.deleteChatDialogContent.classList.add('opacity-0', 'scale-95');
+        pendingDeleteChatIndex = null;
+    }, 200);
+}
+
+// Update translations for delete chat dialog
+function updateDeleteChatDialogTranslations() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const titleEl = els.deleteChatDialogContent?.querySelector('h3[data-i18n="deleteChatConfirmTitle"]');
+    const messageEl = els.deleteChatDialogContent?.querySelector('p[data-i18n="deleteChatConfirmMessage"]');
+    const cancelBtn = els.deleteChatCancel;
+    const okBtn = els.deleteChatOk;
+    
+    if (titleEl && t.deleteChatConfirmTitle) {
+        titleEl.textContent = t.deleteChatConfirmTitle;
+    }
+    if (messageEl && t.deleteChatConfirmMessage) {
+        messageEl.textContent = t.deleteChatConfirmMessage;
+    }
+    if (cancelBtn && t.cancel) {
+        cancelBtn.textContent = t.cancel;
+    }
+    if (okBtn && t.deleteChat) {
+        okBtn.textContent = t.deleteChat;
+    }
 }
 
 function deleteHistoryItem(index) {
@@ -1760,6 +1870,8 @@ function saveFiles() {
 
 // Variable to store pending language change
 let pendingLanguageChange = null;
+// Variable to store pending chat deletion index
+let pendingDeleteChatIndex = null;
 
 // Handle language change - update file extension and ask for confirmation if code exists
 function handleLanguageChange() {
