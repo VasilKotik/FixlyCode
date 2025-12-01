@@ -77,7 +77,7 @@ const TRANSLATIONS = {
         clearHistoryConfirmTitle: "Очистити історію?",
         clearHistoryConfirmMessage: "Ви впевнені, що хочете очистити всю історію? Всі збережені чати будуть безповоротно видалені. Цю дію неможливо скасувати.",
         newFileTitle: "Створити новий файл", fileName: "Назва файлу", fileType: "Тип файлу", cancel: "Скасувати", create: "Створити",
-        versionHistory: "Історія версій", close: "Закрити", restoreVersion: "Відновити версію", noVersions: "Немає збережених версій",
+        versionHistory: "Історія версій", close: "Закрити", restoreVersion: "Відновити версію", noVersions: "Немає збережених версій", chatPrevious: "Попереднє", chatNext: "Наступне",
         changeLanguageConfirm: "Ви впевнені, що хочете змінити мову? Розширення файлу буде оновлено автоматично.",
         changeLanguageConfirmTitle: "Змінити мову програмування?",
         changeLanguageConfirmMessage: "Ви впевнені, що хочете змінити мову програмування? Розширення файлу буде оновлено автоматично.",
@@ -215,6 +215,11 @@ let tooltipHideTimeout;
 let typingInterval; 
 let saveTimeout; // For debounce
 
+// Chat system - accumulate requests in one chat
+let chats = {}; // { chatId: { id, messages: [], createdAt } }
+let currentChatId = null; // Current active chat ID
+let currentMessageIndex = -1; // Index of currently displayed message in chat
+
 // File management
 let files = {};
 let activeFile = null;
@@ -249,6 +254,13 @@ let responseCache = new Map();
 
 
 try { history = JSON.parse(localStorage.getItem('fixly_history')) || []; } catch (e) { history = []; }
+try { 
+    chats = JSON.parse(localStorage.getItem('fixly_chats')) || {}; 
+    currentChatId = localStorage.getItem('fixly_current_chat_id');
+} catch (e) { 
+    chats = {}; 
+    currentChatId = null;
+}
 try { 
     const cached = localStorage.getItem('fixly_cache');
     if (cached) {
@@ -373,6 +385,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.uiLang) els.uiLang.value = currentLang;
     updateTexts(currentLang);
     renderHistory(); 
+    
+    // Initialize chat if exists
+    if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
+        currentMessageIndex = chats[currentChatId].messages.length - 1;
+        renderChatMessages(chats[currentChatId], currentMessageIndex);
+    }
     
     if(localStorage.getItem('fixly_draft')) {
         els.input.value = localStorage.getItem('fixly_draft');
@@ -719,11 +737,44 @@ async function runAI() {
     
     const selectedModel = els.modelSelect.value;
     const lang = els.langSelect.value;
+    
+    // Create or get current chat
+    if (!currentChatId || !chats[currentChatId]) {
+        const newChatId = 'chat_' + Date.now();
+        chats[newChatId] = {
+            id: newChatId,
+            messages: [],
+            createdAt: Date.now()
+        };
+        currentChatId = newChatId;
+        currentMessageIndex = -1;
+        try {
+            localStorage.setItem('fixly_chats', JSON.stringify(chats));
+            localStorage.setItem('fixly_current_chat_id', currentChatId);
+        } catch (e) {}
+    }
+    
     const cacheKey = generateCacheKey(code, currentMode, lang, selectedModel, wishes);
     const cached = getCachedResponse(cacheKey);
     
     if (cached) {
-        renderOutput(cached, lang);
+        // Add message to current chat
+        const message = {
+            input: code,
+            output: cached,
+            mode: currentMode,
+            lang: lang,
+            wishes: wishes,
+            time: new Date().toLocaleTimeString(),
+            timestamp: Date.now()
+        };
+        chats[currentChatId].messages.push(message);
+        currentMessageIndex = chats[currentChatId].messages.length - 1;
+        try {
+            localStorage.setItem('fixly_chats', JSON.stringify(chats));
+        } catch (e) {}
+        
+        renderChatMessages(chats[currentChatId], currentMessageIndex);
         addToHistory({ mode: currentMode, lang, input: code, output: cached, time: new Date().toLocaleTimeString() });
         return;
     }
@@ -913,7 +964,23 @@ async function runAI() {
 
     setCachedResponse(cacheKey, result);
     
-    renderOutput(result, lang);
+    // Add message to current chat
+    const message = {
+        input: code,
+        output: result,
+        mode: currentMode,
+        lang: lang,
+        wishes: wishes,
+        time: new Date().toLocaleTimeString(),
+        timestamp: Date.now()
+    };
+    chats[currentChatId].messages.push(message);
+    currentMessageIndex = chats[currentChatId].messages.length - 1;
+    try {
+        localStorage.setItem('fixly_chats', JSON.stringify(chats));
+    } catch (e) {}
+    
+    renderChatMessages(chats[currentChatId], currentMessageIndex);
     addToHistory({ mode: currentMode, lang, input: code, output: result, time: new Date().toLocaleTimeString() });
 
     } catch (error) {
@@ -975,6 +1042,82 @@ async function runAI() {
 }
 
 // ... RENDER & UTILS ...
+function renderChatMessages(chat, messageIndex) {
+    if (!chat || !chat.messages || chat.messages.length === 0) {
+        return;
+    }
+    
+    const message = chat.messages[messageIndex];
+    if (!message) {
+        return;
+    }
+    
+    renderOutput(message.output, message.lang);
+    
+    // Add navigation buttons if there are multiple messages
+    if (chat.messages.length > 1) {
+        addChatNavigation(chat, messageIndex);
+    } else {
+        removeChatNavigation();
+    }
+}
+
+function addChatNavigation(chat, currentIndex) {
+    // Remove existing navigation if any
+    removeChatNavigation();
+    
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const prevText = t.chatPrevious || 'Previous';
+    const nextText = t.chatNext || 'Next';
+    
+    const navHTML = `
+        <div id="chat-navigation" class="flex items-center justify-between p-3 bg-gray-100 dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700">
+            <button id="chat-prev-btn" class="px-3 py-1.5 text-xs font-bold bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-brand-50 dark:hover:bg-brand-500/20 hover:text-brand-600 dark:hover:text-brand-400 transition disabled:opacity-50 disabled:cursor-not-allowed" ${currentIndex <= 0 ? 'disabled' : ''}>
+                <i class="fa-solid fa-chevron-left mr-1"></i> ${prevText}
+            </button>
+            <span class="text-xs text-slate-600 dark:text-slate-400 font-medium">
+                ${currentIndex + 1} / ${chat.messages.length}
+            </span>
+            <button id="chat-next-btn" class="px-3 py-1.5 text-xs font-bold bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-brand-50 dark:hover:bg-brand-500/20 hover:text-brand-600 dark:hover:text-brand-400 transition disabled:opacity-50 disabled:cursor-not-allowed" ${currentIndex >= chat.messages.length - 1 ? 'disabled' : ''}>
+                ${nextText} <i class="fa-solid fa-chevron-right ml-1"></i>
+            </button>
+        </div>
+    `;
+    
+    const outputContainer = els.outputContainer;
+    if (outputContainer) {
+        outputContainer.insertAdjacentHTML('afterbegin', navHTML);
+        
+        const prevBtn = document.getElementById('chat-prev-btn');
+        const nextBtn = document.getElementById('chat-next-btn');
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentMessageIndex = currentIndex - 1;
+                    renderChatMessages(chat, currentMessageIndex);
+                }
+            });
+        }
+        
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < chat.messages.length - 1) {
+                    currentMessageIndex = currentIndex + 1;
+                    renderChatMessages(chat, currentMessageIndex);
+                }
+            });
+        }
+    }
+}
+
+function removeChatNavigation() {
+    const nav = document.getElementById('chat-navigation');
+    if (nav) {
+        nav.remove();
+    }
+}
+
 function renderOutput(data, lang) {
     els.emptyState.classList.add('hidden'); 
     els.outputContainer.classList.remove('hidden');
@@ -1417,7 +1560,33 @@ function runPreview() {
         }
     }
 }
-function newChat() { els.input.value = ''; els.wishes.value = ''; els.outputContainer.classList.add('hidden'); els.emptyState.classList.remove('hidden'); els.tabPreview.classList.add('hidden'); localStorage.removeItem('fixly_draft'); switchTab('code'); updateLineNumbers(); }
+function newChat() { 
+    // Create new chat
+    const newChatId = 'chat_' + Date.now();
+    chats[newChatId] = {
+        id: newChatId,
+        messages: [],
+        createdAt: Date.now()
+    };
+    currentChatId = newChatId;
+    currentMessageIndex = -1;
+    
+    // Save chats
+    try {
+        localStorage.setItem('fixly_chats', JSON.stringify(chats));
+        localStorage.setItem('fixly_current_chat_id', currentChatId);
+    } catch (e) {}
+    
+    // Clear UI
+    els.input.value = ''; 
+    els.wishes.value = ''; 
+    els.outputContainer.classList.add('hidden'); 
+    els.emptyState.classList.remove('hidden'); 
+    els.tabPreview.classList.add('hidden'); 
+    localStorage.removeItem('fixly_draft'); 
+    switchTab('code'); 
+    updateLineNumbers();
+}
 async function copyCode() {
     try {
         const text = els.outputCode.textContent;
@@ -2631,20 +2800,84 @@ function saveCurrentVersion() {
 }
 
 function showVersionHistory() {
-    if (!activeFile || !fileVersions[activeFile] || fileVersions[activeFile].length === 0) {
+    // Show chat messages if we have a current chat, otherwise show file versions
+    if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
+        // Show chat messages navigation
+        renderChatVersionHistory();
+    } else if (activeFile && fileVersions[activeFile] && fileVersions[activeFile].length > 0) {
+        // Show file versions
+        els.versionHistoryDialog.classList.remove('hidden');
+        els.versionHistoryDialog.classList.add('flex');
+        renderVersionHistory();
+        setTimeout(() => {
+            els.versionHistoryDialogContent.classList.add('dialog-open');
+        }, 10);
+    } else {
         const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
         alert(t.noVersions || 'No saved versions');
+    }
+}
+
+function renderChatVersionHistory() {
+    if (!currentChatId || !chats[currentChatId]) return;
+    
+    const chat = chats[currentChatId];
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    
+    els.versionHistoryList.innerHTML = '';
+    
+    if (chat.messages.length === 0) {
+        els.versionHistoryList.innerHTML = `<div class="text-center text-slate-400 py-4">${t.noVersions || 'No messages'}</div>`;
         return;
     }
     
+    const messages = chat.messages.slice().reverse(); // Show newest first
+    
+    messages.forEach((message, index) => {
+        const item = document.createElement('div');
+        item.className = 'version-item cursor-pointer';
+        const date = new Date(message.timestamp);
+        const modeNames = {
+            'debug': '🐛 Debug',
+            'optimize': '⚡ Optimize',
+            'explain': '📖 Explain',
+            'review': '🔍 Review',
+            'security': '🔒 Security',
+            'refactor': '♻️ Refactor',
+            'document': '📝 Document',
+            'convert': '🔄 Convert',
+            'format': '✨ Format',
+            'test': '🧪 Test'
+        };
+        const modeName = modeNames[message.mode] || message.mode;
+        
+        item.innerHTML = `
+            <div class="flex justify-between items-center">
+                <div class="flex-1">
+                    <div class="text-sm font-semibold text-slate-800 dark:text-white">${modeName} - ${message.time}</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 mt-1 truncate">${message.input.substring(0, 60)}${message.input.length > 60 ? '...' : ''}</div>
+                </div>
+                <button class="px-3 py-1 text-xs bg-brand-600 hover:bg-brand-500 text-white rounded-lg transition ml-2" onclick="loadChatMessage(${messages.length - 1 - index})">
+                    ${t.restoreVersion || 'View'}
+                </button>
+            </div>
+        `;
+        els.versionHistoryList.appendChild(item);
+    });
+    
     els.versionHistoryDialog.classList.remove('hidden');
     els.versionHistoryDialog.classList.add('flex');
-    
-    renderVersionHistory();
-    
     setTimeout(() => {
         els.versionHistoryDialogContent.classList.add('dialog-open');
     }, 10);
+}
+
+function loadChatMessage(index) {
+    if (!currentChatId || !chats[currentChatId] || !chats[currentChatId].messages[index]) return;
+    
+    currentMessageIndex = index;
+    renderChatMessages(chats[currentChatId], index);
+    closeVersionHistory();
 }
 
 function renderVersionHistory() {
