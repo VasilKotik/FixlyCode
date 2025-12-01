@@ -806,6 +806,7 @@ async function runAI() {
         currentMessageIndex = chats[currentChatId].messages.length - 1;
         try {
             localStorage.setItem('fixly_chats', JSON.stringify(chats));
+            localStorage.setItem('fixly_current_chat_id', currentChatId);
         } catch (e) {}
         
         renderChatMessages(chats[currentChatId], currentMessageIndex);
@@ -1015,6 +1016,7 @@ async function runAI() {
     currentMessageIndex = chats[currentChatId].messages.length - 1;
     try {
         localStorage.setItem('fixly_chats', JSON.stringify(chats));
+        localStorage.setItem('fixly_current_chat_id', currentChatId);
     } catch (e) {}
     
     renderChatMessages(chats[currentChatId], currentMessageIndex);
@@ -2931,7 +2933,18 @@ function renderChatVersionHistory() {
 function loadChatMessage(index) {
     if (!currentChatId || !chats[currentChatId] || !chats[currentChatId].messages[index]) return;
     
+    const message = chats[currentChatId].messages[index];
     currentMessageIndex = index;
+    
+    // Load message code into input field
+    els.input.value = message.input;
+    if (message.wishes) {
+        els.wishes.value = message.wishes;
+    }
+    els.langSelect.value = message.lang;
+    setMode(message.mode);
+    updateLineNumbers();
+    
     renderChatMessages(chats[currentChatId], index);
     closeVersionHistory();
 }
