@@ -85,6 +85,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Видалити чат?",
         deleteChatConfirmMessage: "Ви впевнені, що хочете видалити цей чат? Цю дію неможливо скасувати.",
         deleteChat: "Видалити чат", 
+        convertFrom: "З мови:",
+        convertTo: "В мову:",
         welcomeDesc: "Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.", startBtn: "Почати роботу", startTutorialBtn: "Почати навчання", skipBtn: "Пропустити", nextTour: "Далі", finishTour: "Завершити", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
         tabHistory: "Історія", tabTips: "Поради AI", historyEmptyDesc: "Тут з'являться ваші запити.", funFactHeader: "Цікавий факт",
         tourStep1Title: "1. Введіть Код", tourStep1Desc: "Вставте ваш код сюди в текстове поле.", tourStep2Title: "2. Оберіть Мову", tourStep2Desc: "Виберіть мову програмування вашого коду.", tourStep3Title: "3. Оберіть Режим", tourStep3Desc: "Виберіть, що має зробити AI з вашим кодом (виправити, оптимізувати, пояснити тощо).", tourStep4Title: "4. Запустіть AI", tourStep4Desc: "Натисніть кнопку Запуск, щоб почати аналіз!"
@@ -108,6 +110,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Delete Chat?",
         deleteChatConfirmMessage: "Are you sure you want to delete this chat? This action cannot be undone.",
         deleteChat: "Delete Chat",
+        convertFrom: "From language:",
+        convertTo: "To language:",
         welcomeDesc: "Your AI coding assistant.", startBtn: "Get Started", startTutorialBtn: "Start Tutorial", skipBtn: "Skip", nextTour: "Next", finishTour: "Finish", emptyStatePrompt: "Ready to code.",
         tabHistory: "History", tabTips: "AI Tips", historyEmptyDesc: "No history yet.", funFactHeader: "Fun Fact",
         tourStep1Title: "1. Input Code", tourStep1Desc: "Paste your code here in the text area.", tourStep2Title: "2. Select Language", tourStep2Desc: "Choose the programming language of your code.", tourStep3Title: "3. Choose Mode", tourStep3Desc: "Select what AI should do with your code (debug, optimize, explain, etc.).", tourStep4Title: "4. Run AI", tourStep4Desc: "Click the Run button to start the analysis!"
@@ -129,6 +133,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Usunąć czat?",
         deleteChatConfirmMessage: "Czy na pewno chcesz usunąć ten czat? Tej akcji nie można cofnąć.",
         deleteChat: "Usunąć czat",
+        convertFrom: "Z języka:",
+        convertTo: "Do języka:",
         tipDebug: "Napraw błędy", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Code Review", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Testy",
         tipFormatCode: "Formatuj kod zgodnie ze standardami języka programowania", tipUploadFile: "Prześlij plik z komputera do edytora", tipDownloadFile: "Zapisz bieżący kod do pliku", tipVersionHistory: "Zobacz i przywróć poprzednie wersje pliku", tipCopyCode: "Skopiuj kod z edytora do schowka", tipClearEditor: "Wyczyść cały kod z edytora",
         welcomeDesc: "Twój asystent AI do kodowania.", startBtn: "Rozpocznij", startTutorialBtn: "Rozpocznij samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Zakończ", emptyStatePrompt: "Gotowy do kodowania.",
@@ -152,6 +158,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Chat löschen?",
         deleteChatConfirmMessage: "Sind Sie sicher, dass Sie diesen Chat löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
         deleteChat: "Chat löschen",
+        convertFrom: "Von Sprache:",
+        convertTo: "Zu Sprache:",
         tipDebug: "Fehler beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Code Review", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Tests",
         tipFormatCode: "Code nach Programmierstandards formatieren", tipUploadFile: "Datei vom Computer in den Editor hochladen", tipDownloadFile: "Aktuellen Code in Datei speichern", tipVersionHistory: "Vorherige Dateiversionen anzeigen und wiederherstellen", tipCopyCode: "Code aus Editor in Zwischenablage kopieren", tipClearEditor: "Gesamten Code aus Editor löschen",
         welcomeDesc: "Ihr KI-Code-Assistent.", startBtn: "Loslegen", startTutorialBtn: "Tutorial starten", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Beenden", emptyStatePrompt: "Bereit zum Codieren.",
@@ -175,6 +183,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "¿Eliminar chat?",
         deleteChatConfirmMessage: "¿Estás seguro de que quieres eliminar este chat? Esta acción no se puede deshacer.",
         deleteChat: "Eliminar chat",
+        convertFrom: "De idioma:",
+        convertTo: "A idioma:",
         tipDebug: "Corregir errores", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Code Review", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Pruebas",
         tipFormatCode: "Formatear código según estándares del lenguaje de programación", tipUploadFile: "Subir un archivo desde tu computadora al editor", tipDownloadFile: "Guardar código actual en un archivo", tipVersionHistory: "Ver y restaurar versiones anteriores del archivo", tipCopyCode: "Copiar código del editor al portapapeles", tipClearEditor: "Limpiar todo el código del editor",
         welcomeDesc: "Tu asistente de código con IA.", startBtn: "Comenzar", startTutorialBtn: "Iniciar tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Finalizar", emptyStatePrompt: "Listo para codificar.",
@@ -198,6 +208,8 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Удалить чат?",
         deleteChatConfirmMessage: "Вы уверены, что хотите удалить этот чат? Это действие нельзя отменить.",
         deleteChat: "Удалить чат",
+        convertFrom: "Из языка:",
+        convertTo: "В язык:",
         tipDebug: "Исправить ошибки", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Code Review", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматирование", tipTest: "Тесты",
         tipFormatCode: "Форматировать код согласно стандартам языка программирования", tipUploadFile: "Загрузить файл с компьютера в редактор", tipDownloadFile: "Сохранить текущий код в файл", tipVersionHistory: "Просмотреть и восстановить предыдущие версии файла", tipCopyCode: "Копировать код из редактора в буфер обмена", tipClearEditor: "Очистить весь код из редактора",
         welcomeDesc: "Ваш персональный AI-ассистент. Исправляйте баги, оптимизируйте код и тестируйте.", startBtn: "Начать работу", startTutorialBtn: "Начать обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Завершить", emptyStatePrompt: "Выберите режим и нажмите Запуск",
@@ -839,6 +851,16 @@ async function runAI() {
     const cached = getCachedResponse(cacheKey);
     
     if (cached) {
+        // Get convert languages if in convert mode
+        let convertFromLang = null;
+        let convertToLang = null;
+        if (currentMode === 'convert') {
+            const convertFromEl = document.getElementById('convert-from-lang');
+            const convertToEl = document.getElementById('convert-to-lang');
+            if (convertFromEl) convertFromLang = convertFromEl.value;
+            if (convertToEl) convertToLang = convertToEl.value;
+        }
+        
         // Add message to current chat
         const message = {
             input: code,
@@ -846,6 +868,8 @@ async function runAI() {
             mode: currentMode,
             lang: lang,
             wishes: wishes,
+            convertFromLang: convertFromLang,
+            convertToLang: convertToLang,
             time: new Date().toLocaleTimeString(),
             timestamp: Date.now()
         };
@@ -920,12 +944,24 @@ async function runAI() {
                 throw new Error("Model must be selected");
             }
 
+            // Get convert languages if in convert mode
+            let convertFromLang = null;
+            let convertToLang = null;
+            if (currentMode === 'convert') {
+                const convertFromEl = document.getElementById('convert-from-lang');
+                const convertToEl = document.getElementById('convert-to-lang');
+                if (convertFromEl) convertFromLang = convertFromEl.value;
+                if (convertToEl) convertToLang = convertToEl.value;
+            }
+            
             const requestBody = {
                 code: code.trim(),
                 mode: currentMode || 'debug',
                 lang: lang || 'en',
                 model: selectedModel,
-                wishes: wishes ? wishes.trim() : ''
+                wishes: wishes ? wishes.trim() : '',
+                convertFromLang: convertFromLang,
+                convertToLang: convertToLang
             };
 
             const serverResponse = await fetch('/api/ai-request', {
@@ -1055,6 +1091,16 @@ async function runAI() {
 
     setCachedResponse(cacheKey, result);
     
+    // Get convert languages if in convert mode
+    let convertFromLang = null;
+    let convertToLang = null;
+    if (currentMode === 'convert') {
+        const convertFromEl = document.getElementById('convert-from-lang');
+        const convertToEl = document.getElementById('convert-to-lang');
+        if (convertFromEl) convertFromLang = convertFromEl.value;
+        if (convertToEl) convertToLang = convertToEl.value;
+    }
+    
     // Add message to current chat
     const message = {
         input: code,
@@ -1062,6 +1108,8 @@ async function runAI() {
         mode: currentMode,
         lang: lang,
         wishes: wishes,
+        convertFromLang: convertFromLang,
+        convertToLang: convertToLang,
         time: new Date().toLocaleTimeString(),
         timestamp: Date.now()
     };
@@ -1152,6 +1200,9 @@ function renderChatMessages(chat, messageIndex) {
         return;
     }
     
+    // Show input message above output
+    showInputMessage(message);
+    
     renderOutput(message.output, message.lang);
     
     // Add navigation buttons if there are multiple messages
@@ -1159,6 +1210,61 @@ function renderChatMessages(chat, messageIndex) {
         addChatNavigation(chat, messageIndex);
     } else {
         removeChatNavigation();
+    }
+}
+
+function showInputMessage(message) {
+    // Remove existing input message display
+    const existingInputMsg = document.getElementById('chat-input-message');
+    if (existingInputMsg) {
+        existingInputMsg.remove();
+    }
+    
+    if (!message.input || !message.input.trim()) {
+        return;
+    }
+    
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const modeNames = {
+        'debug': '🐛 Debug',
+        'optimize': '⚡ Optimize',
+        'explain': '📖 Explain',
+        'review': '🔍 Review',
+        'security': '🔒 Security',
+        'refactor': '♻️ Refactor',
+        'document': '📝 Document',
+        'convert': '🔄 Convert',
+        'format': '✨ Format',
+        'test': '🧪 Test'
+    };
+    const modeName = modeNames[message.mode] || message.mode;
+    
+    const inputMsgHTML = `
+        <div id="chat-input-message" class="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 p-4">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xs font-bold text-slate-600 dark:text-slate-400">${modeName}</span>
+                    <span class="text-xs text-slate-500 dark:text-slate-500">${message.lang}</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-600">${message.time}</span>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-slate-800 rounded-lg p-3 border border-gray-200 dark:border-slate-700">
+                <pre class="text-xs font-mono text-slate-700 dark:text-slate-300 whitespace-pre-wrap break-words">${escapeHtml(message.input.substring(0, 500))}${message.input.length > 500 ? '...' : ''}</pre>
+            </div>
+            ${message.wishes ? `<div class="mt-2 text-xs text-slate-600 dark:text-slate-400 italic">💭 ${escapeHtml(message.wishes)}</div>` : ''}
+        </div>
+    `;
+    
+    const outputContainer = els.outputContainer;
+    if (outputContainer) {
+        outputContainer.insertAdjacentHTML('afterbegin', inputMsgHTML);
+    }
+}
+
+function hideInputMessage() {
+    const existingInputMsg = document.getElementById('chat-input-message');
+    if (existingInputMsg) {
+        existingInputMsg.remove();
     }
 }
 
@@ -1561,6 +1667,25 @@ function setMode(mode) {
     
     els.runBtnText.textContent = t.runBtn;
     
+    // Show/hide convert language selector
+    const convertSelector = document.getElementById('convert-lang-selector');
+    if (convertSelector) {
+        if (mode === 'convert') {
+            convertSelector.classList.remove('hidden');
+            // Set default values: from current language, to JavaScript
+            const convertFromLang = document.getElementById('convert-from-lang');
+            const convertToLang = document.getElementById('convert-to-lang');
+            if (convertFromLang && els.langSelect) {
+                convertFromLang.value = els.langSelect.value;
+            }
+            if (convertToLang && convertToLang.value === '') {
+                convertToLang.value = 'JavaScript';
+            }
+        } else {
+            convertSelector.classList.add('hidden');
+        }
+    }
+    
     // Announce mode change for screen readers
     if (els.activeModeDisplay) {
         els.activeModeDisplay.setAttribute('aria-live', 'polite');
@@ -1705,6 +1830,9 @@ function newChat() {
     
     // Clear navigation when creating new chat
     removeChatNavigation();
+    
+    // Hide input message
+    hideInputMessage();
     
     // Clear UI
     els.input.value = ''; 
@@ -2260,6 +2388,14 @@ let pendingDeleteChatIndex = null;
 
 // Handle language change - update file extension and ask for confirmation if code exists
 function handleLanguageChange() {
+    // Update convert-from-lang if in convert mode
+    if (currentMode === 'convert') {
+        const convertFromEl = document.getElementById('convert-from-lang');
+        if (convertFromEl && els.langSelect) {
+            convertFromEl.value = els.langSelect.value;
+        }
+    }
+    
     if (!activeFile || !files[activeFile]) {
         // No active file, just update
         return;
@@ -3109,6 +3245,19 @@ function loadChatMessage(index) {
     }
     els.langSelect.value = message.lang;
     setMode(message.mode);
+    
+    // Restore convert languages if they exist
+    if (message.mode === 'convert') {
+        const convertFromEl = document.getElementById('convert-from-lang');
+        const convertToEl = document.getElementById('convert-to-lang');
+        if (message.convertFromLang && convertFromEl) {
+            convertFromEl.value = message.convertFromLang;
+        }
+        if (message.convertToLang && convertToEl) {
+            convertToEl.value = message.convertToLang;
+        }
+    }
+    
     updateLineNumbers();
     
     // Render chat messages with navigation
