@@ -391,10 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTexts(currentLang);
     renderHistory(); 
     
-    // Initialize chat if exists
+    // Initialize chat if exists - show last message with navigation
     if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
         currentMessageIndex = chats[currentChatId].messages.length - 1;
         renderChatMessages(chats[currentChatId], currentMessageIndex);
+    } else {
+        // Clear navigation if no chat or no messages
+        removeChatNavigation();
     }
     
     // Update button tooltip
@@ -746,7 +749,7 @@ async function runAI() {
     const selectedModel = els.modelSelect.value;
     const lang = els.langSelect.value;
     
-    // Get or create current chat - reuse existing chat if available
+    // Get or create current chat - ALWAYS reuse existing chat if available
     if (!currentChatId || !chats[currentChatId]) {
         // Check if there's a recent chat we can reuse
         const chatIds = Object.keys(chats);
@@ -760,7 +763,7 @@ async function runAI() {
                 currentChatId = sortedChats[0].id;
                 currentMessageIndex = sortedChats[0].messages.length > 0 ? sortedChats[0].messages.length - 1 : -1;
             } else {
-                // Create new chat
+                // Create new chat only if no chats exist
                 const newChatId = 'chat_' + Date.now();
                 chats[newChatId] = {
                     id: newChatId,
@@ -771,7 +774,7 @@ async function runAI() {
                 currentMessageIndex = -1;
             }
         } else {
-            // Create new chat
+            // Create new chat only if no chats exist
             const newChatId = 'chat_' + Date.now();
             chats[newChatId] = {
                 id: newChatId,
@@ -787,6 +790,9 @@ async function runAI() {
             localStorage.setItem('fixly_current_chat_id', currentChatId);
         } catch (e) {}
     }
+    
+    // Ensure we're using the current chat (don't create new one)
+    // If currentChatId exists and chat exists, use it - add messages to it
     
     const cacheKey = generateCacheKey(code, currentMode, lang, selectedModel, wishes);
     const cached = getCachedResponse(cacheKey);
@@ -1330,7 +1336,28 @@ function toggleSidebar() {
     if (!els.sidebar.classList.contains('hidden')) els.sidebar.classList.add('sidebar-animate-open'); 
 }
 
-function showTooltip(e) { clearTimeout(tooltipHideTimeout); const key = e.currentTarget.dataset.tooltipKey; if(!key) return; const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; els.tooltip.textContent = t[key]; els.tooltip.classList.remove('hidden', 'opacity-0'); const rect = e.currentTarget.getBoundingClientRect(); els.tooltip.style.top = `${rect.bottom + 5}px`; els.tooltip.style.left = `${rect.left + rect.width/2}px`; }
+function showTooltip(e) { 
+    clearTimeout(tooltipHideTimeout); 
+    const key = e.currentTarget.dataset.tooltipKey; 
+    if(!key) return; 
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; 
+    
+    // Special handling for version history button to show dynamic tooltip
+    let tooltipText = t[key];
+    if (key === 'tipVersionHistory' && e.currentTarget.id === 'version-history-btn') {
+        if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
+            tooltipText = t.tipVersionHistory || t.versionHistory || 'View Chat Messages';
+        } else {
+            tooltipText = t.tipVersionHistory || t.versionHistory || 'Version History';
+        }
+    }
+    
+    els.tooltip.textContent = tooltipText; 
+    els.tooltip.classList.remove('hidden', 'opacity-0'); 
+    const rect = e.currentTarget.getBoundingClientRect(); 
+    els.tooltip.style.top = `${rect.bottom + 5}px`; 
+    els.tooltip.style.left = `${rect.left + rect.width/2}px`; 
+}
 function hideTooltip() { tooltipHideTimeout = setTimeout(() => { els.tooltip.classList.add('opacity-0'); setTimeout(() => els.tooltip.classList.add('hidden'), 200); }, 150); }
 
 function animateScoreCount(targetEl, finalScore) {
@@ -1428,12 +1455,8 @@ function updateTexts(lang) {
     if (els.uploadFileBtn) els.uploadFileBtn.title = t.uploadFile || 'Upload File';
     if (els.downloadFileBtn) els.downloadFileBtn.title = t.downloadFile || 'Download File';
     if (els.versionHistoryBtn) {
-        // Update tooltip based on context
-        if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
-            els.versionHistoryBtn.title = t.tipVersionHistory || t.versionHistory || 'View Chat Messages';
-        } else {
-            els.versionHistoryBtn.title = t.tipVersionHistory || t.versionHistory || 'Version History';
-        }
+        // Update tooltip text in translations based on context, but don't set title (tooltip comes from data-tooltip-key)
+        // The tooltip will be shown via showTooltip function using data-tooltip-key="tipVersionHistory"
     }
     if (els.copyInputBtn) els.copyInputBtn.title = t.copyCode || 'Copy Code';
     const clearBtn = document.getElementById('clear-input-btn');
@@ -1625,6 +1648,9 @@ function newChat() {
         localStorage.setItem('fixly_chats', JSON.stringify(chats));
         localStorage.setItem('fixly_current_chat_id', currentChatId);
     } catch (e) {}
+    
+    // Clear navigation when creating new chat
+    removeChatNavigation();
     
     // Clear UI
     els.input.value = ''; 
@@ -2940,24 +2966,21 @@ function loadChatMessage(index) {
     els.input.value = message.input;
     if (message.wishes) {
         els.wishes.value = message.wishes;
+    } else {
+        els.wishes.value = '';
     }
     els.langSelect.value = message.lang;
     setMode(message.mode);
     updateLineNumbers();
     
+    // Render chat messages with navigation
     renderChatMessages(chats[currentChatId], index);
     closeVersionHistory();
 }
 
 function updateVersionHistoryButtonTooltip() {
-    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
-    if (els.versionHistoryBtn) {
-        if (currentChatId && chats[currentChatId] && chats[currentChatId].messages.length > 0) {
-            els.versionHistoryBtn.title = t.tipVersionHistory || t.versionHistory || 'View Chat Messages';
-        } else {
-            els.versionHistoryBtn.title = t.tipVersionHistory || t.versionHistory || 'Version History';
-        }
-    }
+    // Tooltip is shown via showTooltip using data-tooltip-key="tipVersionHistory"
+    // No need to set title attribute as it would duplicate the tooltip
 }
 
 function renderVersionHistory() {
