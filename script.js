@@ -228,7 +228,6 @@ let currentLang = localStorage.getItem('fixly_lang') || 'en';
 let isDark = localStorage.getItem('fixly_theme') !== 'light';
 let history = [];
 let currentTourStep = 0; 
-let tooltipHideTimeout; 
 let typingInterval; 
 let saveTimeout; // For debounce
 
@@ -271,7 +270,6 @@ try {
     if (cached) {
         const parsed = JSON.parse(cached);
         const now = Date.now();
-        // Filter expired entries
         for (const [key, value] of Object.entries(parsed)) {
             if (now - value.timestamp < CACHE_CONFIG.ttl) {
                 responseCache.set(key, value);
@@ -320,7 +318,6 @@ const els = {
     viewPreview: document.getElementById('view-preview'),
     previewFrame: document.getElementById('preview-frame'),
     refreshPreviewBtn: document.getElementById('refresh-preview-btn'),
-    tooltip: document.getElementById('tooltip'),
     welcomeScreen: document.getElementById('welcome-screen'),
     startBtn: document.getElementById('start-btn'),
     tourOverlay: document.getElementById('tour-overlay'), 
@@ -455,7 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Change language dialog handlers
     if (els.changeLanguageCancel) {
         els.changeLanguageCancel.addEventListener('click', closeChangeLanguageDialog);
     }
@@ -476,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Delete chat dialog handlers
     if (els.deleteChatCancel) {
         els.deleteChatCancel.addEventListener('click', closeDeleteChatDialog);
     }
@@ -497,7 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Language mismatch dialog handlers
     if (els.languageMismatchCancel) {
         els.languageMismatchCancel.addEventListener('click', closeLanguageMismatchDialog);
     }
@@ -510,7 +504,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveFiles();
                 }
                 closeLanguageMismatchDialog();
-                // Automatically run AI after language change
                 setTimeout(() => {
                     runAI();
                 }, 300);
@@ -554,12 +547,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (els.input) {
         els.input.addEventListener('keydown', (e) => {
-            // Ctrl/Cmd + Enter to run
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 e.preventDefault();
                 runAI();
             }
-            // Tab for indentation
             if (e.key === 'Tab') {
                 e.preventDefault();
                 const s = els.input.selectionStart;
@@ -586,8 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.modeBtns && els.modeBtns.length > 0) {
         els.modeBtns.forEach(btn => {
             btn.addEventListener('click', (e) => { const t = e.target.closest('.mode-btn'); if(t) setMode(t.dataset.mode); });
-            btn.addEventListener('mouseenter', showTooltip);
-            btn.addEventListener('mouseleave', hideTooltip);
             btn.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -600,20 +589,16 @@ document.addEventListener('DOMContentLoaded', () => {
         els.refreshPreviewBtn.addEventListener('click', () => { runPreview(); els.refreshPreviewBtn.classList.add('animate-spin'); setTimeout(() => els.refreshPreviewBtn.classList.remove('animate-spin'), 500); });
     }
     
-    // New file management
     if (els.newFileBtn) els.newFileBtn.addEventListener('click', showNewFileDialog);
     if (els.newFileCreate) els.newFileCreate.addEventListener('click', createNewFile);
     if (els.newFileCancel) els.newFileCancel.addEventListener('click', closeNewFileDialog);
     
-    // Toolbar buttons with error handling
     if (els.formatCodeBtn) {
         els.formatCodeBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             formatCode();
         });
-        els.formatCodeBtn.addEventListener('mouseenter', showTooltip);
-        els.formatCodeBtn.addEventListener('mouseleave', hideTooltip);
     }
     if (els.uploadFileBtn && els.fileUploadInput) {
         els.uploadFileBtn.addEventListener('click', (e) => {
@@ -621,8 +606,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             els.fileUploadInput.click();
         });
-        els.uploadFileBtn.addEventListener('mouseenter', showTooltip);
-        els.uploadFileBtn.addEventListener('mouseleave', hideTooltip);
     }
     if (els.downloadFileBtn) {
         els.downloadFileBtn.addEventListener('click', (e) => {
@@ -630,8 +613,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             downloadCurrentFile();
         });
-        els.downloadFileBtn.addEventListener('mouseenter', showTooltip);
-        els.downloadFileBtn.addEventListener('mouseleave', hideTooltip);
     }
     if (els.copyInputBtn) {
         els.copyInputBtn.addEventListener('click', (e) => {
@@ -639,16 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.stopPropagation();
             copyInputCode();
         });
-        els.copyInputBtn.addEventListener('mouseenter', showTooltip);
-        els.copyInputBtn.addEventListener('mouseleave', hideTooltip);
-    }
-    if (els.versionHistoryBtn) {
-        els.versionHistoryBtn.addEventListener('mouseenter', showTooltip);
-        els.versionHistoryBtn.addEventListener('mouseleave', hideTooltip);
-    }
-    if (clearInputBtnEl) {
-        clearInputBtnEl.addEventListener('mouseenter', showTooltip);
-        clearInputBtnEl.addEventListener('mouseleave', hideTooltip);
     }
     if (els.fileUploadInput) {
         els.fileUploadInput.addEventListener('change', handleFileUpload);
@@ -656,7 +627,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.versionHistoryClose) els.versionHistoryClose.addEventListener('click', closeVersionHistory);
     if (els.versionHistoryBtn) els.versionHistoryBtn.addEventListener('click', showVersionHistory);
     
-    // Initialize files
     if (Object.keys(files).length === 0) {
         createFile('New File', '', 'JavaScript');
     } else {
@@ -669,7 +639,7 @@ document.addEventListener('DOMContentLoaded', () => {
         els.langSelect.addEventListener('change', handleLanguageChange);
     }
     
-    setInterval(saveCurrentVersion, 30000); // Every 30 seconds
+    setInterval(saveCurrentVersion, 30000);
 });
 
 function updateLineNumbers() {
@@ -729,9 +699,7 @@ function getCachedResponse(key) {
 }
 
 function setCachedResponse(key, data) {
-    // Limit cache size
     if (responseCache.size >= CACHE_CONFIG.maxSize) {
-        // Remove oldest entry
         const firstKey = responseCache.keys().next().value;
         responseCache.delete(firstKey);
     }
@@ -741,7 +709,6 @@ function setCachedResponse(key, data) {
         timestamp: Date.now()
     });
     
-    // Persist to localStorage (async, don't block)
     setTimeout(() => {
         try {
             const cacheObj = {};
@@ -754,14 +721,12 @@ function setCachedResponse(key, data) {
     }, 0);
 }
 
-// Detect programming language from code content
 function detectCodeLanguage(code) {
     if (!code || code.trim().length < 10) return null;
     
     const codeLower = code.toLowerCase();
     const codeLines = code.split('\n').slice(0, 20).join('\n').toLowerCase();
     
-    // C++ / C
     if (code.includes('#include') || code.includes('using namespace') || 
         code.includes('std::') || code.includes('cout') || code.includes('cin') ||
         (code.includes('int main') && (code.includes('{') || code.includes(';')))) {
@@ -771,26 +736,22 @@ function detectCodeLanguage(code) {
         return 'C';
     }
     
-    // Java
     if (code.includes('public class') || code.includes('public static void main') ||
         code.includes('System.out.println') || code.includes('import java.')) {
         return 'Java';
     }
     
-    // C#
     if (code.includes('using System') || code.includes('namespace ') ||
         code.includes('Console.WriteLine') || code.includes('public class') && code.includes('static void Main')) {
         return 'C#';
     }
     
-    // Python
     if (code.includes('def ') || code.includes('import ') && (code.includes('print(') || code.includes('if __name__')) ||
         code.includes('elif ') || code.includes('except ') || code.includes('lambda ') ||
         (codeLines.match(/^\s*(def|class|import|from|if|for|while|try|except)\s/))) {
         return 'Python';
     }
     
-    // JavaScript / TypeScript
     if (code.includes('function ') || code.includes('const ') || code.includes('let ') ||
         code.includes('var ') || code.includes('=>') || code.includes('console.log') ||
         code.includes('document.') || code.includes('require(') || code.includes('module.exports')) {
@@ -804,45 +765,38 @@ function detectCodeLanguage(code) {
         return 'JavaScript';
     }
     
-    // Go
     if (code.includes('package ') || code.includes('func main()') ||
         code.includes('import (') || code.includes('fmt.Println')) {
         return 'Go';
     }
     
-    // Rust
     if (code.includes('fn main()') || code.includes('use ') ||
         code.includes('println!') || code.includes('let mut ') || code.includes('&str')) {
         return 'Rust';
     }
     
-    // PHP
     if (code.includes('<?php') || code.includes('<?=') ||
         code.includes('$_') || code.includes('->') && code.includes('$')) {
         return 'PHP';
     }
     
-    // Ruby
     if (code.includes('def ') && code.includes('end') ||
         code.includes('puts ') || code.includes('require ') ||
         code.match(/^\s*(class|module|def)\s+\w+/)) {
         return 'Ruby';
     }
     
-    // Swift
     if (code.includes('func ') && code.includes('->') ||
         code.includes('import Swift') || code.includes('var ') && code.includes(':') ||
         code.includes('let ') && code.includes(':')) {
         return 'Swift';
     }
     
-    // Kotlin
     if (code.includes('fun ') || code.includes('val ') || code.includes('var ') && code.includes(':') ||
         code.includes('println(') && code.includes('fun main')) {
         return 'Kotlin';
     }
     
-    // HTML/CSS
     if (code.includes('<!DOCTYPE') || code.includes('<html') || code.includes('<div') ||
         code.includes('</') || (code.includes('<') && code.includes('>'))) {
         if (code.includes('{') && code.includes('}') && (code.includes('color:') || code.includes('margin:'))) {
@@ -851,12 +805,10 @@ function detectCodeLanguage(code) {
         return 'HTML/CSS';
     }
     
-    // SQL
     if (code.match(/\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|FROM|WHERE|JOIN)\b/i)) {
         return 'SQL';
     }
     
-    // Shell/Bash
     if (code.startsWith('#!/bin/') || code.includes('#!/usr/bin/') ||
         code.match(/^\s*(if|for|while|case)\s+\[/) || code.includes('$(') || code.includes('`')) {
         return 'Shell/Bash';
@@ -878,14 +830,11 @@ async function runAI() {
         return; 
     }
     
-    // Detect code language and check if it matches selected language
-    // Skip detection in convert mode (user explicitly chooses languages)
     if (currentMode !== 'convert') {
         const detectedLang = detectCodeLanguage(code);
         const selectedLang = els.langSelect.value;
         
         if (detectedLang && detectedLang !== selectedLang) {
-            // Show dialog to suggest language change
             showLanguageMismatchDialog(detectedLang, selectedLang);
             return;
         }
@@ -901,17 +850,16 @@ async function runAI() {
     }
     
     const selectedModel = els.modelSelect.value;
-    const lang = els.langSelect.value; // Programming language (JavaScript, Python, etc.)
-    const responseLang = currentLang; // Interface language for AI response (uk, en, ru, etc.)
+    const lang = els.langSelect.value;
+    const responseLang = currentLang;
     const cacheKey = generateCacheKey(code, currentMode, responseLang, selectedModel, wishes);
     const cached = getCachedResponse(cacheKey);
     
-    // Start analysis timer
     const analysisStartTime = Date.now();
     let timerInterval;
     
     if (cached) {
-        renderOutput(cached, lang, 0); // 0 for cached (instant)
+        renderOutput(cached, lang, 0);
         addToHistory({ mode: currentMode, lang: responseLang, input: code, output: cached, time: new Date().toLocaleTimeString() });
         return;
     }
@@ -923,23 +871,20 @@ async function runAI() {
     els.runBtn.setAttribute('aria-busy', 'true');
     els.runBtn.disabled = true;
     
-    // Hide timer and disclaimer initially
-    if (els.analysisTimer) els.analysisTimer.classList.add('hidden');
     if (els.aiDisclaimer) els.aiDisclaimer.classList.add('hidden');
     
-    // Start analysis timer
     if (els.analysisTimer && els.timerText) {
+        els.analysisTimer.classList.remove('hidden');
+        els.timerText.textContent = '0s';
         timerInterval = setInterval(() => {
             const elapsed = Math.floor((Date.now() - analysisStartTime) / 1000);
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
             const timeString = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
             if (els.timerText) {
-                const timerLabel = t.analysisTimeLabel || 'Analysis time:';
-                els.timerText.textContent = `${timerLabel} ${timeString}`;
+                els.timerText.textContent = timeString;
             }
         }, 100);
-        // Store interval ID and start time for cleanup
         window._analysisTimerInterval = timerInterval;
         window._analysisStartTime = analysisStartTime;
     }
@@ -949,9 +894,8 @@ async function runAI() {
     } 
 
     const controller = new AbortController();
-    // Longer timeout for slower models
     const slowModels = ['x-ai/grok-4.1-fast:free', 'tngtech/deepseek-r1t2-chimera:free'];
-    const timeoutDuration = slowModels.includes(selectedModel) ? 120000 : 60000; // 120s for slow models, 60s for others
+    const timeoutDuration = slowModels.includes(selectedModel) ? 120000 : 60000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
 
     const targetLangName = t.langName || "English";
@@ -982,7 +926,6 @@ async function runAI() {
 
     if (API_CONFIG.useServer) {
         try {
-            // Validate request data before sending
             if (!code || !code.trim()) {
                 throw new Error("Code cannot be empty");
             }
@@ -993,10 +936,9 @@ async function runAI() {
             const requestBody = {
                 code: code.trim(),
                 mode: currentMode || 'debug',
-                lang: responseLang || 'en', // Interface language for AI response
+                lang: responseLang || 'en',
                 model: selectedModel,
                 wishes: wishes ? wishes.trim() : '',
-                // Add convert language info if in convert mode
                 ...(currentMode === 'convert' && els.convertFromLang && els.convertToLang ? {
                     convertFrom: els.convertFromLang.value,
                     convertTo: els.convertToLang.value
@@ -1065,14 +1007,12 @@ async function runAI() {
             if (fetchError.name === 'AbortError') {
                 throw new Error("Request timeout");
             }
-            // Handle network errors
             if (fetchError.name === 'TypeError') {
                 if (fetchError.message.includes('Failed to fetch') || fetchError.message.includes('NetworkError')) {
                     throw new Error("Network error: Cannot reach server. Please check your connection.");
                 }
                 throw new Error(`Connection error: ${fetchError.message}`);
             }
-            // Re-throw if it's already a proper Error object
             throw fetchError;
         }
     }
@@ -1123,7 +1063,7 @@ async function runAI() {
         throw new Error("Invalid response structure from AI.");
     }
     
-    result.fixedCode = result.fixedCode || "// No code generated";
+    result.fixedCode = result.fixedCode || "";
     result.explanation = result.explanation || "Analysis completed.";
     result.tip = result.tip || "Code processed.";
     result.score = typeof result.score === 'number' ? Math.max(0, Math.min(100, result.score)) : 75;
@@ -1131,7 +1071,6 @@ async function runAI() {
 
     setCachedResponse(cacheKey, result);
     
-    // Calculate analysis time
     const analysisTime = window._analysisStartTime ? Date.now() - window._analysisStartTime : 0;
     
     renderOutput(result, lang, analysisTime);
@@ -1167,7 +1106,6 @@ async function runAI() {
             errorMessage = "Timeout. Try again.";
         } else if (error.message) {
             errorMessage = "Error: " + error.message;
-            // Provide helpful suggestions
             if (error.message.includes('401') || error.message.includes('authentication')) {
                 errorMessage += " Check your API keys.";
             } else if (error.message.includes('429') || error.message.includes('rate limit')) {
@@ -1183,8 +1121,9 @@ async function runAI() {
         els.errorMsg.classList.remove('hidden');
         els.errorMsg.classList.add('animate-shake');
         setTimeout(() => els.errorMsg.classList.remove('animate-shake'), 300);
+        
+        if (els.analysisTimer) els.analysisTimer.classList.add('hidden');
     } finally {
-        // Stop timer if still running
         if (window._analysisTimerInterval) {
             clearInterval(window._analysisTimerInterval);
             window._analysisTimerInterval = null;
@@ -1201,29 +1140,25 @@ async function runAI() {
     }
 }
 
-// ... RENDER & UTILS ...
 function renderOutput(data, lang, analysisTime) {
     els.emptyState.classList.add('hidden'); 
     els.outputContainer.classList.remove('hidden');
     
-    // Stop and display timer
     if (window._analysisTimerInterval) {
         clearInterval(window._analysisTimerInterval);
         window._analysisTimerInterval = null;
     }
     
-    if (els.analysisTimer && els.timerText && analysisTime !== undefined) {
+    if (els.analysisTimer && els.timerText && analysisTime !== undefined && analysisTime > 0) {
         const seconds = Math.floor(analysisTime / 1000);
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
         const timeString = minutes > 0 ? `${minutes}m ${secs}s` : `${secs}s`;
-        const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
-        const timerLabel = t.analysisTimeLabel || 'Analysis time:';
-        els.timerText.textContent = `${timerLabel} ${timeString}`;
-        els.analysisTimer.classList.remove('hidden');
+        els.timerText.textContent = timeString;
+    } else if (els.analysisTimer && analysisTime === 0) {
+        els.analysisTimer.classList.add('hidden');
     }
     
-    // Show AI disclaimer
     if (els.aiDisclaimer) {
         setTimeout(() => {
             els.aiDisclaimer.classList.remove('hidden');
@@ -1235,7 +1170,6 @@ function renderOutput(data, lang, analysisTime) {
         els.outputContainer.classList.remove('animate-fade-in-up');
     }, 400);
     
-    // Announce to screen readers
     if (els.outputContainer) {
         els.outputContainer.setAttribute('aria-live', 'polite');
         els.outputContainer.setAttribute('aria-busy', 'false');
@@ -1260,7 +1194,7 @@ function renderOutput(data, lang, analysisTime) {
     
     const codeBlock = els.outputCode;
     codeBlock.className = 'code-font text-sm';
-    const fixedCode = data.fixedCode || "// No code generated";
+    const fixedCode = data.fixedCode || "";
     codeBlock.textContent = fixedCode;
     
     const langMap = { 
@@ -1308,7 +1242,6 @@ function renderOutput(data, lang, analysisTime) {
     codeBlock.classList.remove(...Object.values(langMap).map(l => `language-${l}`), 'language-plaintext');
     codeBlock.classList.add(`language-${prismLang}`);
     
-    // Highlight with Prism
     if (window.Prism) {
         try {
             Prism.highlightElement(codeBlock);
@@ -1341,22 +1274,18 @@ function showTourStep(index) {
     document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
     targetEl.classList.add('tour-highlight');
     
-    // Scroll to element
     targetEl.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
     
-    // Update tooltip content
     els.tourTitle.textContent = t[step.titleKey] || step.titleKey;
     els.tourDesc.textContent = t[step.descKey] || step.descKey;
     els.tourNextBtn.textContent = index === tourSteps.length - 1 ? (t.finishTour || "Finish") : (t.nextTour || "Next");
     
-    // Show tooltip
     els.tourTooltip.classList.remove('hidden');
     requestAnimationFrame(() => {
         els.tourTooltip.classList.remove('opacity-0', 'scale-95');
         const rect = targetEl.getBoundingClientRect();
         const tooltipRect = els.tourTooltip.getBoundingClientRect();
         
-        // Position tooltip based on step position preference
         let top, left;
         if (step.pos === 'top') {
             top = `${rect.top - tooltipRect.height - 15}px`;
@@ -1372,7 +1301,6 @@ function showTourStep(index) {
             left = `${rect.left - tooltipRect.width - 15}px`;
         }
         
-        // Ensure tooltip stays within viewport
         const maxLeft = window.innerWidth - tooltipRect.width - 20;
         const maxTop = window.innerHeight - tooltipRect.height - 20;
         left = Math.max(20, Math.min(parseInt(left), maxLeft)) + 'px';
@@ -1396,8 +1324,6 @@ function toggleSidebar() {
     if (!els.sidebar.classList.contains('hidden')) els.sidebar.classList.add('sidebar-animate-open'); 
 }
 
-function showTooltip(e) { clearTimeout(tooltipHideTimeout); const key = e.currentTarget.dataset.tooltipKey; if(!key) return; const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; els.tooltip.textContent = t[key]; els.tooltip.classList.remove('hidden', 'opacity-0'); const rect = e.currentTarget.getBoundingClientRect(); els.tooltip.style.top = `${rect.bottom + 5}px`; els.tooltip.style.left = `${rect.left + rect.width/2}px`; }
-function hideTooltip() { tooltipHideTimeout = setTimeout(() => { els.tooltip.classList.add('opacity-0'); setTimeout(() => els.tooltip.classList.add('hidden'), 200); }, 150); }
 
 function animateScoreCount(targetEl, finalScore) {
     if (!targetEl) return;
@@ -1412,7 +1338,6 @@ function animateScoreCount(targetEl, finalScore) {
         const current = Math.floor(progress * clampedScore);
         targetEl.textContent = current;
         
-        // Color based on score
         if (current > 80) {
             targetEl.style.color = '#10b981';
             targetEl.style.borderColor = '#10b981';
@@ -1428,7 +1353,6 @@ function animateScoreCount(targetEl, finalScore) {
             window.requestAnimationFrame(step);
         } else {
             const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
-            // Score text based on final score
             if (clampedScore > 80) {
                 els.scoreText.textContent = "Excellent";
             } else if (clampedScore > 50) {
@@ -1446,7 +1370,6 @@ function toggleTheme() { isDark = !isDark; els.html.classList.toggle('dark'); lo
 function updateTexts(lang) {
     currentLang = lang;
     localStorage.setItem('fixly_lang', lang);
-    // Update HTML lang attribute
     if (els.html) els.html.setAttribute('lang', lang);
     const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
     
@@ -1454,7 +1377,6 @@ function updateTexts(lang) {
         const key = el.getAttribute('data-i18n');
         if (t[key]) {
             if (el.classList.contains('toolbar-btn-icon')) {
-                // Don't set title - tooltip is handled by showTooltip via data-tooltip-key
                 el.setAttribute('aria-label', t[key]);
             } 
             else if (el.classList.contains('toolbar-btn-text')) {
@@ -1492,12 +1414,10 @@ function updateTexts(lang) {
         if (els.deleteChatOk && t.deleteChat) els.deleteChatOk.textContent = t.deleteChat;
     }
     
-    // Tooltips are handled by showTooltip function via data-tooltip-key, no need to set title
     
     if (els.input) els.input.placeholder = t.placeholder || "// Paste code here...";
     if (els.wishes) els.wishes.placeholder = t.wishesPlaceholder || "Additional wishes...";
     
-    // Update convert panel labels
     if (els.convertPanel) {
         const fromLabel = els.convertPanel.querySelector('[data-i18n="convertFrom"]');
         const toLabel = els.convertPanel.querySelector('[data-i18n="convertTo"]');
@@ -1505,7 +1425,6 @@ function updateTexts(lang) {
         if (toLabel && t.convertTo) toLabel.textContent = t.convertTo;
     }
     
-    // Update welcome screen translations
     if (els.welcomeScreen) {
         const welcomeDesc = els.welcomeScreen.querySelector('[data-i18n="welcomeDesc"]');
         const startTutorialBtn = els.welcomeScreen.querySelector('[data-i18n="startTutorialBtn"]');
@@ -1540,16 +1459,6 @@ function updateTexts(lang) {
         if (featureTest && t.featureTest) featureTest.textContent = t.featureTest;
         if (featureTestDesc && t.featureTestDesc) featureTestDesc.textContent = t.featureTestDesc;
         
-        // Update timer and disclaimer texts
-        if (els.timerText && t.analysisTimeLabel) {
-            const currentText = els.timerText.textContent;
-            if (currentText && currentText.includes(':')) {
-                const timePart = currentText.split(':')[1]?.trim() || '';
-                if (timePart) {
-                    els.timerText.textContent = `${t.analysisTimeLabel} ${timePart}`;
-                }
-            }
-        }
         if (els.aiDisclaimer) {
             const disclaimerText = els.aiDisclaimer.querySelector('p[data-i18n="aiDisclaimer"]');
             if (disclaimerText && t.aiDisclaimer) {
@@ -1605,16 +1514,13 @@ function setMode(mode) {
     
     els.runBtnText.textContent = t.runBtn;
     
-    // Show/hide convert panel based on mode
     if (els.convertPanel) {
         if (mode === 'convert') {
             els.convertPanel.classList.remove('hidden', 'convert-panel-hide');
             els.convertPanel.classList.add('convert-panel-show');
-            // Sync convert-from with current language select
             if (els.convertFromLang && els.langSelect) {
                 els.convertFromLang.value = els.langSelect.value;
             }
-            // Set default convert-to to JavaScript if same as from
             if (els.convertToLang && els.convertFromLang) {
                 if (els.convertToLang.value === els.convertFromLang.value) {
                     els.convertToLang.value = 'JavaScript';
@@ -1631,7 +1537,6 @@ function setMode(mode) {
         }
     }
     
-    // Announce mode change for screen readers
     if (els.activeModeDisplay) {
         els.activeModeDisplay.setAttribute('aria-live', 'polite');
     }
@@ -1762,7 +1667,6 @@ async function copyCode() {
         const text = els.outputCode.textContent;
         await navigator.clipboard.writeText(text);
         
-        // Visual feedback
         const originalHTML = els.copyBtn.innerHTML;
         els.copyBtn.innerHTML = '<i class="fa-solid fa-check text-brand-500" aria-hidden="true"></i>';
         els.copyBtn.setAttribute('aria-label', 'Copied!');
@@ -1772,7 +1676,6 @@ async function copyCode() {
             els.copyBtn.setAttribute('aria-label', 'Copy code');
         }, 2000);
         
-        // Announce to screen readers
         const announcement = document.createElement('div');
         announcement.className = 'sr-only';
         announcement.setAttribute('aria-live', 'polite');
@@ -1790,7 +1693,6 @@ function addToHistory(item) {
     history.unshift(item);
     if (history.length > 20) history.pop();
     
-    // Save to localStorage with error handling
     try {
         localStorage.setItem('fixly_history', JSON.stringify(history));
     } catch (e) {
@@ -1814,7 +1716,6 @@ function renderHistory() {
         return;
     }
     
-    // Use DocumentFragment for better performance
     const fragment = document.createDocumentFragment();
     
     history.forEach((item, index) => {
@@ -1830,7 +1731,7 @@ function renderHistory() {
             els.input.value = item.input;
             els.langSelect.value = item.lang;
             setMode(item.mode);
-            renderOutput(item.output, item.lang, 0); // 0 for history items
+            renderOutput(item.output, item.lang, 0);
             updateLineNumbers();
             els.input.focus();
         };
@@ -1897,17 +1798,13 @@ function clearHistory() {
     renderHistory(); 
 }
 
-// Show delete chat confirmation dialog
 function showDeleteChatDialog(index) {
     if (!els.deleteChatDialog || !els.deleteChatDialogContent) return;
     
-    // Store the index for later deletion
     pendingDeleteChatIndex = index;
     
-    // Update translations
     updateDeleteChatDialogTranslations();
     
-    // Show dialog
     els.deleteChatDialog.classList.remove('hidden');
     els.deleteChatDialog.classList.add('flex');
     
@@ -1917,7 +1814,6 @@ function showDeleteChatDialog(index) {
     });
 }
 
-// Close delete chat dialog
 function closeDeleteChatDialog() {
     if (!els.deleteChatDialog || !els.deleteChatDialogContent) return;
     
@@ -1931,7 +1827,6 @@ function closeDeleteChatDialog() {
     }, 200);
 }
 
-// Update translations for delete chat dialog
 function updateDeleteChatDialogTranslations() {
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const titleEl = els.deleteChatDialogContent?.querySelector('h3[data-i18n="deleteChatConfirmTitle"]');
@@ -1953,14 +1848,11 @@ function updateDeleteChatDialogTranslations() {
     }
 }
 
-// Show language mismatch dialog
 function showLanguageMismatchDialog(detectedLang, selectedLang) {
     if (!els.languageMismatchDialog || !els.languageMismatchDialogContent) return;
     
-    // Store detected language
     pendingDetectedLanguage = detectedLang;
     
-    // Update translations
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const langNames = {
         'JavaScript': 'JavaScript',
@@ -1985,7 +1877,6 @@ function showLanguageMismatchDialog(detectedLang, selectedLang) {
     const detectedLangName = langNames[detectedLang] || detectedLang;
     const selectedLangName = langNames[selectedLang] || selectedLang;
     
-    // Build message based on UI language
     let message;
     if (currentLang === 'uk') {
         message = `Код виглядає як ${detectedLangName}, але вибрано ${selectedLangName}. Змінити мову програмування на ${detectedLangName}?`;
@@ -2005,7 +1896,6 @@ function showLanguageMismatchDialog(detectedLang, selectedLang) {
         els.languageMismatchMessage.textContent = message;
     }
     
-    // Update button texts
     if (els.languageMismatchCancel && t.cancel) {
         els.languageMismatchCancel.textContent = t.cancel;
     }
@@ -2013,7 +1903,6 @@ function showLanguageMismatchDialog(detectedLang, selectedLang) {
         els.languageMismatchChange.textContent = t.changeLanguage;
     }
     
-    // Show dialog
     els.languageMismatchDialog.classList.remove('hidden');
     els.languageMismatchDialog.classList.add('flex');
     
@@ -2023,7 +1912,6 @@ function showLanguageMismatchDialog(detectedLang, selectedLang) {
     });
 }
 
-// Close language mismatch dialog
 function closeLanguageMismatchDialog() {
     if (!els.languageMismatchDialog || !els.languageMismatchDialogContent) return;
     
@@ -2047,7 +1935,6 @@ function deleteHistoryItem(index) {
 
 
 function createFile(filename, content = '', language = 'JavaScript') {
-    // If filename is "New File" without extension, add extension based on language
     let finalFilename = filename;
     if (filename === 'New File' || filename.toLowerCase() === 'new file') {
         const extMap = {
@@ -2092,7 +1979,6 @@ function createFile(filename, content = '', language = 'JavaScript') {
         const ext = extMap[language] || '.js';
         finalFilename = 'New File' + ext;
         
-        // If file already exists, add number
         let counter = 1;
         while (files[finalFilename]) {
             finalFilename = `New File (${counter})${ext}`;
@@ -2111,7 +1997,6 @@ function createFile(filename, content = '', language = 'JavaScript') {
     saveFiles();
     renderFileTabs();
     
-    // Animate file creation
     const newTab = document.querySelector(`[data-filename="${finalFilename}"]`);
     if (newTab) {
         newTab.classList.add('file-tab-new');
@@ -2122,7 +2007,6 @@ function createFile(filename, content = '', language = 'JavaScript') {
     
     openFile(finalFilename);
     
-    // Animate editor opening
     els.input.style.transform = 'scale(0.98)';
     els.input.style.opacity = '0.8';
     setTimeout(() => {
@@ -2134,13 +2018,11 @@ function createFile(filename, content = '', language = 'JavaScript') {
 function openFile(filename) {
     if (!files[filename]) return;
     
-    // Save current file before switching
     if (activeFile && files[activeFile]) {
         files[activeFile].content = els.input.value;
         files[activeFile].modified = Date.now();
     }
     
-    // Animate file switch with slide animation
     els.input.style.opacity = '0.5';
     els.input.style.transform = 'translateX(-10px)';
     els.input.classList.add('animate-slide-in-left');
@@ -2153,7 +2035,6 @@ function openFile(filename) {
         renderFileTabs();
         saveFiles();
         
-        // Animate back with slide
         els.input.style.opacity = '1';
         els.input.style.transform = 'translateX(0)';
         els.input.classList.remove('animate-slide-in-left');
@@ -2211,7 +2092,6 @@ function renderFileTabs() {
         nameSpan.textContent = filename;
         nameSpan.setAttribute('title', filename);
         
-        // Make filename editable on double click
         nameSpan.addEventListener('dblclick', (e) => {
             e.stopPropagation();
             editFileName(filename, nameSpan);
@@ -2237,7 +2117,6 @@ function renderFileTabs() {
     });
 }
 
-// Edit file name inline
 function editFileName(filename, nameElement) {
     const oldName = filename;
     const lastDotIndex = oldName.lastIndexOf('.');
@@ -2250,7 +2129,6 @@ function editFileName(filename, nameElement) {
     input.className = 'bg-transparent border border-brand-500 rounded px-1 text-xs w-full';
     input.style.minWidth = '80px';
     
-    // Replace span with input
     nameElement.replaceWith(input);
     input.focus();
     input.select();
@@ -2267,7 +2145,6 @@ function editFileName(filename, nameElement) {
             }
             renameFile(oldName, newFilename);
         } else {
-            // Just restore the element
             input.replaceWith(nameElement);
         }
     };
@@ -2298,44 +2175,34 @@ let pendingDeleteChatIndex = null;
 // Variable to store detected language from code analysis
 let pendingDetectedLanguage = null;
 
-// Handle language change - update file extension and ask for confirmation if code exists
 function handleLanguageChange() {
     if (!activeFile || !files[activeFile]) {
-        // No active file, just update
         return;
     }
     
     const newLang = els.langSelect.value;
     const currentLang = files[activeFile].language;
     
-    // If language didn't change, do nothing
     if (newLang === currentLang) {
         return;
     }
     
-    // Check if there's code in the editor
     const hasCode = els.input.value.trim().length > 0;
     
     if (hasCode) {
-        // Store the new language for later use
         pendingLanguageChange = newLang;
         
-        // Show confirmation dialog
         showChangeLanguageDialog(currentLang, newLang);
         
-        // Revert language select temporarily
         els.langSelect.value = currentLang;
     } else {
-        // No code, just update directly
         renameFileWithExtension(activeFile, newLang);
     }
 }
 
-// Show change language confirmation dialog
 function showChangeLanguageDialog(programmingLang, newLang) {
     if (!els.changeLanguageDialog || !els.changeLanguageDialogContent) return;
     
-    // Use UI language, not programming language
     const uiLang = currentLang || localStorage.getItem('fixly_lang') || 'en';
     const t = TRANSLATIONS[uiLang] || TRANSLATIONS.en;
     const langNames = {
@@ -2382,9 +2249,7 @@ function showChangeLanguageDialog(programmingLang, newLang) {
     const currentLangName = langNames[programmingLang] || programmingLang;
     const newLangName = langNames[newLang] || newLang;
     
-    // Update message with language names
     if (els.changeLanguageMessage) {
-        // Build message based on UI language
         let message;
         if (uiLang === 'uk') {
             message = `Ви впевнені, що хочете змінити мову програмування з "${currentLangName}" на "${newLangName}"? Розширення файлу буде оновлено автоматично.`;
@@ -2397,17 +2262,14 @@ function showChangeLanguageDialog(programmingLang, newLang) {
         } else if (uiLang === 'es') {
             message = `¿Estás seguro de que quieres cambiar el lenguaje de programación de "${currentLangName}" a "${newLangName}"? La extensión del archivo se actualizará automáticamente.`;
         } else {
-            // English default
             message = `Are you sure you want to change the programming language from "${currentLangName}" to "${newLangName}"? The file extension will be updated automatically.`;
         }
         
         els.changeLanguageMessage.textContent = message;
     }
     
-    // Update translations
     updateChangeLanguageDialogTranslations();
     
-    // Show dialog
     els.changeLanguageDialog.classList.remove('hidden');
     els.changeLanguageDialog.classList.add('flex');
     
@@ -2417,7 +2279,6 @@ function showChangeLanguageDialog(programmingLang, newLang) {
     });
 }
 
-// Close change language dialog
 function closeChangeLanguageDialog() {
     if (!els.changeLanguageDialog || !els.changeLanguageDialogContent) return;
     
@@ -2431,7 +2292,6 @@ function closeChangeLanguageDialog() {
     }, 200);
 }
 
-// Update translations for change language dialog
 function updateChangeLanguageDialogTranslations() {
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const titleEl = els.changeLanguageDialogContent?.querySelector('h3[data-i18n="changeLanguageConfirmTitle"]');
@@ -2449,20 +2309,16 @@ function updateChangeLanguageDialogTranslations() {
     }
 }
 
-// Rename file with correct extension based on language
 function renameFileWithExtension(oldFilename, newLanguage) {
     if (!files[oldFilename]) return;
     
-    // Get base name without extension
     const lastDotIndex = oldFilename.lastIndexOf('.');
     let baseName = lastDotIndex > 0 ? oldFilename.substring(0, lastDotIndex) : oldFilename;
     
-    // If it's "New File" or "untitled", keep it as is
     if (baseName === 'New File' || baseName === 'untitled' || baseName.toLowerCase() === 'new file') {
         baseName = 'New File';
     }
     
-    // Map language to extension
     const extMap = {
         'JavaScript': '.js',
         'TypeScript': '.ts',
@@ -2506,7 +2362,6 @@ function renameFileWithExtension(oldFilename, newLanguage) {
     const newExt = extMap[newLanguage] || '';
     const newFilename = baseName + newExt;
     
-    // If filename already exists and it's different, add number
     let finalFilename = newFilename;
     let counter = 1;
     while (files[finalFilename] && finalFilename !== oldFilename) {
@@ -2515,75 +2370,60 @@ function renameFileWithExtension(oldFilename, newLanguage) {
         counter++;
     }
     
-    // Save current content
     const content = els.input.value;
     const language = newLanguage;
     const modified = files[oldFilename].modified;
     
-    // Remove old file
     delete files[oldFilename];
     
-    // Create new file with new name
     files[finalFilename] = {
         content: content,
         language: language,
         modified: modified
     };
     
-    // Update versions
     if (fileVersions[oldFilename]) {
         fileVersions[finalFilename] = fileVersions[oldFilename];
         delete fileVersions[oldFilename];
     }
     
-    // Update active file
     activeFile = finalFilename;
     
-    // Save and re-render
     saveFiles();
     renderFileTabs();
     
-    // Update language select to match
     els.langSelect.value = newLanguage;
 }
 
-// Rename file function (can be called from UI)
 function renameFile(oldFilename, newFilename) {
     if (!files[oldFilename]) return false;
     
-    // Check if new filename already exists
     if (files[newFilename] && newFilename !== oldFilename) {
         alert('File with this name already exists!');
         return false;
     }
     
-    // Save current content
     const content = files[oldFilename].content;
     const language = files[oldFilename].language;
     const modified = files[oldFilename].modified;
     
-    // Remove old file
     delete files[oldFilename];
     
-    // Create new file with new name
     files[newFilename] = {
         content: content,
         language: language,
         modified: modified
     };
     
-    // Update versions
     if (fileVersions[oldFilename]) {
         fileVersions[newFilename] = fileVersions[oldFilename];
         delete fileVersions[oldFilename];
     }
     
-    // Update active file if it was the renamed one
     if (activeFile === oldFilename) {
         activeFile = newFilename;
     }
     
-    // Save and re-render
     saveFiles();
     renderFileTabs();
     
@@ -2628,7 +2468,6 @@ function createNewFile() {
     }
     
     const langMap = {
-        // Popular
         '.js': 'JavaScript',
         '.ts': 'TypeScript',
         '.jsx': 'React',
@@ -2638,23 +2477,19 @@ function createNewFile() {
         '.cpp': 'C++',
         '.c': 'C',
         '.cs': 'C#',
-        // Web
         '.html': 'HTML/CSS',
         '.css': 'HTML/CSS',
         '.php': 'PHP',
         '.rb': 'Ruby',
         '.vue': 'Vue',
         '.svelte': 'Svelte',
-        // Systems
         '.go': 'Go',
         '.rs': 'Rust',
         '.asm': 'Assembly',
-        // Mobile
         '.swift': 'Swift',
         '.kt': 'Kotlin',
         '.dart': 'Dart',
         '.m': 'Objective-C',
-        // Data & Scripts
         '.sql': 'SQL',
         '.r': 'R',
         '.sh': 'Shell/Bash',
@@ -2666,7 +2501,6 @@ function createNewFile() {
         '.ex': 'Elixir',
         '.clj': 'Clojure',
         '.erl': 'Erlang',
-        // Config & Markup
         '.json': 'JSON',
         '.yaml': 'YAML',
         '.yml': 'YAML',
@@ -2675,7 +2509,6 @@ function createNewFile() {
         '.toml': 'TOML',
         '.ini': 'INI',
         '.conf': 'INI',
-        // Other
         '.txt': 'JavaScript',
         '.log': 'JavaScript'
     };
@@ -2696,26 +2529,22 @@ async function formatCode() {
     const code = els.input.value;
     const lang = els.langSelect.value;
     
-    // Enhanced formatting with better indentation
     let formatted = code;
     let indentLevel = 0;
     const indentSize = 4;
     
     if (lang === 'JavaScript' || lang === 'TypeScript') {
-        // Enhanced JS/TS formatting
         const lines = code.split('\n');
         formatted = lines.map(line => {
             const trimmed = line.trim();
             if (!trimmed) return '';
             
-            // Decrease indent for closing braces
             if (trimmed.startsWith('}') || trimmed.startsWith(']') || trimmed.startsWith(')')) {
                 indentLevel = Math.max(0, indentLevel - 1);
             }
             
             const indented = ' '.repeat(indentLevel * indentSize) + trimmed;
             
-            // Increase indent for opening braces
             if (trimmed.endsWith('{') || trimmed.endsWith('[') || trimmed.endsWith('(')) {
                 indentLevel++;
             }
@@ -2723,7 +2552,6 @@ async function formatCode() {
             return indented;
         }).join('\n');
         
-        // Clean up extra spaces
         formatted = formatted
             .replace(/\s*{\s*/g, ' {')
             .replace(/\s*}\s*/g, ' }')
@@ -2732,7 +2560,6 @@ async function formatCode() {
             .trim();
             
     } else if (lang === 'HTML/CSS') {
-        // Enhanced HTML formatting
         formatted = code
             .replace(/>\s*</g, '>\n<')
             .replace(/^\s+|\s+$/gm, '')
@@ -2752,14 +2579,13 @@ async function formatCode() {
             .join('\n')
             .trim();
     } else if (lang === 'Python') {
-        // Python formatting (basic)
+ formatting (basic)
         formatted = code
             .split('\n')
             .map(line => {
                 const trimmed = line.trim();
                 if (!trimmed) return '';
                 if (trimmed && !trimmed.startsWith('#') && !trimmed.match(/^(if|elif|else|for|while|def|class|try|except|finally|with)\s/)) {
-                    // Check if previous line should increase indent
                 }
                 return trimmed;
             })
@@ -2768,7 +2594,6 @@ async function formatCode() {
             .trim();
     }
     
-    // Animate the change
     els.input.style.opacity = '0.5';
     setTimeout(() => {
         els.input.value = formatted;
@@ -2785,7 +2610,6 @@ async function formatCode() {
         els.formatCodeBtn.classList.remove('animate-pulse-glow');
     }, 1500);
     
-    // Save version after formatting
     if (activeFile) {
         saveCurrentVersion();
     }
@@ -2795,7 +2619,6 @@ function handleFileUpload(event) {
     const file = event.target.files[0];
     if (!file) return;
     
-    // Add animation to upload button
     els.uploadFileBtn.classList.add('animate-bounce');
     setTimeout(() => {
         els.uploadFileBtn.classList.remove('animate-bounce');
@@ -2808,7 +2631,6 @@ function handleFileUpload(event) {
         const ext = filename.substring(filename.lastIndexOf('.'));
         
         const langMap = {
-            // Popular
             '.js': 'JavaScript',
             '.ts': 'TypeScript',
             '.jsx': 'React',
@@ -2818,23 +2640,19 @@ function handleFileUpload(event) {
             '.cpp': 'C++',
             '.c': 'C',
             '.cs': 'C#',
-            // Web
             '.html': 'HTML/CSS',
             '.css': 'HTML/CSS',
             '.php': 'PHP',
             '.rb': 'Ruby',
             '.vue': 'Vue',
             '.svelte': 'Svelte',
-            // Systems
             '.go': 'Go',
             '.rs': 'Rust',
             '.asm': 'Assembly',
-            // Mobile
             '.swift': 'Swift',
             '.kt': 'Kotlin',
             '.dart': 'Dart',
             '.m': 'Objective-C',
-            // Data & Scripts
             '.sql': 'SQL',
             '.r': 'R',
             '.sh': 'Shell/Bash',
@@ -2846,7 +2664,6 @@ function handleFileUpload(event) {
             '.ex': 'Elixir',
             '.clj': 'Clojure',
             '.erl': 'Erlang',
-            // Config & Markup
             '.json': 'JSON',
             '.yaml': 'YAML',
             '.yml': 'YAML',
@@ -2855,7 +2672,6 @@ function handleFileUpload(event) {
             '.toml': 'TOML',
             '.ini': 'INI',
             '.conf': 'INI',
-            // Other
             '.txt': 'JavaScript',
             '.log': 'JavaScript'
         };
