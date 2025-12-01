@@ -214,6 +214,9 @@ let currentTourStep = 0;
 let tooltipHideTimeout; 
 let typingInterval; 
 let saveTimeout; // For debounce
+let resizeObserver = null; // ResizeObserver instance
+let fallbackAttempts = 0; // Counter for fallback attempts to prevent infinite recursion
+const MAX_FALLBACK_ATTEMPTS = 2; // Maximum fallback attempts
 
 // Chat system - accumulate requests in one chat
 let chats = {}; // { chatId: { id, messages: [], createdAt } }
@@ -375,6 +378,26 @@ const els = {
     clearHistoryConfirmCancel: document.getElementById('clear-history-confirm-cancel'),
     clearHistoryConfirmOk: document.getElementById('clear-history-confirm-ok')
 };
+
+// Cleanup function to prevent memory leaks
+function cleanup() {
+    if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+    }
+    if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+    }
+    if (saveTimeout) {
+        clearTimeout(saveTimeout);
+        saveTimeout = null;
+    }
+}
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', cleanup);
+window.addEventListener('pagehide', cleanup);
 
 document.addEventListener('DOMContentLoaded', () => {
     const welcomeSeen = localStorage.getItem('fixly_welcome_seen');
@@ -545,8 +568,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        let resizeObserver;
-        if (window.ResizeObserver) {
+        if (window.ResizeObserver && els.input) {
+            // Disconnect existing observer if any
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
             resizeObserver = new ResizeObserver(() => {
                 updateLineNumbers();
             });
@@ -682,7 +708,13 @@ function checkRateLimit() {
 }
 
 function generateCacheKey(code, mode, lang, model, wishes) {
-    return `${mode}_${lang}_${model}_${wishes}_${code.substring(0, 100).replace(/\s/g, '')}`;
+    // Validate inputs to prevent undefined in key
+    const safeCode = (code || '').substring(0, 100).replace(/\s/g, '');
+    const safeMode = mode || 'debug';
+    const safeLang = lang || 'en';
+    const safeModel = model || '';
+    const safeWishes = wishes || '';
+    return `${safeMode}_${safeLang}_${safeModel}_${safeWishes}_${safeCode}`;
 }
 
 function getCachedResponse(key) {
@@ -701,9 +733,18 @@ function getCachedResponse(key) {
 function setCachedResponse(key, data) {
     // Limit cache size
     if (responseCache.size >= CACHE_CONFIG.maxSize) {
-        // Remove oldest entry
-        const firstKey = responseCache.keys().next().value;
-        responseCache.delete(firstKey);
+        // Remove oldest entry by timestamp
+        let oldestKey = null;
+        let oldestTime = Infinity;
+        for (const [key, value] of responseCache.entries()) {
+            if (value.timestamp < oldestTime) {
+                oldestTime = value.timestamp;
+                oldestKey = key;
+            }
+        }
+        if (oldestKey) {
+            responseCache.delete(oldestKey);
+        }
     }
     
     responseCache.set(key, {
@@ -1044,18 +1085,17 @@ async function runAI() {
             error.status === 404
         ));
         
-        if (isModelError && modelConfig?.fallback && !window._triedFallback) {
-            window._triedFallback = true;
+        if (isModelError && modelConfig?.fallback && fallbackAttempts < MAX_FALLBACK_ATTEMPTS) {
+            fallbackAttempts++;
             els.modelSelect.value = modelConfig.fallback;
             els.loadingText.textContent = `Trying fallback model...`;
             setTimeout(() => {
-                window._triedFallback = false;
                 runAI();
             }, 500);
             return;
         }
         
-        window._triedFallback = false;
+        fallbackAttempts = 0; // Reset on error or success
         
         if (error.name === 'AbortError') {
             errorMessage = "Timeout. Try again.";
@@ -1498,12 +1538,14 @@ function setMode(mode) {
     els.modeIcon.className = `fa-solid ${icons[mode] || 'fa-code'} text-base`;
     els.modeName.textContent = names[mode] || mode;
     
-    els.modeBtns.forEach(btn => {
-        const isActive = btn.dataset.mode === mode;
-        btn.classList.toggle('active-mode', isActive);
-        btn.setAttribute('aria-pressed', isActive);
-        if (!isActive) btn.className = 'mode-btn';
-    });
+    if (els.modeBtns && els.modeBtns.length > 0) {
+        els.modeBtns.forEach(btn => {
+            const isActive = btn.dataset.mode === mode;
+            btn.classList.toggle('active-mode', isActive);
+            btn.setAttribute('aria-pressed', isActive);
+            if (!isActive) btn.className = 'mode-btn';
+        });
+    }
     
     els.runBtnText.textContent = t.runBtn;
     
@@ -3037,31 +3079,32 @@ function closeVersionHistory() {
     }, 300);
 }
 
-// Update input handler to save to current file
-// Note: This replaces the existing input listener, so we need to preserve the original
-const originalInputHandler = () => {
-    clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
-        localStorage.setItem('fixly_draft', els.input.value);
-    }, 500);
-    updateLineNumbers();
-};
+// Enhanced input handler - store reference for proper cleanup
+let inputHandler = null;
 
-// Enhanced input handler
-els.input.removeEventListener('input', originalInputHandler);
-els.input.addEventListener('input', () => {
-    if (activeFile && files[activeFile]) {
-        files[activeFile].content = els.input.value;
-        files[activeFile].modified = Date.now();
+if (els.input) {
+    // Remove any existing handler if re-initializing
+    if (inputHandler) {
+        els.input.removeEventListener('input', inputHandler);
     }
-    clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
-        saveFiles();
-        saveCurrentVersion();
-        localStorage.setItem('fixly_draft', els.input.value);
-    }, 1000);
-    updateLineNumbers();
-});
+    
+    // Create new handler
+    inputHandler = () => {
+        if (activeFile && files[activeFile]) {
+            files[activeFile].content = els.input.value;
+            files[activeFile].modified = Date.now();
+        }
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            saveFiles();
+            saveCurrentVersion();
+            localStorage.setItem('fixly_draft', els.input.value);
+        }, 1000);
+        updateLineNumbers();
+    };
+    
+    els.input.addEventListener('input', inputHandler);
+}
 
 
 async function testAIModel(modelId) {
