@@ -66,8 +66,8 @@ const CONTENT_POOLS = {
 
 const TRANSLATIONS = {
     uk: {
-        newChatBtn: "Новий чат", donateBtn: "На каву", runBtn: "Запуск", analysisHeader: "Аналіз", emptyTitle: "FixlyCode", loading: "Аналіз...", errorEmpty: "Введіть код!", clearHistory: "Очистити", clearHistoryConfirm: "Очистити всю історію?", placeholder: "// Вставте код тут...", tipHeader: "Порада:", langName: "Українська", wishesPlaceholder: "Додаткові побажання...", exportBtn: "Експорт MD", scoreTitle: "Оцінка",
-        tipDebug: "Виправити", tipOptimize: "Оптимізувати", tipExplain: "Пояснити", tipReview: "Огляд", tipSecurity: "Безпека", tipRefactor: "Рефакторинг", tipDocument: "Документація", tipConvert: "Конвертувати", tipFormat: "Форматувати", tipTest: "Тести",
+        newChatBtn: "Новий чат", donateBtn: "На каву", runBtn: "Запуск", analysisHeader: "Аналіз", emptyTitle: "FixlyCode", loading: "Аналіз...", errorEmpty: "Введіть код!", clearHistory: "Очистити", clearHistoryConfirm: "Очистити всю історію?", placeholder: "// Вставте код тут...", tipHeader: "Порада:", langName: "Українська", wishesPlaceholder: "Додаткові побажання...", exportBtn: "Експорт MD", scoreTitle: "Оцінка", analysisTimeLabel: "Час аналізу:", aiDisclaimer: "Штучний інтелект може помилятися. Будь ласка, перевіряйте інформацію та код перед використанням.",
+        tipDebug: "Виправити", tipOptimize: "Оптимізувати", tipExplain: "Пояснити", tipReview: "Огляд", tipSecurity: "Безпека", tipRefactor: "Рефакторинг", tipDocument: "Документація", tipConvert: "Конвертувати", tipFormat: "Форматувати", tipTest: "Міркування",
         convertFrom: "З:", convertTo: "В:",
         languageMismatchTitle: "Невідповідність мови", languageMismatchMessage: "Код виглядає як інша мова. Змінити мову програмування?",
         tipFormatCode: "Форматувати код", tipUploadFile: "Завантажити файл", tipDownloadFile: "Зберегти файл", tipVersionHistory: "Історія версій", tipCopyCode: "Копіювати код", tipClearEditor: "Очистити редактор",
@@ -87,13 +87,13 @@ const TRANSLATIONS = {
         deleteChatConfirmMessage: "Цю дію неможливо скасувати.",
         deleteChat: "Видалити", 
         welcomeDesc: "Ваш персональний AI-асистент для роботи з кодом. Виправляйте помилки, оптимізуйте, конвертуйте мови та тестуйте код за допомогою штучного інтелекту.", startBtn: "Почати", startTutorialBtn: "Навчання", skipBtn: "Пропустити", nextTour: "Далі", finishTour: "Готово", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
-        featureDebug: "Виправлення", featureDebugDesc: "Знайдіть та виправте помилки автоматично", featureOptimize: "Оптимізація", featureOptimizeDesc: "Покращте продуктивність та якість коду", featureExplain: "Пояснення", featureExplainDesc: "Детально зрозумійте логіку коду", featureConvert: "Конвертація", featureConvertDesc: "Конвертуйте між мовами програмування", featureTest: "Тести", featureTestDesc: "Створюйте unit та integration тести", featureSecurity: "Безпека", featureSecurityDesc: "Знайдіть вразливості та проблеми безпеки", featureMultiLang: "6 Мов", featureMultiCodeLang: "30+ Мов Програмування", featureFast: "Швидко та Безкоштовно",
+        featureDebug: "Виправлення", featureDebugDesc: "Знайдіть та виправте помилки автоматично", featureOptimize: "Оптимізація", featureOptimizeDesc: "Покращте продуктивність та якість коду", featureExplain: "Пояснення", featureExplainDesc: "Детально зрозумійте логіку коду", featureConvert: "Конвертація", featureConvertDesc: "Конвертуйте між мовами програмування", featureTest: "Міркування", featureTestDesc: "Подивіться на процес мислення AI крок за кроком", featureSecurity: "Безпека", featureSecurityDesc: "Знайдіть вразливості та проблеми безпеки", featureMultiLang: "6 Мов", featureMultiCodeLang: "30+ Мов Програмування", featureFast: "Швидко та Безкоштовно",
         tabHistory: "Історія", tabTips: "Поради", historyEmptyDesc: "Тут з'являться ваші запити.", funFactHeader: "Цікавий факт",
         tourStep1Title: "1. Введіть код", tourStep1Desc: "Вставте код у текстове поле.", tourStep2Title: "2. Оберіть мову", tourStep2Desc: "Виберіть мову програмування.", tourStep3Title: "3. Оберіть режим", tourStep3Desc: "Що має зробити AI (виправити, оптимізувати, пояснити).", tourStep4Title: "4. Запустіть", tourStep4Desc: "Натисніть Запуск для аналізу!"
     },
     en: {
-        newChatBtn: "New Chat", donateBtn: "Buy coffee", runBtn: "Run", analysisHeader: "Analysis", emptyTitle: "FixlyCode", loading: "Thinking...", errorEmpty: "Enter code!", clearHistory: "Clear", clearHistoryConfirm: "Clear all history?", placeholder: "// Paste code here...", langName: "English", wishesPlaceholder: "Additional wishes...", exportBtn: "Export MD", scoreTitle: "Score",
-        tipDebug: "Fix", tipOptimize: "Optimize", tipExplain: "Explain", tipReview: "Review", tipSecurity: "Security", tipRefactor: "Refactor", tipDocument: "Document", tipConvert: "Convert", tipFormat: "Format", tipTest: "Tests",
+        newChatBtn: "New Chat", donateBtn: "Buy coffee", runBtn: "Run", analysisHeader: "Analysis", emptyTitle: "FixlyCode", loading: "Thinking...", errorEmpty: "Enter code!", clearHistory: "Clear", clearHistoryConfirm: "Clear all history?", placeholder: "// Paste code here...", langName: "English", wishesPlaceholder: "Additional wishes...", exportBtn: "Export MD", scoreTitle: "Score", analysisTimeLabel: "Analysis time:", aiDisclaimer: "Artificial intelligence may make mistakes. Please verify information and code before use.",
+        tipDebug: "Fix", tipOptimize: "Optimize", tipExplain: "Explain", tipReview: "Review", tipSecurity: "Security", tipRefactor: "Refactor", tipDocument: "Document", tipConvert: "Convert", tipFormat: "Format", tipTest: "Reasoning",
         convertFrom: "From:", convertTo: "To:",
         languageMismatchTitle: "Language Mismatch", languageMismatchMessage: "Code appears to be a different language. Change programming language?",
         tipFormatCode: "Format code", tipUploadFile: "Upload file", tipDownloadFile: "Save file", tipVersionHistory: "Version history", tipCopyCode: "Copy code", tipClearEditor: "Clear editor",
@@ -113,12 +113,12 @@ const TRANSLATIONS = {
         deleteChatConfirmMessage: "This action cannot be undone.",
         deleteChat: "Delete",
         welcomeDesc: "Your personal AI coding assistant. Fix bugs, optimize, convert languages, and test code with artificial intelligence.", startBtn: "Start", startTutorialBtn: "Tutorial", skipBtn: "Skip", nextTour: "Next", finishTour: "Done", emptyStatePrompt: "Ready to code.",
-        featureDebug: "Debug & Fix", featureDebugDesc: "Find and fix bugs automatically", featureOptimize: "Optimize", featureOptimizeDesc: "Improve performance and code quality", featureExplain: "Explain", featureExplainDesc: "Understand code logic in detail", featureConvert: "Convert", featureConvertDesc: "Convert between programming languages", featureTest: "Generate Tests", featureTestDesc: "Create unit and integration tests", featureSecurity: "Security", featureSecurityDesc: "Find vulnerabilities and security issues", featureMultiLang: "6 Languages", featureMultiCodeLang: "30+ Programming Languages", featureFast: "Fast & Free",
+        featureDebug: "Debug & Fix", featureDebugDesc: "Find and fix bugs automatically", featureOptimize: "Optimize", featureOptimizeDesc: "Improve performance and code quality", featureExplain: "Explain", featureExplainDesc: "Understand code logic in detail", featureConvert: "Convert", featureConvertDesc: "Convert between programming languages", featureTest: "Reasoning", featureTestDesc: "See AI's step-by-step thinking process", featureSecurity: "Security", featureSecurityDesc: "Find vulnerabilities and security issues", featureMultiLang: "6 Languages", featureMultiCodeLang: "30+ Programming Languages", featureFast: "Fast & Free",
         tabHistory: "History", tabTips: "Tips", historyEmptyDesc: "No history yet.", funFactHeader: "Fun Fact",
         tourStep1Title: "1. Enter code", tourStep1Desc: "Paste code in the text area.", tourStep2Title: "2. Select language", tourStep2Desc: "Choose programming language.", tourStep3Title: "3. Choose mode", tourStep3Desc: "What AI should do (fix, optimize, explain).", tourStep4Title: "4. Run", tourStep4Desc: "Click Run to start analysis!"
     },
     pl: {
-        newChatBtn: "Nowy czat", donateBtn: "Kawa", runBtn: "Uruchom", analysisHeader: "Analiza", emptyTitle: "FixlyCode", loading: "Analizowanie...", errorEmpty: "Wprowadź kod!", clearHistory: "Wyczyść", clearHistoryConfirm: "Wyczyścić historię?", placeholder: "// Wklej kod tutaj...", tipHeader: "Wskazówka:", langName: "Polski", wishesPlaceholder: "Dodatkowe życzenia...", exportBtn: "Eksportuj MD", scoreTitle: "Ocena",
+        newChatBtn: "Nowy czat", donateBtn: "Kawa", runBtn: "Uruchom", analysisHeader: "Analiza", emptyTitle: "FixlyCode", loading: "Analizowanie...", errorEmpty: "Wprowadź kod!", clearHistory: "Wyczyść", clearHistoryConfirm: "Wyczyścić historię?", placeholder: "// Wklej kod tutaj...", tipHeader: "Wskazówka:", langName: "Polski", wishesPlaceholder: "Dodatkowe życzenia...", exportBtn: "Eksportuj MD", scoreTitle: "Ocena", analysisTimeLabel: "Czas analizy:", aiDisclaimer: "Sztuczna inteligencja może popełniać błędy. Proszę sprawdzić informacje i kod przed użyciem.",
         formatCode: "Formatuj", uploadFile: "Wgraj", downloadFile: "Pobierz", copyCode: "Kopiuj", clearEditor: "Wyczyść",
         clearConfirm: "Wyczyścić edytor?",
         clearConfirmTitle: "Wyczyścić edytor?",
@@ -134,17 +134,17 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Usunąć czat?",
         deleteChatConfirmMessage: "Tej akcji nie można cofnąć.",
         deleteChat: "Usunąć",
-        tipDebug: "Napraw", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Przegląd", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Testy",
+        tipDebug: "Napraw", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Przegląd", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Rozumowanie",
         convertFrom: "Z:", convertTo: "Do:",
         languageMismatchTitle: "Niezgodność języka", languageMismatchMessage: "Kod wygląda na inny język. Zmienić język programowania?",
         tipFormatCode: "Formatuj kod", tipUploadFile: "Wgraj plik", tipDownloadFile: "Zapisz plik", tipVersionHistory: "Historia wersji", tipCopyCode: "Kopiuj kod", tipClearEditor: "Wyczyść edytor",
         welcomeDesc: "Twój osobisty asystent AI do kodowania. Naprawiaj błędy, optymalizuj, konwertuj języki i testuj kod za pomocą sztucznej inteligencji.", startBtn: "Start", startTutorialBtn: "Samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Gotowe", emptyStatePrompt: "Gotowy do kodowania.",
-        featureDebug: "Debugowanie", featureDebugDesc: "Znajdź i napraw błędy automatycznie", featureOptimize: "Optymalizacja", featureOptimizeDesc: "Popraw wydajność i jakość kodu", featureExplain: "Wyjaśnienie", featureExplainDesc: "Zrozum logikę kodu szczegółowo", featureConvert: "Konwersja", featureConvertDesc: "Konwertuj między językami programowania", featureTest: "Testy", featureTestDesc: "Twórz testy jednostkowe i integracyjne", featureSecurity: "Bezpieczeństwo", featureSecurityDesc: "Znajdź luki i problemy bezpieczeństwa", featureMultiLang: "6 Języków", featureMultiCodeLang: "30+ Języków Programowania", featureFast: "Szybko i Za Darmo",
+        featureDebug: "Debugowanie", featureDebugDesc: "Znajdź i napraw błędy automatycznie", featureOptimize: "Optymalizacja", featureOptimizeDesc: "Popraw wydajność i jakość kodu", featureExplain: "Wyjaśnienie", featureExplainDesc: "Zrozum logikę kodu szczegółowo", featureConvert: "Konwersja", featureConvertDesc: "Konwertuj między językami programowania", featureTest: "Rozumowanie", featureTestDesc: "Zobacz proces myślenia AI krok po kroku", featureSecurity: "Bezpieczeństwo", featureSecurityDesc: "Znajdź luki i problemy bezpieczeństwa", featureMultiLang: "6 Języków", featureMultiCodeLang: "30+ Języków Programowania", featureFast: "Szybko i Za Darmo",
         tabHistory: "Historia", tabTips: "Wskazówki", historyEmptyDesc: "Brak historii.", funFactHeader: "Ciekawostka",
         tourStep1Title: "1. Wprowadź kod", tourStep1Desc: "Wklej kod w obszarze tekstowym.", tourStep2Title: "2. Wybierz język", tourStep2Desc: "Wybierz język programowania.", tourStep3Title: "3. Wybierz tryb", tourStep3Desc: "Co AI ma zrobić (naprawić, zoptymalizować, wyjaśnić).", tourStep4Title: "4. Uruchom", tourStep4Desc: "Kliknij Uruchom, aby rozpocząć analizę!"
     },
     de: {
-        newChatBtn: "Neuer Chat", donateBtn: "Kaffee", runBtn: "Ausführen", analysisHeader: "Analyse", emptyTitle: "FixlyCode", loading: "Analysiere...", errorEmpty: "Code eingeben!", clearHistory: "Löschen", clearHistoryConfirm: "Verlauf löschen?", placeholder: "// Code hier einfügen...", tipHeader: "Tipp:", langName: "Deutsch", wishesPlaceholder: "Zusätzliche Wünsche...", exportBtn: "Export MD", scoreTitle: "Bewertung",
+        newChatBtn: "Neuer Chat", donateBtn: "Kaffee", runBtn: "Ausführen", analysisHeader: "Analyse", emptyTitle: "FixlyCode", loading: "Analysiere...", errorEmpty: "Code eingeben!", clearHistory: "Löschen", clearHistoryConfirm: "Verlauf löschen?", placeholder: "// Code hier einfügen...", tipHeader: "Tipp:", langName: "Deutsch", wishesPlaceholder: "Zusätzliche Wünsche...", exportBtn: "Export MD", scoreTitle: "Bewertung", analysisTimeLabel: "Analysezeit:", aiDisclaimer: "Künstliche Intelligenz kann Fehler machen. Bitte überprüfen Sie Informationen und Code vor der Verwendung.",
         formatCode: "Formatieren", uploadFile: "Hochladen", downloadFile: "Herunterladen", copyCode: "Kopieren", clearEditor: "Löschen",
         clearConfirm: "Editor löschen?",
         clearConfirmTitle: "Editor löschen?",
@@ -160,17 +160,17 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Chat löschen?",
         deleteChatConfirmMessage: "Diese Aktion kann nicht rückgängig gemacht werden.",
         deleteChat: "Löschen",
-        tipDebug: "Beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Prüfen", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Tests",
+        tipDebug: "Beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Prüfen", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Argumentation",
         convertFrom: "Von:", convertTo: "Nach:",
         languageMismatchTitle: "Sprachkonflikt", languageMismatchMessage: "Der Code scheint eine andere Sprache zu sein. Programmiersprache ändern?",
         tipFormatCode: "Code formatieren", tipUploadFile: "Datei hochladen", tipDownloadFile: "Datei speichern", tipVersionHistory: "Versionsverlauf", tipCopyCode: "Code kopieren", tipClearEditor: "Editor löschen",
         welcomeDesc: "Ihr persönlicher KI-Code-Assistent. Beheben Sie Fehler, optimieren Sie, konvertieren Sie Sprachen und testen Sie Code mit künstlicher Intelligenz.", startBtn: "Start", startTutorialBtn: "Tutorial", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Fertig", emptyStatePrompt: "Bereit zum Codieren.",
-        featureDebug: "Debuggen", featureDebugDesc: "Fehler automatisch finden und beheben", featureOptimize: "Optimieren", featureOptimizeDesc: "Leistung und Codequalität verbessern", featureExplain: "Erklären", featureExplainDesc: "Code-Logik im Detail verstehen", featureConvert: "Konvertieren", featureConvertDesc: "Zwischen Programmiersprachen konvertieren", featureTest: "Tests", featureTestDesc: "Unit- und Integrationstests erstellen", featureSecurity: "Sicherheit", featureSecurityDesc: "Schwachstellen und Sicherheitsprobleme finden", featureMultiLang: "6 Sprachen", featureMultiCodeLang: "30+ Programmiersprachen", featureFast: "Schnell & Kostenlos",
+        featureDebug: "Debuggen", featureDebugDesc: "Fehler automatisch finden und beheben", featureOptimize: "Optimieren", featureOptimizeDesc: "Leistung und Codequalität verbessern", featureExplain: "Erklären", featureExplainDesc: "Code-Logik im Detail verstehen", featureConvert: "Konvertieren", featureConvertDesc: "Zwischen Programmiersprachen konvertieren", featureTest: "Argumentation", featureTestDesc: "Sehen Sie den Denkprozess der KI Schritt für Schritt", featureSecurity: "Sicherheit", featureSecurityDesc: "Schwachstellen und Sicherheitsprobleme finden", featureMultiLang: "6 Sprachen", featureMultiCodeLang: "30+ Programmiersprachen", featureFast: "Schnell & Kostenlos",
         tabHistory: "Verlauf", tabTips: "Tipps", historyEmptyDesc: "Kein Verlauf.", funFactHeader: "Fun Fact",
         tourStep1Title: "1. Code eingeben", tourStep1Desc: "Code in das Textfeld einfügen.", tourStep2Title: "2. Sprache wählen", tourStep2Desc: "Programmiersprache wählen.", tourStep3Title: "3. Modus wählen", tourStep3Desc: "Was die KI tun soll (beheben, optimieren, erklären).", tourStep4Title: "4. Ausführen", tourStep4Desc: "Auf Ausführen klicken, um die Analyse zu starten!"
     },
     es: {
-        newChatBtn: "Nuevo chat", donateBtn: "Café", runBtn: "Ejecutar", analysisHeader: "Análisis", emptyTitle: "FixlyCode", loading: "Analizando...", errorEmpty: "¡Ingresa código!", clearHistory: "Limpiar", clearHistoryConfirm: "¿Limpiar historial?", placeholder: "// Pega el código aquí...", tipHeader: "Consejo:", langName: "Español", wishesPlaceholder: "Deseos adicionales...", exportBtn: "Exportar MD", scoreTitle: "Puntuación",
+        newChatBtn: "Nuevo chat", donateBtn: "Café", runBtn: "Ejecutar", analysisHeader: "Análisis", emptyTitle: "FixlyCode", loading: "Analizando...", errorEmpty: "¡Ingresa código!", clearHistory: "Limpiar", clearHistoryConfirm: "¿Limpiar historial?", placeholder: "// Pega el código aquí...", tipHeader: "Consejo:", langName: "Español", wishesPlaceholder: "Deseos adicionales...", exportBtn: "Exportar MD", scoreTitle: "Puntuación", analysisTimeLabel: "Tiempo de análisis:", aiDisclaimer: "La inteligencia artificial puede cometer errores. Por favor, verifique la información y el código antes de usar.",
         formatCode: "Formatear", uploadFile: "Subir", downloadFile: "Descargar", copyCode: "Copiar", clearEditor: "Limpiar",
         clearConfirm: "¿Limpiar editor?",
         clearConfirmTitle: "¿Limpiar editor?",
@@ -186,17 +186,17 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "¿Eliminar chat?",
         deleteChatConfirmMessage: "Esta acción no se puede deshacer.",
         deleteChat: "Eliminar",
-        tipDebug: "Corregir", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Revisar", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Pruebas",
+        tipDebug: "Corregir", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Revisar", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Razonamiento",
         convertFrom: "De:", convertTo: "A:",
         languageMismatchTitle: "Conflicto de idioma", languageMismatchMessage: "El código parece ser otro lenguaje. ¿Cambiar el lenguaje de programación?",
         tipFormatCode: "Formatear código", tipUploadFile: "Subir archivo", tipDownloadFile: "Guardar archivo", tipVersionHistory: "Historial de versiones", tipCopyCode: "Copiar código", tipClearEditor: "Limpiar editor",
         welcomeDesc: "Tu asistente personal de código con IA. Corrige errores, optimiza, convierte lenguajes y prueba código con inteligencia artificial.", startBtn: "Iniciar", startTutorialBtn: "Tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Listo", emptyStatePrompt: "Listo para codificar.",
-        featureDebug: "Depurar", featureDebugDesc: "Encuentra y corrige errores automáticamente", featureOptimize: "Optimizar", featureOptimizeDesc: "Mejora el rendimiento y calidad del código", featureExplain: "Explicar", featureExplainDesc: "Entiende la lógica del código en detalle", featureConvert: "Convertir", featureConvertDesc: "Convierte entre lenguajes de programación", featureTest: "Generar Tests", featureTestDesc: "Crea tests unitarios e integración", featureSecurity: "Seguridad", featureSecurityDesc: "Encuentra vulnerabilidades y problemas de seguridad", featureMultiLang: "6 Idiomas", featureMultiCodeLang: "30+ Lenguajes de Programación", featureFast: "Rápido y Gratis",
+        featureDebug: "Depurar", featureDebugDesc: "Encuentra y corrige errores automáticamente", featureOptimize: "Optimizar", featureOptimizeDesc: "Mejora el rendimiento y calidad del código", featureExplain: "Explicar", featureExplainDesc: "Entiende la lógica del código en detalle", featureConvert: "Convertir", featureConvertDesc: "Convierte entre lenguajes de programación", featureTest: "Razonamiento", featureTestDesc: "Ve el proceso de pensamiento de la IA paso a paso", featureSecurity: "Seguridad", featureSecurityDesc: "Encuentra vulnerabilidades y problemas de seguridad", featureMultiLang: "6 Idiomas", featureMultiCodeLang: "30+ Lenguajes de Programación", featureFast: "Rápido y Gratis",
         tabHistory: "Historial", tabTips: "Consejos", historyEmptyDesc: "Sin historial.", funFactHeader: "Dato curioso",
         tourStep1Title: "1. Ingresa código", tourStep1Desc: "Pega código en el área de texto.", tourStep2Title: "2. Selecciona idioma", tourStep2Desc: "Elige lenguaje de programación.", tourStep3Title: "3. Elige modo", tourStep3Desc: "Qué debe hacer la IA (corregir, optimizar, explicar).", tourStep4Title: "4. Ejecutar", tourStep4Desc: "¡Haz clic en Ejecutar para comenzar el análisis!"
     },
     ru: {
-        newChatBtn: "Новый чат", donateBtn: "Кофе", runBtn: "Запуск", analysisHeader: "Анализ", emptyTitle: "FixlyCode", loading: "Анализ...", errorEmpty: "Введите код!", clearHistory: "Очистить", clearHistoryConfirm: "Очистить историю?", placeholder: "// Вставьте код здесь...", tipHeader: "Совет:", langName: "Русский", wishesPlaceholder: "Дополнительные пожелания...", exportBtn: "Экспорт MD", scoreTitle: "Оценка",
+        newChatBtn: "Новый чат", donateBtn: "Кофе", runBtn: "Запуск", analysisHeader: "Анализ", emptyTitle: "FixlyCode", loading: "Анализ...", errorEmpty: "Введите код!", clearHistory: "Очистить", clearHistoryConfirm: "Очистить историю?", placeholder: "// Вставьте код здесь...", tipHeader: "Совет:", langName: "Русский", wishesPlaceholder: "Дополнительные пожелания...", exportBtn: "Экспорт MD", scoreTitle: "Оценка", analysisTimeLabel: "Время анализа:", aiDisclaimer: "Искусственный интеллект может ошибаться. Пожалуйста, проверяйте информацию и код перед использованием.",
         formatCode: "Форматировать", uploadFile: "Загрузить", downloadFile: "Сохранить", copyCode: "Копировать", clearEditor: "Очистить",
         clearConfirm: "Очистить редактор?",
         clearConfirmTitle: "Очистить редактор?",
@@ -212,12 +212,12 @@ const TRANSLATIONS = {
         deleteChatConfirmTitle: "Удалить чат?",
         deleteChatConfirmMessage: "Это действие нельзя отменить.",
         deleteChat: "Удалить",
-        tipDebug: "Исправить", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Обзор", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматировать", tipTest: "Тесты",
+        tipDebug: "Исправить", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Обзор", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматировать", tipTest: "Рассуждение",
         convertFrom: "Из:", convertTo: "В:",
         languageMismatchTitle: "Несоответствие языка", languageMismatchMessage: "Код выглядит как другой язык. Изменить язык программирования?",
         tipFormatCode: "Форматировать код", tipUploadFile: "Загрузить файл", tipDownloadFile: "Сохранить файл", tipVersionHistory: "История версий", tipCopyCode: "Копировать код", tipClearEditor: "Очистить редактор",
         welcomeDesc: "Ваш персональный AI-ассистент для работы с кодом. Исправляйте ошибки, оптимизируйте, конвертируйте языки и тестируйте код с помощью искусственного интеллекта.", startBtn: "Начать", startTutorialBtn: "Обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Готово", emptyStatePrompt: "Выберите режим и нажмите Запуск",
-        featureDebug: "Исправление", featureDebugDesc: "Найдите и исправьте ошибки автоматически", featureOptimize: "Оптимизация", featureOptimizeDesc: "Улучшите производительность и качество кода", featureExplain: "Объяснение", featureExplainDesc: "Детально поймите логику кода", featureConvert: "Конвертация", featureConvertDesc: "Конвертируйте между языками программирования", featureTest: "Тесты", featureTestDesc: "Создавайте unit и integration тесты", featureSecurity: "Безопасность", featureSecurityDesc: "Найдите уязвимости и проблемы безопасности", featureMultiLang: "6 Языков", featureMultiCodeLang: "30+ Языков Программирования", featureFast: "Быстро и Бесплатно",
+        featureDebug: "Исправление", featureDebugDesc: "Найдите и исправьте ошибки автоматически", featureOptimize: "Оптимизация", featureOptimizeDesc: "Улучшите производительность и качество кода", featureExplain: "Объяснение", featureExplainDesc: "Детально поймите логику кода", featureConvert: "Конвертация", featureConvertDesc: "Конвертируйте между языками программирования", featureTest: "Рассуждение", featureTestDesc: "Посмотрите на процесс мышления AI пошагово", featureSecurity: "Безопасность", featureSecurityDesc: "Найдите уязвимости и проблемы безопасности", featureMultiLang: "6 Языков", featureMultiCodeLang: "30+ Языков Программирования", featureFast: "Быстро и Бесплатно",
         tabHistory: "История", tabTips: "Советы", historyEmptyDesc: "Здесь появятся ваши запросы.", funFactHeader: "Интересный факт",
         tourStep1Title: "1. Введите код", tourStep1Desc: "Вставьте код в текстовое поле.", tourStep2Title: "2. Выберите язык", tourStep2Desc: "Выберите язык программирования.", tourStep3Title: "3. Выберите режим", tourStep3Desc: "Что должен сделать AI (исправить, оптимизировать, объяснить).", tourStep4Title: "4. Запустите", tourStep4Desc: "Нажмите Запуск, чтобы начать анализ!"
     }
@@ -297,6 +297,9 @@ const els = {
     emptyState: document.getElementById('empty-state'),
     loadingOverlay: document.getElementById('loading-overlay'),
     loadingText: document.getElementById('loading-text'),
+    analysisTimer: document.getElementById('analysis-timer'),
+    timerText: document.getElementById('timer-text'),
+    aiDisclaimer: document.getElementById('ai-disclaimer'),
     runBtn: document.getElementById('run-btn'),
     runBtnText: document.getElementById('run-btn-text'),
     errorMsg: document.getElementById('error-msg'),
@@ -903,8 +906,12 @@ async function runAI() {
     const cacheKey = generateCacheKey(code, currentMode, responseLang, selectedModel, wishes);
     const cached = getCachedResponse(cacheKey);
     
+    // Start analysis timer
+    const analysisStartTime = Date.now();
+    let timerInterval;
+    
     if (cached) {
-        renderOutput(cached, lang);
+        renderOutput(cached, lang, 0); // 0 for cached (instant)
         addToHistory({ mode: currentMode, lang: responseLang, input: code, output: cached, time: new Date().toLocaleTimeString() });
         return;
     }
@@ -915,6 +922,27 @@ async function runAI() {
     els.runBtn.classList.add('run-btn-glowing');
     els.runBtn.setAttribute('aria-busy', 'true');
     els.runBtn.disabled = true;
+    
+    // Hide timer and disclaimer initially
+    if (els.analysisTimer) els.analysisTimer.classList.add('hidden');
+    if (els.aiDisclaimer) els.aiDisclaimer.classList.add('hidden');
+    
+    // Start analysis timer
+    if (els.analysisTimer && els.timerText) {
+        timerInterval = setInterval(() => {
+            const elapsed = Math.floor((Date.now() - analysisStartTime) / 1000);
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            const timeString = minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;
+            if (els.timerText) {
+                const timerLabel = t.analysisTimeLabel || 'Analysis time:';
+                els.timerText.textContent = `${timerLabel} ${timeString}`;
+            }
+        }, 100);
+        // Store interval ID and start time for cleanup
+        window._analysisTimerInterval = timerInterval;
+        window._analysisStartTime = analysisStartTime;
+    }
     
     if (els.outputContainer) {
         els.outputContainer.setAttribute('aria-busy', 'true');
@@ -947,7 +975,7 @@ async function runAI() {
         'document': 'Generate comprehensive documentation: comments, docstrings, and usage examples.',
         'convert': 'Convert code to another programming language or framework.',
         'format': 'Format and style code according to language-specific conventions and best practices.',
-        'test': 'Generate comprehensive unit tests, integration tests, and test cases.'
+        'test': 'Analyze code using step-by-step reasoning and show the thinking process.'
     };
 
     let rawText = "";
@@ -1103,7 +1131,10 @@ async function runAI() {
 
     setCachedResponse(cacheKey, result);
     
-    renderOutput(result, lang);
+    // Calculate analysis time
+    const analysisTime = window._analysisStartTime ? Date.now() - window._analysisStartTime : 0;
+    
+    renderOutput(result, lang, analysisTime);
     addToHistory({ mode: currentMode, lang: responseLang, input: code, output: result, time: new Date().toLocaleTimeString() });
 
     } catch (error) {
@@ -1153,6 +1184,12 @@ async function runAI() {
         els.errorMsg.classList.add('animate-shake');
         setTimeout(() => els.errorMsg.classList.remove('animate-shake'), 300);
     } finally {
+        // Stop timer if still running
+        if (window._analysisTimerInterval) {
+            clearInterval(window._analysisTimerInterval);
+            window._analysisTimerInterval = null;
+        }
+        
         els.loadingOverlay.classList.add('hidden');
         els.runBtn.classList.remove('run-btn-glowing');
         els.runBtn.setAttribute('aria-busy', 'false');
@@ -1165,9 +1202,33 @@ async function runAI() {
 }
 
 // ... RENDER & UTILS ...
-function renderOutput(data, lang) {
+function renderOutput(data, lang, analysisTime) {
     els.emptyState.classList.add('hidden'); 
     els.outputContainer.classList.remove('hidden');
+    
+    // Stop and display timer
+    if (window._analysisTimerInterval) {
+        clearInterval(window._analysisTimerInterval);
+        window._analysisTimerInterval = null;
+    }
+    
+    if (els.analysisTimer && els.timerText && analysisTime !== undefined) {
+        const seconds = Math.floor(analysisTime / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        const timeString = minutes > 0 ? `${minutes}m ${secs}s` : `${secs}s`;
+        const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+        const timerLabel = t.analysisTimeLabel || 'Analysis time:';
+        els.timerText.textContent = `${timerLabel} ${timeString}`;
+        els.analysisTimer.classList.remove('hidden');
+    }
+    
+    // Show AI disclaimer
+    if (els.aiDisclaimer) {
+        setTimeout(() => {
+            els.aiDisclaimer.classList.remove('hidden');
+        }, 500);
+    }
     
     els.outputContainer.classList.add('animate-fade-in-up');
     setTimeout(() => {
@@ -1478,6 +1539,23 @@ function updateTexts(lang) {
         if (featureConvertDesc && t.featureConvertDesc) featureConvertDesc.textContent = t.featureConvertDesc;
         if (featureTest && t.featureTest) featureTest.textContent = t.featureTest;
         if (featureTestDesc && t.featureTestDesc) featureTestDesc.textContent = t.featureTestDesc;
+        
+        // Update timer and disclaimer texts
+        if (els.timerText && t.analysisTimeLabel) {
+            const currentText = els.timerText.textContent;
+            if (currentText && currentText.includes(':')) {
+                const timePart = currentText.split(':')[1]?.trim() || '';
+                if (timePart) {
+                    els.timerText.textContent = `${t.analysisTimeLabel} ${timePart}`;
+                }
+            }
+        }
+        if (els.aiDisclaimer) {
+            const disclaimerText = els.aiDisclaimer.querySelector('p[data-i18n="aiDisclaimer"]');
+            if (disclaimerText && t.aiDisclaimer) {
+                disclaimerText.textContent = t.aiDisclaimer;
+            }
+        }
         if (featureSecurity && t.featureSecurity) featureSecurity.textContent = t.featureSecurity;
         if (featureSecurityDesc && t.featureSecurityDesc) featureSecurityDesc.textContent = t.featureSecurityDesc;
         if (featureMultiLang && t.featureMultiLang) featureMultiLang.textContent = t.featureMultiLang;
@@ -1752,7 +1830,7 @@ function renderHistory() {
             els.input.value = item.input;
             els.langSelect.value = item.lang;
             setMode(item.mode);
-            renderOutput(item.output, item.lang);
+            renderOutput(item.output, item.lang, 0); // 0 for history items
             updateLineNumbers();
             els.input.focus();
         };

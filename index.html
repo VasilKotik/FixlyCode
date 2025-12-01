@@ -480,6 +480,20 @@
                         <div class="relative group rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 shadow-md">
                             <pre class="m-0 !bg-white dark:!bg-[#151b2b] !p-4 !margin-0 transition-colors"><code id="output-code" class="language-javascript code-font text-sm"></code></pre>
                         </div>
+                        
+                        <!-- Analysis Timer -->
+                        <div id="analysis-timer" class="hidden bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700 p-2 flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-slate-400 dark:text-slate-500 text-xs mr-2"></i>
+                            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium" id="timer-text" data-i18n="analysisTime">Analysis time: 0s</span>
+                        </div>
+                        
+                        <!-- AI Disclaimer -->
+                        <div id="ai-disclaimer" class="hidden bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800/50 p-3 flex items-start animate-fade-in">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-500 dark:text-amber-400 text-sm mr-3 mt-0.5 flex-shrink-0"></i>
+                            <div class="flex-1">
+                                <p class="text-xs text-amber-800 dark:text-amber-200 leading-relaxed font-medium" data-i18n="aiDisclaimer">Штучний інтелект може помилятися. Будь ласка, перевіряйте інформацію та код перед використанням.</p>
+                            </div>
+                        </div>
                     </div>
                     <div id="view-preview" class="hidden h-full pb-10">
                         <div class="h-full bg-white rounded-xl border border-gray-200 dark:border-slate-700 shadow-lg overflow-hidden flex flex-col">
