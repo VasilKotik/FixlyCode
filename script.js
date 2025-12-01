@@ -421,8 +421,21 @@ document.addEventListener('DOMContentLoaded', () => {
         els.html.classList.add('overflow-hidden');
     }
     if (isDark) els.html.classList.add('dark'); else els.html.classList.remove('dark');
-    if (!TRANSLATIONS[currentLang]) currentLang = 'en';
-    if (els.uiLang) els.uiLang.value = currentLang;
+    // Validate and set current language
+    if (!TRANSLATIONS[currentLang]) {
+        currentLang = 'en';
+    }
+    if (els.uiLang) {
+        // Ensure the value exists in the select options
+        const optionExists = Array.from(els.uiLang.options).some(opt => opt.value === currentLang);
+        if (optionExists) {
+            els.uiLang.value = currentLang;
+        } else {
+            // Fallback to first available option or 'en'
+            els.uiLang.value = els.uiLang.options[0]?.value || 'en';
+            currentLang = els.uiLang.value;
+        }
+    }
     updateTexts(currentLang);
     renderHistory(); 
     
@@ -450,7 +463,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.runBtn) els.runBtn.addEventListener('click', runAI);
     if (els.newChatBtn) els.newChatBtn.addEventListener('click', newChat);
     if (els.themeToggle) els.themeToggle.addEventListener('click', toggleTheme);
-    if (els.uiLang) els.uiLang.addEventListener('change', (e) => updateTexts(e.target.value));
+    if (els.uiLang) {
+        els.uiLang.addEventListener('change', (e) => {
+            const selectedLang = e.target.value;
+            // Validate that the selected language exists in TRANSLATIONS
+            if (TRANSLATIONS[selectedLang]) {
+                updateTexts(selectedLang);
+            } else {
+                // Fallback to English if invalid language
+                console.warn(`Language "${selectedLang}" not found, falling back to English`);
+                e.target.value = 'en';
+                updateTexts('en');
+            }
+        });
+    }
     if (els.copyBtn) els.copyBtn.addEventListener('click', copyCode);
     if (els.exportBtn) els.exportBtn.addEventListener('click', exportMarkdown);
     const clearInputBtnEl = document.getElementById('clear-input-btn');
