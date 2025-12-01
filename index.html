@@ -573,6 +573,22 @@
         </div>
     </div>
 
+    <div id="language-mismatch-dialog" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 transform transition-all scale-95 opacity-0" id="language-mismatch-dialog-content">
+            <div class="flex items-center mb-4">
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mr-4">
+                    <i class="fa-solid fa-code text-blue-600 dark:text-blue-400 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 dark:text-white" data-i18n="languageMismatchTitle">Language Mismatch Detected</h3>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-6 leading-relaxed" id="language-mismatch-message" data-i18n="languageMismatchMessage">The code appears to be written in a different language than selected. Would you like to change the language setting?</p>
+            <div class="flex justify-end space-x-3">
+                <button id="language-mismatch-cancel" class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-700 rounded-lg transition" data-i18n="cancel">Cancel</button>
+                <button id="language-mismatch-change" class="px-4 py-2 text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition flex items-center space-x-2" data-i18n="changeLanguage">Change Language</button>
+            </div>
+        </div>
+    </div>
+
     <input type="file" id="file-upload-input" class="hidden" accept=".js,.ts,.jsx,.tsx,.py,.java,.cpp,.c,.cs,.go,.rs,.swift,.kt,.dart,.php,.rb,.html,.css,.vue,.svelte,.sql,.r,.sh,.ps1,.lua,.pl,.scala,.hs,.ex,.clj,.erl,.json,.yaml,.yml,.xml,.md,.toml,.ini,.conf,.txt,.log,.asm,.m">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" defer></script>

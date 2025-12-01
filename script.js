@@ -70,6 +70,7 @@ const TRANSLATIONS = {
         newChatBtn: "Новий чат", donateBtn: "На каву", runBtn: "Запуск", analysisHeader: "Аналіз", emptyTitle: "FixlyCode", loading: "Аналіз...", errorEmpty: "Введіть код!", clearHistory: "Очистити", clearHistoryConfirm: "Очистити всю історію?", placeholder: "// Вставте код тут...", tipHeader: "Порада:", langName: "Українська", wishesPlaceholder: "Додаткові побажання...", exportBtn: "Експорт MD", scoreTitle: "Оцінка",
         tipDebug: "Виправити", tipOptimize: "Оптимізувати", tipExplain: "Пояснити", tipReview: "Огляд", tipSecurity: "Безпека", tipRefactor: "Рефакторинг", tipDocument: "Документація", tipConvert: "Конвертувати", tipFormat: "Форматувати", tipTest: "Тести",
         convertFrom: "З:", convertTo: "В:",
+        languageMismatchTitle: "Невідповідність мови", languageMismatchMessage: "Код виглядає як інша мова. Змінити мову програмування?",
         tipFormatCode: "Форматувати код", tipUploadFile: "Завантажити файл", tipDownloadFile: "Зберегти файл", tipVersionHistory: "Історія версій", tipCopyCode: "Копіювати код", tipClearEditor: "Очистити редактор",
         formatCode: "Форматувати", uploadFile: "Завантажити", downloadFile: "Зберегти", copyCode: "Копіювати", clearEditor: "Очистити",
         clearConfirm: "Очистити редактор?",
@@ -94,6 +95,7 @@ const TRANSLATIONS = {
         newChatBtn: "New Chat", donateBtn: "Buy coffee", runBtn: "Run", analysisHeader: "Analysis", emptyTitle: "FixlyCode", loading: "Thinking...", errorEmpty: "Enter code!", clearHistory: "Clear", clearHistoryConfirm: "Clear all history?", placeholder: "// Paste code here...", langName: "English", wishesPlaceholder: "Additional wishes...", exportBtn: "Export MD", scoreTitle: "Score",
         tipDebug: "Fix", tipOptimize: "Optimize", tipExplain: "Explain", tipReview: "Review", tipSecurity: "Security", tipRefactor: "Refactor", tipDocument: "Document", tipConvert: "Convert", tipFormat: "Format", tipTest: "Tests",
         convertFrom: "From:", convertTo: "To:",
+        languageMismatchTitle: "Language Mismatch", languageMismatchMessage: "Code appears to be a different language. Change programming language?",
         tipFormatCode: "Format code", tipUploadFile: "Upload file", tipDownloadFile: "Save file", tipVersionHistory: "Version history", tipCopyCode: "Copy code", tipClearEditor: "Clear editor",
         formatCode: "Format", uploadFile: "Upload", downloadFile: "Download", copyCode: "Copy", clearEditor: "Clear",
         clearConfirm: "Clear editor?",
@@ -133,6 +135,7 @@ const TRANSLATIONS = {
         deleteChat: "Usunąć",
         tipDebug: "Napraw", tipOptimize: "Optymalizuj", tipExplain: "Wyjaśnij", tipReview: "Przegląd", tipSecurity: "Bezpieczeństwo", tipRefactor: "Refaktoryzuj", tipDocument: "Dokumentacja", tipConvert: "Konwertuj", tipFormat: "Formatuj", tipTest: "Testy",
         convertFrom: "Z:", convertTo: "Do:",
+        languageMismatchTitle: "Niezgodność języka", languageMismatchMessage: "Kod wygląda na inny język. Zmienić język programowania?",
         tipFormatCode: "Formatuj kod", tipUploadFile: "Wgraj plik", tipDownloadFile: "Zapisz plik", tipVersionHistory: "Historia wersji", tipCopyCode: "Kopiuj kod", tipClearEditor: "Wyczyść edytor",
         welcomeDesc: "Asystent AI do kodowania. Naprawiaj błędy, optymalizuj i testuj kod.", startBtn: "Start", startTutorialBtn: "Samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Gotowe", emptyStatePrompt: "Gotowy do kodowania.",
         tabHistory: "Historia", tabTips: "Wskazówki", historyEmptyDesc: "Brak historii.", funFactHeader: "Ciekawostka",
@@ -157,6 +160,7 @@ const TRANSLATIONS = {
         deleteChat: "Löschen",
         tipDebug: "Beheben", tipOptimize: "Optimieren", tipExplain: "Erklären", tipReview: "Prüfen", tipSecurity: "Sicherheit", tipRefactor: "Refaktorieren", tipDocument: "Dokumentieren", tipConvert: "Konvertieren", tipFormat: "Formatieren", tipTest: "Tests",
         convertFrom: "Von:", convertTo: "Nach:",
+        languageMismatchTitle: "Sprachkonflikt", languageMismatchMessage: "Der Code scheint eine andere Sprache zu sein. Programmiersprache ändern?",
         tipFormatCode: "Code formatieren", tipUploadFile: "Datei hochladen", tipDownloadFile: "Datei speichern", tipVersionHistory: "Versionsverlauf", tipCopyCode: "Code kopieren", tipClearEditor: "Editor löschen",
         welcomeDesc: "KI-Code-Assistent. Fehler beheben, optimieren und testen.", startBtn: "Start", startTutorialBtn: "Tutorial", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Fertig", emptyStatePrompt: "Bereit zum Codieren.",
         tabHistory: "Verlauf", tabTips: "Tipps", historyEmptyDesc: "Kein Verlauf.", funFactHeader: "Fun Fact",
@@ -181,6 +185,7 @@ const TRANSLATIONS = {
         deleteChat: "Eliminar",
         tipDebug: "Corregir", tipOptimize: "Optimizar", tipExplain: "Explicar", tipReview: "Revisar", tipSecurity: "Seguridad", tipRefactor: "Refactorizar", tipDocument: "Documentar", tipConvert: "Convertir", tipFormat: "Formatear", tipTest: "Pruebas",
         convertFrom: "De:", convertTo: "A:",
+        languageMismatchTitle: "Conflicto de idioma", languageMismatchMessage: "El código parece ser otro lenguaje. ¿Cambiar el lenguaje de programación?",
         tipFormatCode: "Formatear código", tipUploadFile: "Subir archivo", tipDownloadFile: "Guardar archivo", tipVersionHistory: "Historial de versiones", tipCopyCode: "Copiar código", tipClearEditor: "Limpiar editor",
         welcomeDesc: "Asistente de código con IA. Corrige errores, optimiza y prueba código.", startBtn: "Iniciar", startTutorialBtn: "Tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Listo", emptyStatePrompt: "Listo para codificar.",
         tabHistory: "Historial", tabTips: "Consejos", historyEmptyDesc: "Sin historial.", funFactHeader: "Dato curioso",
@@ -205,6 +210,7 @@ const TRANSLATIONS = {
         deleteChat: "Удалить",
         tipDebug: "Исправить", tipOptimize: "Оптимизировать", tipExplain: "Объяснить", tipReview: "Обзор", tipSecurity: "Безопасность", tipRefactor: "Рефакторинг", tipDocument: "Документация", tipConvert: "Конвертировать", tipFormat: "Форматировать", tipTest: "Тесты",
         convertFrom: "Из:", convertTo: "В:",
+        languageMismatchTitle: "Несоответствие языка", languageMismatchMessage: "Код выглядит как другой язык. Изменить язык программирования?",
         tipFormatCode: "Форматировать код", tipUploadFile: "Загрузить файл", tipDownloadFile: "Сохранить файл", tipVersionHistory: "История версий", tipCopyCode: "Копировать код", tipClearEditor: "Очистить редактор",
         welcomeDesc: "AI-ассистент для работы с кодом. Исправляйте ошибки, оптимизируйте и тестируйте.", startBtn: "Начать", startTutorialBtn: "Обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Готово", emptyStatePrompt: "Выберите режим и нажмите Запуск",
         tabHistory: "История", tabTips: "Советы", historyEmptyDesc: "Здесь появятся ваши запросы.", funFactHeader: "Интересный факт",
@@ -365,7 +371,12 @@ const els = {
     clearHistoryConfirmOk: document.getElementById('clear-history-confirm-ok'),
     convertPanel: document.getElementById('convert-panel'),
     convertFromLang: document.getElementById('convert-from-lang'),
-    convertToLang: document.getElementById('convert-to-lang')
+    convertToLang: document.getElementById('convert-to-lang'),
+    languageMismatchDialog: document.getElementById('language-mismatch-dialog'),
+    languageMismatchDialogContent: document.getElementById('language-mismatch-dialog-content'),
+    languageMismatchMessage: document.getElementById('language-mismatch-message'),
+    languageMismatchCancel: document.getElementById('language-mismatch-cancel'),
+    languageMismatchChange: document.getElementById('language-mismatch-change')
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -478,6 +489,34 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Language mismatch dialog handlers
+    if (els.languageMismatchCancel) {
+        els.languageMismatchCancel.addEventListener('click', closeLanguageMismatchDialog);
+    }
+    if (els.languageMismatchChange) {
+        els.languageMismatchChange.addEventListener('click', () => {
+            if (pendingDetectedLanguage) {
+                els.langSelect.value = pendingDetectedLanguage;
+                if (activeFile && files[activeFile]) {
+                    files[activeFile].language = pendingDetectedLanguage;
+                    saveFiles();
+                }
+                closeLanguageMismatchDialog();
+                // Automatically run AI after language change
+                setTimeout(() => {
+                    runAI();
+                }, 300);
+            }
+        });
+    }
+    if (els.languageMismatchDialog) {
+        els.languageMismatchDialog.addEventListener('click', (e) => {
+            if (e.target === els.languageMismatchDialog) {
+                closeLanguageMismatchDialog();
+            }
+        });
+    }
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (els.clearConfirmDialog && !els.clearConfirmDialog.classList.contains('hidden')) {
@@ -491,6 +530,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (els.deleteChatDialog && !els.deleteChatDialog.classList.contains('hidden')) {
                 closeDeleteChatDialog();
+            }
+            if (els.languageMismatchDialog && !els.languageMismatchDialog.classList.contains('hidden')) {
+                closeLanguageMismatchDialog();
             }
         }
     });
@@ -704,6 +746,117 @@ function setCachedResponse(key, data) {
     }, 0);
 }
 
+// Detect programming language from code content
+function detectCodeLanguage(code) {
+    if (!code || code.trim().length < 10) return null;
+    
+    const codeLower = code.toLowerCase();
+    const codeLines = code.split('\n').slice(0, 20).join('\n').toLowerCase();
+    
+    // C++ / C
+    if (code.includes('#include') || code.includes('using namespace') || 
+        code.includes('std::') || code.includes('cout') || code.includes('cin') ||
+        (code.includes('int main') && (code.includes('{') || code.includes(';')))) {
+        if (code.includes('class') && (code.includes('public:') || code.includes('private:'))) {
+            return 'C++';
+        }
+        return 'C';
+    }
+    
+    // Java
+    if (code.includes('public class') || code.includes('public static void main') ||
+        code.includes('System.out.println') || code.includes('import java.')) {
+        return 'Java';
+    }
+    
+    // C#
+    if (code.includes('using System') || code.includes('namespace ') ||
+        code.includes('Console.WriteLine') || code.includes('public class') && code.includes('static void Main')) {
+        return 'C#';
+    }
+    
+    // Python
+    if (code.includes('def ') || code.includes('import ') && (code.includes('print(') || code.includes('if __name__')) ||
+        code.includes('elif ') || code.includes('except ') || code.includes('lambda ') ||
+        (codeLines.match(/^\s*(def|class|import|from|if|for|while|try|except)\s/))) {
+        return 'Python';
+    }
+    
+    // JavaScript / TypeScript
+    if (code.includes('function ') || code.includes('const ') || code.includes('let ') ||
+        code.includes('var ') || code.includes('=>') || code.includes('console.log') ||
+        code.includes('document.') || code.includes('require(') || code.includes('module.exports')) {
+        if (code.includes(':') && (code.includes('interface ') || code.includes('type ') || 
+            code.includes('enum ') || code.match(/:\s*(string|number|boolean|any|void)/))) {
+            return 'TypeScript';
+        }
+        if (code.includes('import ') && code.includes('from ') && code.includes("'") || code.includes('export ')) {
+            return 'JavaScript';
+        }
+        return 'JavaScript';
+    }
+    
+    // Go
+    if (code.includes('package ') || code.includes('func main()') ||
+        code.includes('import (') || code.includes('fmt.Println')) {
+        return 'Go';
+    }
+    
+    // Rust
+    if (code.includes('fn main()') || code.includes('use ') ||
+        code.includes('println!') || code.includes('let mut ') || code.includes('&str')) {
+        return 'Rust';
+    }
+    
+    // PHP
+    if (code.includes('<?php') || code.includes('<?=') ||
+        code.includes('$_') || code.includes('->') && code.includes('$')) {
+        return 'PHP';
+    }
+    
+    // Ruby
+    if (code.includes('def ') && code.includes('end') ||
+        code.includes('puts ') || code.includes('require ') ||
+        code.match(/^\s*(class|module|def)\s+\w+/)) {
+        return 'Ruby';
+    }
+    
+    // Swift
+    if (code.includes('func ') && code.includes('->') ||
+        code.includes('import Swift') || code.includes('var ') && code.includes(':') ||
+        code.includes('let ') && code.includes(':')) {
+        return 'Swift';
+    }
+    
+    // Kotlin
+    if (code.includes('fun ') || code.includes('val ') || code.includes('var ') && code.includes(':') ||
+        code.includes('println(') && code.includes('fun main')) {
+        return 'Kotlin';
+    }
+    
+    // HTML/CSS
+    if (code.includes('<!DOCTYPE') || code.includes('<html') || code.includes('<div') ||
+        code.includes('</') || (code.includes('<') && code.includes('>'))) {
+        if (code.includes('{') && code.includes('}') && (code.includes('color:') || code.includes('margin:'))) {
+            return 'HTML/CSS';
+        }
+        return 'HTML/CSS';
+    }
+    
+    // SQL
+    if (code.match(/\b(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|FROM|WHERE|JOIN)\b/i)) {
+        return 'SQL';
+    }
+    
+    // Shell/Bash
+    if (code.startsWith('#!/bin/') || code.includes('#!/usr/bin/') ||
+        code.match(/^\s*(if|for|while|case)\s+\[/) || code.includes('$(') || code.includes('`')) {
+        return 'Shell/Bash';
+    }
+    
+    return null;
+}
+
 async function runAI() {
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
     const code = els.input.value.trim();
@@ -715,6 +868,19 @@ async function runAI() {
         els.errorMsg.classList.add('animate-shake'); 
         setTimeout(() => els.errorMsg.classList.remove('animate-shake'), 300); 
         return; 
+    }
+    
+    // Detect code language and check if it matches selected language
+    // Skip detection in convert mode (user explicitly chooses languages)
+    if (currentMode !== 'convert') {
+        const detectedLang = detectCodeLanguage(code);
+        const selectedLang = els.langSelect.value;
+        
+        if (detectedLang && detectedLang !== selectedLang) {
+            // Show dialog to suggest language change
+            showLanguageMismatchDialog(detectedLang, selectedLang);
+            return;
+        }
     }
     
     if (!checkRateLimit()) {
@@ -1660,6 +1826,90 @@ function updateDeleteChatDialogTranslations() {
     }
 }
 
+// Show language mismatch dialog
+function showLanguageMismatchDialog(detectedLang, selectedLang) {
+    if (!els.languageMismatchDialog || !els.languageMismatchDialogContent) return;
+    
+    // Store detected language
+    pendingDetectedLanguage = detectedLang;
+    
+    // Update translations
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const langNames = {
+        'JavaScript': 'JavaScript',
+        'TypeScript': 'TypeScript',
+        'Python': 'Python',
+        'Java': 'Java',
+        'C++': 'C++',
+        'C#': 'C#',
+        'C': 'C',
+        'Go': 'Go',
+        'Rust': 'Rust',
+        'Swift': 'Swift',
+        'Kotlin': 'Kotlin',
+        'PHP': 'PHP',
+        'Ruby': 'Ruby',
+        'HTML/CSS': 'HTML/CSS',
+        'React': 'React',
+        'SQL': 'SQL',
+        'Shell/Bash': 'Shell/Bash'
+    };
+    
+    const detectedLangName = langNames[detectedLang] || detectedLang;
+    const selectedLangName = langNames[selectedLang] || selectedLang;
+    
+    // Build message based on UI language
+    let message;
+    if (currentLang === 'uk') {
+        message = `Код виглядає як ${detectedLangName}, але вибрано ${selectedLangName}. Змінити мову програмування на ${detectedLangName}?`;
+    } else if (currentLang === 'ru') {
+        message = `Код выглядит как ${detectedLangName}, но выбрано ${selectedLangName}. Изменить язык программирования на ${detectedLangName}?`;
+    } else if (currentLang === 'pl') {
+        message = `Kod wygląda na ${detectedLangName}, ale wybrano ${selectedLangName}. Zmienić język programowania na ${detectedLangName}?`;
+    } else if (currentLang === 'de') {
+        message = `Der Code sieht aus wie ${detectedLangName}, aber ${selectedLangName} wurde ausgewählt. Programmiersprache auf ${detectedLangName} ändern?`;
+    } else if (currentLang === 'es') {
+        message = `El código parece ser ${detectedLangName}, pero se seleccionó ${selectedLangName}. ¿Cambiar el lenguaje de programación a ${detectedLangName}?`;
+    } else {
+        message = `Code appears to be ${detectedLangName}, but ${selectedLangName} is selected. Change programming language to ${detectedLangName}?`;
+    }
+    
+    if (els.languageMismatchMessage) {
+        els.languageMismatchMessage.textContent = message;
+    }
+    
+    // Update button texts
+    if (els.languageMismatchCancel && t.cancel) {
+        els.languageMismatchCancel.textContent = t.cancel;
+    }
+    if (els.languageMismatchChange && t.changeLanguage) {
+        els.languageMismatchChange.textContent = t.changeLanguage;
+    }
+    
+    // Show dialog
+    els.languageMismatchDialog.classList.remove('hidden');
+    els.languageMismatchDialog.classList.add('flex');
+    
+    requestAnimationFrame(() => {
+        els.languageMismatchDialogContent.classList.remove('opacity-0', 'scale-95');
+        els.languageMismatchDialogContent.classList.add('dialog-open');
+    });
+}
+
+// Close language mismatch dialog
+function closeLanguageMismatchDialog() {
+    if (!els.languageMismatchDialog || !els.languageMismatchDialogContent) return;
+    
+    els.languageMismatchDialogContent.classList.remove('dialog-open');
+    
+    setTimeout(() => {
+        els.languageMismatchDialog.classList.add('hidden');
+        els.languageMismatchDialog.classList.remove('flex');
+        els.languageMismatchDialogContent.classList.add('opacity-0', 'scale-95');
+        pendingDetectedLanguage = null;
+    }, 200);
+}
+
 function deleteHistoryItem(index) {
     if (index >= 0 && index < history.length) {
         history.splice(index, 1);
@@ -1918,6 +2168,8 @@ function saveFiles() {
 let pendingLanguageChange = null;
 // Variable to store pending chat deletion index
 let pendingDeleteChatIndex = null;
+// Variable to store detected language from code analysis
+let pendingDetectedLanguage = null;
 
 // Handle language change - update file extension and ask for confirmation if code exists
 function handleLanguageChange() {
