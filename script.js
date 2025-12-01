@@ -3,11 +3,11 @@ const API_CONFIG = {
 };
 const MODEL_CONFIG = {
     'gemini-2.5-flash': { provider: 'google', supportsJson: true, verified: true },
+    'deepseek/deepseek-chat:free': { provider: 'openrouter', supportsJson: true, verified: true },
     'meta-llama/llama-3.1-8b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true },
+    'qwen/qwen-2.5-14b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true },
     'google/gemma-2-9b-it:free': { provider: 'openrouter', supportsJson: true, verified: true },
-    'qwen/qwen-2.5-7b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true },
-    'microsoft/phi-3-medium-128k-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true },
-    'meta-llama/llama-3-8b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true }
+    'microsoft/phi-3.5-mini-128k-instruct:free': { provider: 'openrouter', supportsJson: true, verified: true }
 };
 
 const FALLBACK_MODELS = {
