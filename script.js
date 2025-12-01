@@ -6,9 +6,7 @@ const MODEL_CONFIG = {
     'qwen/qwen3-coder:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'openai/gpt-oss-20b:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'x-ai/grok-4.1-fast:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'tngtech/deepseek-r1t2-chimera:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'google/gemma-3-27b:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'openrouter/bert-nebulon-alpha:free': { provider: 'openrouter', supportsJson: true, verified: false }
+    'tngtech/deepseek-r1t2-chimera:free': { provider: 'openrouter', supportsJson: true, verified: false }
 };
 
 const FALLBACK_MODELS = {
@@ -923,7 +921,10 @@ async function runAI() {
     } 
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout
+    // Longer timeout for slower models
+    const slowModels = ['x-ai/grok-4.1-fast:free', 'tngtech/deepseek-r1t2-chimera:free'];
+    const timeoutDuration = slowModels.includes(selectedModel) ? 120000 : 60000; // 120s for slow models, 60s for others
+    const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
 
     const targetLangName = t.langName || "English";
     
