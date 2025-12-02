@@ -227,6 +227,7 @@ let currentMode = 'debug';
 let currentLang = localStorage.getItem('fixly_lang') || 'en';
 let isDark = localStorage.getItem('fixly_theme') !== 'light';
 let history = [];
+let currentChatId = null; // Track current active chat
 let currentTourStep = 0; 
 let tooltipHideTimeout; 
 let typingInterval; 
@@ -265,7 +266,23 @@ const CACHE_CONFIG = {
 let responseCache = new Map();
 
 
-try { history = JSON.parse(localStorage.getItem('fixly_history')) || []; } catch (e) { history = []; }
+try { 
+    history = JSON.parse(localStorage.getItem('fixly_history')) || []; 
+    // Ensure all history items have id and versions
+    history.forEach(item => {
+        if (!item.id) {
+            item.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        }
+        if (!item.versions) {
+            item.versions = [];
+        }
+    });
+    // Save updated history back
+    try {
+        localStorage.setItem('fixly_history', JSON.stringify(history));
+    } catch (e) {
+    }
+} catch (e) { history = []; }
 try { 
     const cached = localStorage.getItem('fixly_cache');
     if (cached) {
@@ -1766,7 +1783,17 @@ function runPreview() {
         }
     }
 }
-function newChat() { els.input.value = ''; els.wishes.value = ''; els.outputContainer.classList.add('hidden'); els.emptyState.classList.remove('hidden'); els.tabPreview.classList.add('hidden'); localStorage.removeItem('fixly_draft'); switchTab('code'); updateLineNumbers(); }
+function newChat() { 
+    els.input.value = ''; 
+    els.wishes.value = ''; 
+    els.outputContainer.classList.add('hidden'); 
+    els.emptyState.classList.remove('hidden'); 
+    els.tabPreview.classList.add('hidden'); 
+    localStorage.removeItem('fixly_draft'); 
+    currentChatId = null; // Reset current chat
+    switchTab('code'); 
+    updateLineNumbers(); 
+}
 async function copyCode() {
     try {
         const text = els.outputCode.textContent;
@@ -1797,6 +1824,17 @@ async function copyCode() {
 }
 function exportMarkdown() { const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``; navigator.clipboard.writeText(md); els.exportBtn.textContent = "Copied!"; setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${t.exportBtn}`, 2000); }
 function addToHistory(item) {
+    // Add id and versions array if not present
+    if (!item.id) {
+        item.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    }
+    if (!item.versions) {
+        item.versions = [];
+    }
+    
+    // Set as current active chat
+    currentChatId = item.id;
+    
     history.unshift(item);
     if (history.length > 20) history.pop();
     
@@ -1843,6 +1881,8 @@ function renderHistory() {
             renderOutput(item.output, item.lang, 0); // 0 for history items
             updateLineNumbers();
             els.input.focus();
+            // Set as current active chat
+            currentChatId = item.id;
         };
         
         contentDiv.addEventListener('keydown', (e) => {
@@ -1858,8 +1898,27 @@ function renderHistory() {
             return tempDiv.innerHTML;
         };
         
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = "absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1";
+        
+        // Version history button
+        const versionBtn = document.createElement('button');
+        versionBtn.className = "p-1.5 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 text-blue-500 hover:text-blue-600 dark:hover:text-blue-400";
+        versionBtn.setAttribute('aria-label', 'View version history');
+        versionBtn.innerHTML = '<i class="fa-solid fa-clock-rotate-left text-xs"></i>';
+        versionBtn.onclick = (e) => {
+            e.stopPropagation();
+            if (item.versions && item.versions.length > 0) {
+                showVersionHistory(item.id);
+            } else {
+                const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+                alert(t.noVersions || 'No saved versions');
+            }
+        };
+        
+        // Delete button
         const deleteBtn = document.createElement('button');
-        deleteBtn.className = "absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-500 hover:text-red-600 dark:hover:text-red-400";
+        deleteBtn.className = "p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-500 hover:text-red-600 dark:hover:text-red-400";
         deleteBtn.setAttribute('aria-label', 'Delete this history item');
         deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i>';
         deleteBtn.onclick = (e) => {
@@ -1867,16 +1926,23 @@ function renderHistory() {
             showDeleteChatDialog(index);
         };
         
+        actionsDiv.appendChild(versionBtn);
+        actionsDiv.appendChild(deleteBtn);
+        
+        // Show version count badge if versions exist
+        const versionCount = item.versions ? item.versions.length : 0;
+        const versionBadge = versionCount > 0 ? `<span class="absolute top-1 left-1 bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">${versionCount}</span>` : '';
+        
         contentDiv.innerHTML = `
             <div class="flex justify-between mb-1">
                 <span class="font-mono text-[10px] text-slate-400">${escapeHtml(item.time)}</span>
                 <span class="text-[10px] font-bold text-brand-600 dark:text-brand-400">${escapeHtml(item.mode)}</span>
             </div>
-            <div class="text-xs truncate text-slate-500 dark:text-slate-400">${escapeHtml(item.input.substring(0, 30))}...</div>
+            <div class="text-xs truncate text-slate-500 dark:text-slate-400 relative">${versionBadge}${escapeHtml(item.input.substring(0, 30))}...</div>
         `;
         
         div.appendChild(contentDiv);
-        div.appendChild(deleteBtn);
+        div.appendChild(actionsDiv);
         fragment.appendChild(div);
     });
     
@@ -3042,9 +3108,45 @@ function clearInput() {
 
 
 function saveCurrentVersion() {
-    if (!activeFile || !els.input.value.trim()) return;
+    const content = els.input.value.trim();
+    if (!content) return;
     
-    const content = els.input.value;
+    // Save to current active chat if exists
+    if (currentChatId) {
+        const currentChat = history.find(chat => chat.id === currentChatId);
+        if (currentChat) {
+            if (!currentChat.versions) {
+                currentChat.versions = [];
+            }
+            
+            // Don't save if same as last version
+            const lastVersion = currentChat.versions[currentChat.versions.length - 1];
+            if (lastVersion && lastVersion.content === content) {
+                return;
+            }
+            
+            currentChat.versions.push({
+                content: content,
+                timestamp: Date.now()
+            });
+            
+            // Keep only last 50 versions per chat
+            if (currentChat.versions.length > 50) {
+                currentChat.versions = currentChat.versions.slice(-50);
+            }
+            
+            // Save to localStorage
+            try {
+                localStorage.setItem('fixly_history', JSON.stringify(history));
+            } catch (e) {
+            }
+            return;
+        }
+    }
+    
+    // Fallback to file-based versioning if no active chat
+    if (!activeFile) return;
+    
     if (!fileVersions[activeFile]) {
         fileVersions[activeFile] = [];
     }
@@ -3068,9 +3170,41 @@ function saveCurrentVersion() {
     saveFiles();
 }
 
-function showVersionHistory() {
+function showVersionHistory(chatId = null) {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    
+    // If chatId provided, show versions for that chat
+    if (chatId) {
+        const chat = history.find(c => c.id === chatId);
+        if (chat && chat.versions && chat.versions.length > 0) {
+            renderChatVersionHistory(chat);
+            els.versionHistoryDialog.classList.remove('hidden');
+            els.versionHistoryDialog.classList.add('flex');
+            setTimeout(() => {
+                els.versionHistoryDialogContent.classList.add('dialog-open');
+            }, 10);
+            return;
+        } else {
+            alert(t.noVersions || 'No saved versions');
+            return;
+        }
+    }
+    
+    // Otherwise, show file versions (fallback)
     if (!activeFile || !fileVersions[activeFile] || fileVersions[activeFile].length === 0) {
-        const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+        // Try to show current chat versions
+        if (currentChatId) {
+            const currentChat = history.find(c => c.id === currentChatId);
+            if (currentChat && currentChat.versions && currentChat.versions.length > 0) {
+                renderChatVersionHistory(currentChat);
+                els.versionHistoryDialog.classList.remove('hidden');
+                els.versionHistoryDialog.classList.add('flex');
+                setTimeout(() => {
+                    els.versionHistoryDialogContent.classList.add('dialog-open');
+                }, 10);
+                return;
+            }
+        }
         alert(t.noVersions || 'No saved versions');
         return;
     }
@@ -3098,7 +3232,7 @@ function renderVersionHistory() {
     
     versions.forEach((version, index) => {
         const item = document.createElement('div');
-        item.className = 'version-item';
+        item.className = 'version-item p-3 bg-gray-50 dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-700 mb-2';
         const date = new Date(version.timestamp);
         item.innerHTML = `
             <div class="flex justify-between items-center">
@@ -3106,7 +3240,7 @@ function renderVersionHistory() {
                     <div class="text-sm font-semibold text-slate-800 dark:text-white">Version ${versions.length - index}</div>
                     <div class="text-xs text-slate-500 dark:text-slate-400">${date.toLocaleString()}</div>
                 </div>
-                <button class="px-3 py-1 text-xs bg-brand-600 hover:bg-brand-500 text-white rounded-lg transition" onclick="restoreVersion(${versions.length - 1 - index})">
+                <button class="px-3 py-1 text-xs bg-brand-600 hover:bg-brand-500 text-white rounded-lg transition" onclick="restoreFileVersion(${versions.length - 1 - index})">
                     ${t.restoreVersion || 'Restore'}
                 </button>
             </div>
@@ -3115,10 +3249,57 @@ function renderVersionHistory() {
     });
 }
 
-function restoreVersion(index) {
+function renderChatVersionHistory(chat) {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    els.versionHistoryList.innerHTML = '';
+    
+    if (!chat || !chat.versions || chat.versions.length === 0) {
+        els.versionHistoryList.innerHTML = `<div class="text-center text-slate-400 py-4">${t.noVersions || 'No versions'}</div>`;
+        return;
+    }
+    
+    // Update dialog title to show chat info
+    const titleEl = els.versionHistoryDialogContent?.querySelector('h3');
+    if (titleEl) {
+        const chatPreview = chat.input.substring(0, 30) + (chat.input.length > 30 ? '...' : '');
+        titleEl.textContent = `${t.versionHistory} - ${chatPreview}`;
+    }
+    
+    const versions = chat.versions.slice().reverse(); // Show newest first
+    
+    versions.forEach((version, index) => {
+        const item = document.createElement('div');
+        item.className = 'version-item p-3 bg-gray-50 dark:bg-slate-900 rounded-lg border border-gray-200 dark:border-slate-700 mb-2';
+        const date = new Date(version.timestamp);
+        item.innerHTML = `
+            <div class="flex justify-between items-center">
+                <div>
+                    <div class="text-sm font-semibold text-slate-800 dark:text-white">Version ${versions.length - index}</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400">${date.toLocaleString()}</div>
+                </div>
+                <button class="px-3 py-1 text-xs bg-brand-600 hover:bg-brand-500 text-white rounded-lg transition" onclick="restoreChatVersion('${chat.id}', ${versions.length - 1 - index})">
+                    ${t.restoreVersion || 'Restore'}
+                </button>
+            </div>
+        `;
+        els.versionHistoryList.appendChild(item);
+    });
+}
+
+function restoreFileVersion(index) {
     if (!activeFile || !fileVersions[activeFile] || !fileVersions[activeFile][index]) return;
     
     const version = fileVersions[activeFile][index];
+    els.input.value = version.content;
+    updateLineNumbers();
+    closeVersionHistory();
+}
+
+function restoreChatVersion(chatId, index) {
+    const chat = history.find(c => c.id === chatId);
+    if (!chat || !chat.versions || !chat.versions[index]) return;
+    
+    const version = chat.versions[index];
     els.input.value = version.content;
     updateLineNumbers();
     closeVersionHistory();
@@ -3129,6 +3310,12 @@ function closeVersionHistory() {
     setTimeout(() => {
         els.versionHistoryDialog.classList.add('hidden');
         els.versionHistoryDialog.classList.remove('flex');
+        // Reset dialog title
+        const titleEl = els.versionHistoryDialogContent?.querySelector('h3');
+        if (titleEl) {
+            const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+            titleEl.textContent = t.versionHistory || 'Version History';
+        }
     }, 300);
 }
 
