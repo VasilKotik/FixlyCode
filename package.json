@@ -5,6 +5,7 @@
   "main": "api/ai-request.js",
   "scripts": {
     "dev": "node server/server.js",
+    "start": "node server/server.js"
   },
   "engines": {
     "node": "20.x"
