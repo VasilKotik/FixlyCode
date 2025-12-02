@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="FixlyCode - безкоштовний AI-асистент для розробників. Виправляйте баги, оптимізуйте код, пояснюйте логіку, конвертуйте мови програмування та генеруйте тести. Швидкий та безкоштовний інструмент для роботи з кодом.">
-    <meta name="keywords" content="AI асистент для коду, виправлення багів, оптимізація коду, пояснення коду, конвертер мов програмування, допомога з програмуванням, безкоштовний AI інструмент, AI code assistant, code fixer, code optimizer">
+    <meta name="description" content="FixlyCode - free AI assistant for developers. Fix bugs, optimize code, explain logic, convert programming languages and generate tests. Fast and free tool for working with code.">
+    <meta name="keywords" content="AI code assistant, code fixer, code optimizer, code explanation, programming language converter, coding help, free AI tool, AI code assistant, code fixer, code optimizer">
     <meta name="author" content="FixlyCode">
     <meta name="theme-color" content="#10b981">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,17 +18,17 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fixlycode.vercel.app/">
-    <meta property="og:title" content="FixlyCode — AI-асистент для розробників">
-    <meta property="og:description" content="Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.">
+    <meta property="og:title" content="FixlyCode — AI Assistant for Developers">
+    <meta property="og:description" content="Free AI assistant for fixing bugs, optimizing code, explaining logic, converting programming languages and generating tests.">
     <meta property="og:site_name" content="FixlyCode">
-    <meta property="og:locale" content="uk_UA">
+    <meta property="og:locale" content="en_US">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FixlyCode — AI-асистент для розробників">
-    <meta name="twitter:description" content="Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.">
+    <meta name="twitter:title" content="FixlyCode — AI Assistant for Developers">
+    <meta name="twitter:description" content="Free AI assistant for fixing bugs, optimizing code, explaining logic, converting programming languages and generating tests.">
     
-    <title>FixlyCode — AI-асистент для виправлення та оптимізації коду</title>
+    <title>FixlyCode — AI Assistant for Code Fixing and Optimization</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -70,7 +70,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "FixlyCode",
-      "description": "Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.",
+      "description": "Free AI assistant for fixing bugs, optimizing code, explaining logic, converting programming languages and generating tests.",
       "url": "https://fixlycode.vercel.app/",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Web",
@@ -80,12 +80,12 @@
         "priceCurrency": "USD"
       },
       "featureList": [
-        "Виправлення багів",
-        "Оптимізація коду",
-        "Пояснення логіки коду",
-        "Конвертація мов програмування",
-        "Генерація тестів",
-        "Аналіз безпеки коду"
+        "Bug Fixing",
+        "Code Optimization",
+        "Code Logic Explanation",
+        "Programming Language Conversion",
+        "Test Generation",
+        "Code Security Analysis"
       ],
       "provider": {
         "@type": "Organization",
@@ -119,11 +119,11 @@
                     Fixly<span class="text-brand-500">Code</span> 
                 </h1>
                 <h2 class="text-lg md:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mb-8 leading-relaxed font-medium" data-i18n="welcomeDesc">
-                    Ваш персональний AI-асистент. Виправляйте баги, оптимізуйте код та тестуйте.
+                    Your personal AI assistant. Fix bugs, optimize code and test.
                 </h2>
                 
                 <!-- Features Grid -->
-                <h3 class="sr-only">Основні можливості FixlyCode</h3>
+                <h3 class="sr-only">Main Features of FixlyCode</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 w-full max-w-4xl">
                     <div class="bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-xl p-4 border border-white/30 dark:border-slate-700/50 hover:border-brand-400/50 transition-all transform hover:scale-105">
                         <div class="flex items-start space-x-3">
@@ -231,7 +231,7 @@
         <div class="p-4 border-b border-gray-200 dark:border-slate-800 flex justify-between">
             <div class="flex space-x-2">
                 <button id="tab-history-btn" class="sidebar-tab active-sidebar-tab">
-                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> <span data-i18n="tabHistory">Історія</span>
+                    <i class="fa-solid fa-clock-rotate-left mr-2"></i> <span data-i18n="tabHistory">History</span>
                 </button>
             </div>
             <button id="close-sidebar-btn" class="md:hidden text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
@@ -239,7 +239,7 @@
         <div class="p-4 space-y-2">
             <button id="new-chat-btn" class="flex items-center justify-center w-full py-3 bg-brand-50 dark:bg-brand-500/10 hover:bg-brand-100 dark:hover:bg-brand-500/20 border border-brand-200 dark:border-brand-500/30 text-brand-700 dark:text-brand-400 text-sm font-bold rounded-xl transition-all group">
                 <i class="fa-solid fa-plus mr-2 transition-transform group-hover:rotate-90"></i>
-                <span data-i18n="newChatBtn">Новий чат</span>
+                <span data-i18n="newChatBtn">New Chat</span>
             </button>
         </div>
         <div class="flex-1 overflow-y-auto px-4 space-y-2 custom-scrollbar relative">
@@ -247,14 +247,14 @@
         </div>
         <div class="p-4 border-t border-gray-200 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 space-y-3">
             <button id="export-md-btn" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-800 rounded-lg transition border border-transparent hover:border-gray-200 dark:hover:border-slate-700">
-                <i class="fa-brands fa-markdown text-lg mr-3"></i> <span data-i18n="exportBtn">Експорт в Markdown</span>
+                <i class="fa-brands fa-markdown text-lg mr-3"></i> <span data-i18n="exportBtn">Export to Markdown</span>
             </button>
             <a href="https://send.monobank.ua/jar/4FWQNammbQ" target="_blank" rel="noopener noreferrer" id="donate-btn" class="flex items-center w-full px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-red-500 hover:bg-white dark:hover:bg-slate-800 rounded-lg transition border border-transparent hover:border-red-200 dark:hover:border-red-900/30">
-                <i class="fa-solid fa-heart text-sm mr-3 text-red-400 animate-pulse"></i> <span data-i18n="donateBtn">На каву розробнику</span>
+                <i class="fa-solid fa-heart text-sm mr-3 text-red-400 animate-pulse"></i> <span data-i18n="donateBtn">Buy coffee</span>
             </a>
             <div class="h-px bg-gray-200 dark:bg-slate-800 my-2"></div>
             <button id="clear-history-btn" class="flex items-center justify-center w-full text-[10px] text-slate-400 hover:text-red-500 transition py-1">
-                <i class="fa-solid fa-trash-can-arrow-up mr-1.5"></i> <span data-i18n="clearHistory">Очистити все</span>
+                <i class="fa-solid fa-trash-can-arrow-up mr-1.5"></i> <span data-i18n="clearHistory">Clear</span>
             </button>
         </div>
     </aside>
@@ -272,8 +272,8 @@
                 </div>
                 
                 <div class="hidden sm:flex items-center bg-gray-100 dark:bg-slate-800 rounded-lg p-1 border border-gray-200 dark:border-slate-700">
-                    <div class="px-2 text-slate-400"><i class="fa-solid fa-brain text-xs"></i></div>
-                    <select id="model-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-1.5 px-3 pr-8 rounded-lg transition-colors max-w-[200px] appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat">
+                    <div class="px-1.5 text-slate-400"><i class="fa-solid fa-brain text-xs"></i></div>
+                    <select id="model-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-1.5 px-2 pr-7 rounded-lg transition-colors w-auto max-w-[160px] min-w-[130px] appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:14px] bg-[right_6px_center] bg-no-repeat">
                         <optgroup label="Google (Direct)">
                             <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
                         </optgroup>
@@ -287,7 +287,7 @@
                 </div>
             </div>
 
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-2">
                 <div id="mode-buttons-container" class="flex bg-gray-100 dark:bg-slate-800 p-0.5 sm:p-1 rounded-xl space-x-0.5 sm:space-x-1 overflow-x-auto no-scrollbar max-w-[180px] sm:max-w-none" role="toolbar" aria-label="Mode selection">
                     <button data-mode="debug" class="mode-btn active-mode" data-tooltip-key="tipDebug" aria-label="Debug mode" aria-pressed="true" tabindex="0"><i class="fa-solid fa-wrench" aria-hidden="true"></i></button>
                     <button data-mode="optimize" class="mode-btn" data-tooltip-key="tipOptimize" aria-label="Optimize mode" aria-pressed="false" tabindex="0"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i></button>
@@ -295,9 +295,9 @@
                     <button data-mode="convert" class="mode-btn" data-tooltip-key="tipConvert" aria-label="Convert mode" aria-pressed="false" tabindex="0"><i class="fa-solid fa-right-left" aria-hidden="true"></i></button>
                     <button data-mode="test" class="mode-btn" data-tooltip-key="tipTest" aria-label="Test mode" aria-pressed="false" tabindex="0"><i class="fa-solid fa-vial-virus" aria-hidden="true"></i></button>
                 </div>
-                <div class="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-1 hidden sm:block"></div>
-                <div class="flex items-center space-x-2">
-                    <select id="interface-lang" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase cursor-pointer focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 transition py-1.5 px-3 pr-8 rounded-lg appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat">
+                <div class="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-0.5 hidden sm:block"></div>
+                <div class="flex items-center space-x-1.5">
+                    <select id="interface-lang" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase cursor-pointer focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 transition py-1.5 px-2 pr-7 rounded-lg appearance-none w-auto max-w-[65px] min-w-[55px] bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:14px] bg-[right_6px_center] bg-no-repeat">
                         <option value="en">EN</option>
                         <option value="uk">UA</option>
                         <option value="pl">PL</option>
@@ -341,7 +341,7 @@
                 
                 <div class="px-2 sm:px-4 py-2 bg-gray-50 dark:bg-darkpanel border-b border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
                     <div class="flex items-center space-x-2 flex-1 min-w-0">
-                        <select id="language-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-2 px-3 pr-8 rounded-lg transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat flex-1 min-w-[120px]">
+                        <select id="language-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-2 px-3 pr-8 rounded-lg transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat w-auto max-w-[180px] min-w-[140px]">
                             <optgroup label="Popular">
                                 <option value="JavaScript">JavaScript</option>
                                 <option value="TypeScript">TypeScript</option>
@@ -496,11 +496,11 @@
                     <span id="input-help-text" class="sr-only">Enter your code here. Press Ctrl+Enter or Cmd+Enter to run analysis.</span>
                 </div>
                 <div class="p-2 sm:p-3 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-darkpanel flex flex-col space-y-2">
-                    <input type="text" id="custom-wishes" class="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-xs rounded-lg px-3 py-2.5 sm:py-2 focus:border-brand-500 focus:outline-none dark:text-white transition" placeholder="Додаткові побажання..." aria-label="Additional wishes or requirements" tabindex="0">
+                    <input type="text" id="custom-wishes" class="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-xs rounded-lg px-3 py-2.5 sm:py-2 focus:border-brand-500 focus:outline-none dark:text-white transition" placeholder="Additional wishes..." aria-label="Additional wishes or requirements" tabindex="0">
                     <button id="run-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 sm:py-2.5 rounded-xl shadow-lg shadow-brand-500/20 transition-all transform active:scale-[0.98] flex items-center justify-center relative overflow-hidden group min-h-[44px]" aria-label="Run AI analysis" tabindex="0">
                         <span class="relative z-10 flex items-center">
                             <i class="fa-solid fa-wand-magic-sparkles mr-2 group-hover:animate-pulse" aria-hidden="true"></i> 
-                            <span id="run-btn-text" data-i18n="runBtn">Запуск</span>
+                            <span id="run-btn-text" data-i18n="runBtn">Run</span>
                         </span>
                     </button>
                     <p id="error-msg" class="text-red-500 text-[10px] hidden text-center font-bold"></p>
@@ -538,7 +538,7 @@
                             <div class="bg-white dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 p-3 flex items-center shadow-sm">
                                 <div id="score-circle" class="w-10 h-10 rounded-full border-4 border-brand-500 flex items-center justify-center font-bold text-brand-600 dark:text-brand-400 text-sm mr-3">--</div>
                                 <div>
-                                    <div class="text-[10px] text-slate-400 uppercase font-bold" data-i18n="scoreTitle">Рейтинг</div>
+                                    <div class="text-[10px] text-slate-400 uppercase font-bold" data-i18n="scoreTitle">Score</div>
                                     <div class="text-xs text-slate-600 dark:text-slate-300 font-medium" id="score-text">...</div>
                                 </div>
                             </div>
@@ -568,7 +568,7 @@
                         <div id="ai-disclaimer" class="hidden bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800/50 p-3 flex items-start animate-fade-in">
                             <i class="fa-solid fa-triangle-exclamation text-amber-500 dark:text-amber-400 text-sm mr-3 mt-0.5 flex-shrink-0"></i>
                             <div class="flex-1">
-                                <p class="text-xs text-amber-800 dark:text-amber-200 leading-relaxed font-medium" data-i18n="aiDisclaimer">Штучний інтелект може помилятися. Будь ласка, перевіряйте інформацію та код перед використанням.</p>
+                                <p class="text-xs text-amber-800 dark:text-amber-200 leading-relaxed font-medium" data-i18n="aiDisclaimer">Artificial intelligence may make mistakes. Please verify information and code before use.</p>
                             </div>
                         </div>
                     </div>
