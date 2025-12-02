@@ -58,6 +58,10 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
+        .btn:focus {
+            outline: 3px solid rgba(255,255,255,0.5);
+            outline-offset: 2px;
+        }
         .icon {
             font-size: 80px;
             margin-bottom: 20px;
@@ -67,11 +71,11 @@
 </head>
 <body>
     <div class="container">
-        <div class="icon">🔍</div>
+        <div class="icon" role="img" aria-label="Search icon">🔍</div>
         <h1>404</h1>
         <h2>Сторінка не знайдена</h2>
         <p>Вибачте, але сторінка, яку ви шукаєте, не існує або була переміщена.</p>
-        <a href="/" class="btn">Повернутися на головну</a>
+        <a href="/" class="btn" aria-label="Повернутися на головну сторінку">Повернутися на головну</a>
     </div>
 </body>
 </html>
