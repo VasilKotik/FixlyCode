@@ -4,8 +4,6 @@
       "source": "/api/ai-request",
       "destination": "/api/ai-request.js"
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
 
