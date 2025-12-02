@@ -268,14 +268,45 @@ let responseCache = new Map();
 
 try { 
     history = JSON.parse(localStorage.getItem('fixly_history')) || []; 
-    // Ensure all history items have id and versions
-    history.forEach(item => {
+    // Migrate old format to new format
+    history = history.map(item => {
+        // If it's old format (has input/output directly), convert to new format
+        if (item.input && !item.messages) {
+            return {
+                id: item.id || Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                messages: [{
+                    input: item.input,
+                    output: item.output,
+                    mode: item.mode,
+                    lang: item.lang,
+                    time: item.time || new Date().toLocaleTimeString(),
+                    timestamp: Date.now()
+                }],
+                versions: item.versions || [],
+                createdAt: item.createdAt || Date.now(),
+                lastActivity: item.lastActivity || Date.now(),
+                lastMessage: item.input ? item.input.substring(0, 50) : '',
+                firstMode: item.mode,
+                firstLang: item.lang
+            };
+        }
+        // Ensure new format items have all required fields
         if (!item.id) {
             item.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        }
+        if (!item.messages) {
+            item.messages = [];
         }
         if (!item.versions) {
             item.versions = [];
         }
+        if (!item.createdAt) {
+            item.createdAt = Date.now();
+        }
+        if (!item.lastActivity) {
+            item.lastActivity = Date.now();
+        }
+        return item;
     });
     // Save updated history back
     try {
@@ -402,7 +433,10 @@ const els = {
     languageMismatchMessage: document.getElementById('language-mismatch-message'),
     languageMismatchCancel: document.getElementById('language-mismatch-cancel'),
     languageMismatchContinue: document.getElementById('language-mismatch-continue'),
-    languageMismatchChange: document.getElementById('language-mismatch-change')
+    languageMismatchChange: document.getElementById('language-mismatch-change'),
+    toast: document.getElementById('toast'),
+    toastMessage: document.getElementById('toast-message'),
+    toastClose: document.getElementById('toast-close')
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1790,7 +1824,8 @@ function newChat() {
     els.emptyState.classList.remove('hidden'); 
     els.tabPreview.classList.add('hidden'); 
     localStorage.removeItem('fixly_draft'); 
-    currentChatId = null; // Reset current chat
+    currentChatId = null; // Reset current chat - next addToHistory will create new chat
+    renderHistory(); // Re-render to remove active state
     switchTab('code'); 
     updateLineNumbers(); 
 }
@@ -1824,18 +1859,66 @@ async function copyCode() {
 }
 function exportMarkdown() { const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; const md = `# FixlyCode Report\n\n${els.outputExpl.textContent}\n\n\`\`\`\n${els.outputCode.textContent}\n\`\`\``; navigator.clipboard.writeText(md); els.exportBtn.textContent = "Copied!"; setTimeout(() => els.exportBtn.innerHTML = `<i class="fa-brands fa-markdown mr-2"></i> ${t.exportBtn}`, 2000); }
 function addToHistory(item) {
-    // Add id and versions array if not present
-    if (!item.id) {
-        item.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    // If we have an active chat, add message to it instead of creating new chat
+    if (currentChatId) {
+        const currentChat = history.find(chat => chat.id === currentChatId);
+        if (currentChat) {
+            // Add message to existing chat
+            if (!currentChat.messages) {
+                currentChat.messages = [];
+            }
+            currentChat.messages.push({
+                input: item.input,
+                output: item.output,
+                mode: item.mode,
+                lang: item.lang,
+                time: item.time || new Date().toLocaleTimeString(),
+                timestamp: Date.now()
+            });
+            // Update chat's last activity time
+            currentChat.lastActivity = Date.now();
+            currentChat.lastMessage = item.input.substring(0, 50);
+            // Save to localStorage
+            try {
+                localStorage.setItem('fixly_history', JSON.stringify(history));
+            } catch (e) {
+                if (e.name === 'QuotaExceededError') {
+                    history = history.slice(0, 10);
+                    try {
+                        localStorage.setItem('fixly_history', JSON.stringify(history));
+                    } catch (e2) {
+                    }
+                }
+            }
+            renderHistory();
+            return;
+        }
     }
-    if (!item.versions) {
-        item.versions = [];
-    }
+    
+    // Create new chat if no active chat
+    const newChat = {
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+        messages: [{
+            input: item.input,
+            output: item.output,
+            mode: item.mode,
+            lang: item.lang,
+            time: item.time || new Date().toLocaleTimeString(),
+            timestamp: Date.now()
+        }],
+        versions: [],
+        createdAt: Date.now(),
+        lastActivity: Date.now(),
+        lastMessage: item.input.substring(0, 50),
+        // Keep first message info for display
+        firstMode: item.mode,
+        firstLang: item.lang
+    };
     
     // Set as current active chat
-    currentChatId = item.id;
+    currentChatId = newChat.id;
     
-    history.unshift(item);
+    history.unshift(newChat);
     if (history.length > 20) history.pop();
     
     // Save to localStorage with error handling
@@ -1865,24 +1948,47 @@ function renderHistory() {
     // Use DocumentFragment for better performance
     const fragment = document.createDocumentFragment();
     
-    history.forEach((item, index) => {
+    history.forEach((chat, index) => {
         const div = document.createElement('div');
-        div.className = "p-3 rounded-lg bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:border-brand-500 mb-2 transition-colors relative group";
+        const isActive = currentChatId === chat.id;
+        div.className = `p-3 rounded-lg ${isActive ? 'bg-brand-50 dark:bg-brand-900/20 border-brand-500' : 'bg-gray-50 dark:bg-slate-900 border-gray-200 dark:border-slate-800'} border hover:border-brand-500 mb-2 transition-colors relative group`;
         div.setAttribute('role', 'button');
         div.setAttribute('tabindex', '0');
-        div.setAttribute('aria-label', `History item ${index + 1}: ${item.mode} mode`);
+        
+        const lastMessage = chat.messages && chat.messages.length > 0 
+            ? chat.messages[chat.messages.length - 1] 
+            : null;
+        
+        const messageCount = chat.messages ? chat.messages.length : 1;
+        const displayTime = lastMessage ? lastMessage.time : (chat.lastActivity ? new Date(chat.lastActivity).toLocaleTimeString() : '');
+        const displayText = chat.lastMessage || (lastMessage ? lastMessage.input.substring(0, 30) : '') || 'Empty chat';
+        const displayMode = lastMessage ? lastMessage.mode : (chat.firstMode || 'debug');
+        
+        div.setAttribute('aria-label', `Chat ${index + 1}: ${messageCount} messages, ${displayMode} mode`);
         
         const contentDiv = document.createElement('div');
         contentDiv.className = "cursor-pointer";
         contentDiv.onclick = () => {
-            els.input.value = item.input;
-            els.langSelect.value = item.lang;
-            setMode(item.mode);
-            renderOutput(item.output, item.lang, 0); // 0 for history items
+            // Load last message from chat
+            if (lastMessage) {
+                els.input.value = lastMessage.input;
+                els.langSelect.value = lastMessage.lang;
+                setMode(lastMessage.mode);
+                renderOutput(lastMessage.output, lastMessage.lang, 0);
+            } else {
+                // Fallback for old format
+                els.input.value = chat.input || '';
+                els.langSelect.value = chat.lang || 'JavaScript';
+                setMode(chat.mode || 'debug');
+                if (chat.output) {
+                    renderOutput(chat.output, chat.lang || 'JavaScript', 0);
+                }
+            }
             updateLineNumbers();
             els.input.focus();
             // Set as current active chat
-            currentChatId = item.id;
+            currentChatId = chat.id;
+            renderHistory(); // Re-render to show active state
         };
         
         contentDiv.addEventListener('keydown', (e) => {
@@ -1908,18 +2014,18 @@ function renderHistory() {
         versionBtn.innerHTML = '<i class="fa-solid fa-clock-rotate-left text-xs"></i>';
         versionBtn.onclick = (e) => {
             e.stopPropagation();
-            if (item.versions && item.versions.length > 0) {
-                showVersionHistory(item.id);
+            if (chat.versions && chat.versions.length > 0) {
+                showVersionHistory(chat.id);
             } else {
                 const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
-                alert(t.noVersions || 'No saved versions');
+                showToast(t.noVersions || 'No saved versions');
             }
         };
         
         // Delete button
         const deleteBtn = document.createElement('button');
         deleteBtn.className = "p-1.5 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 text-red-500 hover:text-red-600 dark:hover:text-red-400";
-        deleteBtn.setAttribute('aria-label', 'Delete this history item');
+        deleteBtn.setAttribute('aria-label', 'Delete this chat');
         deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i>';
         deleteBtn.onclick = (e) => {
             e.stopPropagation();
@@ -1930,15 +2036,18 @@ function renderHistory() {
         actionsDiv.appendChild(deleteBtn);
         
         // Show version count badge if versions exist
-        const versionCount = item.versions ? item.versions.length : 0;
+        const versionCount = chat.versions ? chat.versions.length : 0;
         const versionBadge = versionCount > 0 ? `<span class="absolute top-1 left-1 bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">${versionCount}</span>` : '';
+        
+        // Show message count badge
+        const messageBadge = messageCount > 1 ? `<span class="absolute top-1 right-1 bg-blue-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">${messageCount}</span>` : '';
         
         contentDiv.innerHTML = `
             <div class="flex justify-between mb-1">
-                <span class="font-mono text-[10px] text-slate-400">${escapeHtml(item.time)}</span>
-                <span class="text-[10px] font-bold text-brand-600 dark:text-brand-400">${escapeHtml(item.mode)}</span>
+                <span class="font-mono text-[10px] text-slate-400">${escapeHtml(displayTime)}</span>
+                <span class="text-[10px] font-bold text-brand-600 dark:text-brand-400">${escapeHtml(displayMode)}</span>
             </div>
-            <div class="text-xs truncate text-slate-500 dark:text-slate-400 relative">${versionBadge}${escapeHtml(item.input.substring(0, 30))}...</div>
+            <div class="text-xs truncate text-slate-500 dark:text-slate-400 relative">${versionBadge}${messageBadge}${escapeHtml(displayText)}...</div>
         `;
         
         div.appendChild(contentDiv);
@@ -3185,7 +3294,7 @@ function showVersionHistory(chatId = null) {
             }, 10);
             return;
         } else {
-            alert(t.noVersions || 'No saved versions');
+            showToast(t.noVersions || 'No saved versions');
             return;
         }
     }
@@ -3205,7 +3314,7 @@ function showVersionHistory(chatId = null) {
                 return;
             }
         }
-        alert(t.noVersions || 'No saved versions');
+        showToast(t.noVersions || 'No saved versions');
         return;
     }
     
@@ -3261,8 +3370,8 @@ function renderChatVersionHistory(chat) {
     // Update dialog title to show chat info
     const titleEl = els.versionHistoryDialogContent?.querySelector('h3');
     if (titleEl) {
-        const chatPreview = chat.input.substring(0, 30) + (chat.input.length > 30 ? '...' : '');
-        titleEl.textContent = `${t.versionHistory} - ${chatPreview}`;
+        const chatPreview = chat.lastMessage || (chat.messages && chat.messages.length > 0 ? chat.messages[chat.messages.length - 1].input.substring(0, 30) : '') || 'Chat';
+        titleEl.textContent = `${t.versionHistory} - ${chatPreview}${chatPreview.length > 30 ? '...' : ''}`;
     }
     
     const versions = chat.versions.slice().reverse(); // Show newest first
@@ -3303,6 +3412,42 @@ function restoreChatVersion(chatId, index) {
     els.input.value = version.content;
     updateLineNumbers();
     closeVersionHistory();
+}
+
+// Show toast notification
+function showToast(message, duration = 3000) {
+    if (!els.toast || !els.toastMessage) return;
+    
+    els.toastMessage.textContent = message;
+    
+    // Show toast
+    els.toast.classList.remove('translate-x-full', 'opacity-0');
+    els.toast.classList.add('-translate-x-0', 'opacity-100');
+    els.toast.classList.remove('pointer-events-none');
+    
+    // Auto hide after duration
+    const hideToast = () => {
+        els.toast.classList.add('translate-x-full', 'opacity-0');
+        els.toast.classList.remove('-translate-x-0', 'opacity-100');
+        els.toast.classList.add('pointer-events-none');
+    };
+    
+    // Clear existing timeout if any
+    if (els.toast._hideTimeout) {
+        clearTimeout(els.toast._hideTimeout);
+    }
+    
+    els.toast._hideTimeout = setTimeout(hideToast, duration);
+    
+    // Close button handler
+    if (els.toastClose) {
+        els.toastClose.onclick = () => {
+            hideToast();
+            if (els.toast._hideTimeout) {
+                clearTimeout(els.toast._hideTimeout);
+            }
+        };
+    }
 }
 
 function closeVersionHistory() {

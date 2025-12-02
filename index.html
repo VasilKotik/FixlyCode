@@ -696,6 +696,21 @@
     </div>
 
     <input type="file" id="file-upload-input" class="hidden" accept=".js,.ts,.jsx,.tsx,.py,.java,.cpp,.c,.cs,.go,.rs,.swift,.kt,.dart,.php,.rb,.html,.css,.vue,.svelte,.sql,.r,.sh,.ps1,.lua,.pl,.scala,.hs,.ex,.clj,.erl,.json,.yaml,.yml,.xml,.md,.toml,.ini,.conf,.txt,.log,.asm,.m">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-4 right-4 z-[200] transform translate-x-full opacity-0 transition-all duration-300 ease-in-out pointer-events-none">
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-200 dark:border-slate-700 p-4 flex items-center space-x-3 min-w-[300px] max-w-[400px]">
+            <div class="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-info-circle text-blue-600 dark:text-blue-400"></i>
+            </div>
+            <div class="flex-1">
+                <p id="toast-message" class="text-sm font-medium text-slate-800 dark:text-slate-200"></p>
+            </div>
+            <button id="toast-close" class="flex-shrink-0 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js" defer></script> 
