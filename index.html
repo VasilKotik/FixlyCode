@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="uk" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="description" content="FixlyCode - безкоштовний AI-асистент для розробників. Виправляйте баги, оптимізуйте код, пояснюйте логіку, конвертуйте мови програмування та генеруйте тести. Швидкий та безкоштовний інструмент для роботи з кодом.">
-    <meta name="keywords" content="AI асистент для коду, виправлення багів, оптимізація коду, пояснення коду, конвертер мов програмування, допомога з програмуванням, безкоштовний AI інструмент, AI code assistant, code fixer, code optimizer">
+    <meta name="description" content="FixlyCode - Free AI-powered code assistant for developers. Fix bugs, optimize code, explain logic, convert programming languages, and generate tests. Fast and free coding tool.">
+    <meta name="keywords" content="AI code assistant, code fixer, code optimizer, code explainer, code converter, programming help, AI coding tool, free AI assistant, debug code, optimize code">
     <meta name="author" content="FixlyCode">
     <meta name="theme-color" content="#10b981">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,17 +18,17 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fixlycode.vercel.app/">
-    <meta property="og:title" content="FixlyCode — AI-асистент для розробників">
-    <meta property="og:description" content="Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.">
+    <meta property="og:title" content="FixlyCode — AI Code Assistant for Developers">
+    <meta property="og:description" content="Free AI-powered code assistant. Fix bugs, optimize code, explain logic, convert programming languages, and generate tests.">
     <meta property="og:site_name" content="FixlyCode">
-    <meta property="og:locale" content="uk_UA">
+    <meta property="og:locale" content="en_US">
     
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FixlyCode — AI-асистент для розробників">
-    <meta name="twitter:description" content="Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.">
+    <meta name="twitter:title" content="FixlyCode — AI Code Assistant for Developers">
+    <meta name="twitter:description" content="Free AI-powered code assistant. Fix bugs, optimize code, explain logic, convert programming languages, and generate tests.">
     
-    <title>FixlyCode — AI-асистент для виправлення та оптимізації коду</title>
+    <title>FixlyCode — AI Code Assistant for Fixing and Optimizing Code</title>
     <script src="https://cdn.tailwindcss.com" defer></script>
     <script>
         tailwind.config = {
@@ -70,7 +70,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "FixlyCode",
-      "description": "Безкоштовний AI-асистент для виправлення багів, оптимізації коду, пояснення логіки, конвертації мов програмування та генерації тестів.",
+      "description": "Free AI-powered code assistant for fixing bugs, optimizing code, explaining logic, converting programming languages, and generating tests.",
       "url": "https://fixlycode.vercel.app/",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Web",
@@ -80,12 +80,12 @@
         "priceCurrency": "USD"
       },
       "featureList": [
-        "Виправлення багів",
-        "Оптимізація коду",
-        "Пояснення логіки коду",
-        "Конвертація мов програмування",
-        "Генерація тестів",
-        "Аналіз безпеки коду"
+        "Debug and fix bugs",
+        "Optimize code",
+        "Explain code logic",
+        "Convert programming languages",
+        "Generate tests",
+        "Security analysis"
       ],
       "provider": {
         "@type": "Organization",
@@ -98,6 +98,17 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <div id="welcome-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-white/80 via-white/60 to-white/80 dark:from-darkbg/90 dark:via-darkbg/80 dark:to-darkbg/90 backdrop-blur-xl transition-opacity duration-500 overflow-y-auto custom-scrollbar">
+        <!-- Language Selector in Top Right Corner -->
+        <div class="absolute top-4 right-4 z-50">
+            <select id="welcome-lang-select" class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-md border border-white/30 dark:border-slate-700/50 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase cursor-pointer focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 transition py-2 px-4 pr-10 rounded-xl shadow-lg appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat hover:bg-white/80 dark:hover:bg-slate-700/80">
+                <option value="en">EN</option>
+                <option value="uk">UA</option>
+                <option value="pl">PL</option>
+                <option value="de">DE</option>
+                <option value="es">ES</option>
+                <option value="ru">RU</option>
+            </select>
+        </div>
         <div class="max-w-5xl w-full p-8 text-center relative flex flex-col items-center justify-center min-h-screen">
             <!-- Glassmorphism background effects -->
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl animate-pulse-slow pointer-events-none"></div>
@@ -123,7 +134,7 @@
                 </h2>
                 
                 <!-- Features Grid -->
-                <h3 class="sr-only">Основні можливості FixlyCode</h3>
+                <h3 class="sr-only">FixlyCode Main Features</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 w-full max-w-4xl">
                     <div class="bg-white/50 dark:bg-slate-800/50 backdrop-blur-md rounded-xl p-4 border border-white/30 dark:border-slate-700/50 hover:border-brand-400/50 transition-all transform hover:scale-105">
                         <div class="flex items-start space-x-3">

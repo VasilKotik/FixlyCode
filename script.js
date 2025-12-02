@@ -354,6 +354,7 @@ const els = {
     historyList: document.getElementById('history-list'),
     langSelect: document.getElementById('language-select'),
     uiLang: document.getElementById('interface-lang'),
+    welcomeLangSelect: document.getElementById('welcome-lang-select'),
     modelSelect: document.getElementById('model-select'),
     modeBtns: document.querySelectorAll('.mode-btn'),
     copyBtn: document.getElementById('copy-btn'),
@@ -457,6 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isDark) els.html.classList.add('dark'); else els.html.classList.remove('dark');
     if (!TRANSLATIONS[currentLang]) currentLang = 'en';
     if (els.uiLang) els.uiLang.value = currentLang;
+    if (els.welcomeLangSelect) els.welcomeLangSelect.value = currentLang;
     updateTexts(currentLang);
     renderHistory(); 
     
@@ -472,7 +474,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.runBtn) els.runBtn.addEventListener('click', runAI);
     if (els.newChatBtn) els.newChatBtn.addEventListener('click', newChat);
     if (els.themeToggle) els.themeToggle.addEventListener('click', toggleTheme);
-    if (els.uiLang) els.uiLang.addEventListener('change', (e) => updateTexts(e.target.value));
+    if (els.uiLang) els.uiLang.addEventListener('change', (e) => {
+        updateTexts(e.target.value);
+        if (els.welcomeLangSelect) els.welcomeLangSelect.value = e.target.value;
+    });
+    if (els.welcomeLangSelect) els.welcomeLangSelect.addEventListener('change', (e) => {
+        updateTexts(e.target.value);
+        if (els.uiLang) els.uiLang.value = e.target.value;
+    });
     if (els.copyBtn) els.copyBtn.addEventListener('click', copyCode);
     if (els.exportBtn) els.exportBtn.addEventListener('click', exportMarkdown);
     const clearInputBtnEl = document.getElementById('clear-input-btn');
@@ -1534,6 +1543,9 @@ function updateTexts(lang) {
     localStorage.setItem('fixly_lang', lang);
     // Update HTML lang attribute
     if (els.html) els.html.setAttribute('lang', lang);
+    // Sync language selectors
+    if (els.uiLang) els.uiLang.value = lang;
+    if (els.welcomeLangSelect) els.welcomeLangSelect.value = lang;
     const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
     
     document.querySelectorAll('[data-i18n]').forEach(el => {
