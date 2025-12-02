@@ -436,7 +436,10 @@ const els = {
     languageMismatchChange: document.getElementById('language-mismatch-change'),
     toast: document.getElementById('toast'),
     toastMessage: document.getElementById('toast-message'),
-    toastClose: document.getElementById('toast-close')
+    toastClose: document.getElementById('toast-close'),
+    inputSection: document.getElementById('input-section'),
+    outputSection: document.getElementById('output-section'),
+    resizeHandle: document.getElementById('resize-handle')
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -555,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (els.languageMismatchContinue) {
         els.languageMismatchContinue.addEventListener('click', () => {
+            skipLanguageCheck = true; // Set flag to skip language check
             closeLanguageMismatchDialog();
             // Continue with AI execution anyway
             setTimeout(() => {
@@ -716,6 +720,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (els.versionHistoryClose) els.versionHistoryClose.addEventListener('click', closeVersionHistory);
     if (els.versionHistoryBtn) els.versionHistoryBtn.addEventListener('click', showVersionHistory);
+    
+    // Initialize resize functionality
+    initResize();
     
     // Initialize files
     if (Object.keys(files).length === 0) {
@@ -941,7 +948,12 @@ async function runAI() {
     
     // Detect code language and check if it matches selected language
     // Skip detection in convert mode (user explicitly chooses languages)
-    if (currentMode !== 'convert') {
+    // Skip if user chose to continue anyway
+    const shouldSkipCheck = skipLanguageCheck;
+    // Reset flag before check (so it only applies to this run)
+    skipLanguageCheck = false;
+    
+    if (currentMode !== 'convert' && !shouldSkipCheck) {
         const detectedLang = detectCodeLanguage(code);
         const selectedLang = els.langSelect.value;
         
@@ -2485,6 +2497,8 @@ let pendingLanguageChange = null;
 let pendingDeleteChatIndex = null;
 // Variable to store detected language from code analysis
 let pendingDetectedLanguage = null;
+// Flag to skip language mismatch check
+let skipLanguageCheck = false;
 
 // Handle language change - update file extension and ask for confirmation if code exists
 function handleLanguageChange() {
@@ -3485,6 +3499,83 @@ function loadChatMessage(chatId, messageIndex) {
     currentChatId = chatId;
     closeVersionHistory();
     renderHistory(); // Re-render to show active state
+}
+
+// Initialize resize handle functionality
+function initResize() {
+    if (!els.resizeHandle || !els.inputSection || !els.outputSection) return;
+    
+    // Load saved width from localStorage
+    const savedWidth = localStorage.getItem('fixly_input_width');
+    if (savedWidth) {
+        const width = parseFloat(savedWidth);
+        if (width > 0 && width < 100) {
+            els.inputSection.style.flex = `0 0 ${width}%`;
+            els.outputSection.style.flex = `0 0 ${100 - width}%`;
+        }
+    }
+    
+    let isResizing = false;
+    let startX = 0;
+    let startInputWidth = 0;
+    let startOutputWidth = 0;
+    
+    const startResize = (e) => {
+        isResizing = true;
+        startX = e.clientX || e.touches[0].clientX;
+        
+        const inputRect = els.inputSection.getBoundingClientRect();
+        const containerRect = els.inputSection.parentElement.getBoundingClientRect();
+        
+        startInputWidth = (inputRect.width / containerRect.width) * 100;
+        
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none';
+        els.resizeHandle.classList.add('bg-brand-500');
+        
+        e.preventDefault();
+    };
+    
+    const resize = (e) => {
+        if (!isResizing) return;
+        
+        const currentX = e.clientX || e.touches[0].clientX;
+        const containerRect = els.inputSection.parentElement.getBoundingClientRect();
+        const deltaX = currentX - startX;
+        const deltaPercent = (deltaX / containerRect.width) * 100;
+        
+        let newInputWidth = startInputWidth + deltaPercent;
+        
+        // Constrain between 20% and 80%
+        newInputWidth = Math.max(20, Math.min(80, newInputWidth));
+        const newOutputWidth = 100 - newInputWidth;
+        
+        els.inputSection.style.flex = `0 0 ${newInputWidth}%`;
+        els.outputSection.style.flex = `0 0 ${newOutputWidth}%`;
+        
+        // Save to localStorage
+        localStorage.setItem('fixly_input_width', newInputWidth.toString());
+        
+        e.preventDefault();
+    };
+    
+    const stopResize = () => {
+        if (!isResizing) return;
+        isResizing = false;
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        els.resizeHandle.classList.remove('bg-brand-500');
+    };
+    
+    // Mouse events
+    els.resizeHandle.addEventListener('mousedown', startResize);
+    document.addEventListener('mousemove', resize);
+    document.addEventListener('mouseup', stopResize);
+    
+    // Touch events for mobile
+    els.resizeHandle.addEventListener('touchstart', startResize);
+    document.addEventListener('touchmove', resize);
+    document.addEventListener('touchend', stopResize);
 }
 
 // Show toast notification

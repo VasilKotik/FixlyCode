@@ -2,7 +2,26 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="FixlyCode - AI-powered code assistant. Fix bugs, optimize code, explain logic, convert languages, and generate tests. Free and fast AI coding tool.">
+    <meta name="keywords" content="AI code assistant, code fixer, code optimizer, code explainer, code converter, programming help, AI coding tool, free AI assistant">
+    <meta name="author" content="FixlyCode">
+    <meta name="theme-color" content="#10b981">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="FixlyCode — AI Dev Environment">
+    <meta property="og:description" content="AI-powered code assistant. Fix bugs, optimize code, explain logic, convert languages, and generate tests.">
+    <meta property="og:site_name" content="FixlyCode">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FixlyCode — AI Dev Environment">
+    <meta name="twitter:description" content="AI-powered code assistant. Fix bugs, optimize code, explain logic, convert languages, and generate tests.">
+    
     <title>FixlyCode — AI Dev Environment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,7 +54,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-50 text-slate-800 dark:bg-darkbg dark:text-slate-300 h-screen flex overflow-hidden font-sans transition-colors duration-300 relative">
+<body class="bg-gray-50 text-slate-800 dark:bg-darkbg dark:text-slate-300 h-screen flex overflow-hidden font-sans transition-colors duration-300 relative" style="touch-action: pan-y pinch-zoom;">
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <div id="welcome-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-white/80 via-white/60 to-white/80 dark:from-darkbg/90 dark:via-darkbg/80 dark:to-darkbg/90 backdrop-blur-xl transition-opacity duration-500 overflow-y-auto custom-scrollbar">
@@ -228,7 +247,7 @@
             </div>
 
             <div class="flex items-center space-x-4">
-                <div id="mode-buttons-container" class="flex bg-gray-100 dark:bg-slate-800 p-1 rounded-xl space-x-1 overflow-x-auto no-scrollbar max-w-[200px] sm:max-w-none" role="toolbar" aria-label="Mode selection">
+                <div id="mode-buttons-container" class="flex bg-gray-100 dark:bg-slate-800 p-0.5 sm:p-1 rounded-xl space-x-0.5 sm:space-x-1 overflow-x-auto no-scrollbar max-w-[180px] sm:max-w-none" role="toolbar" aria-label="Mode selection">
                     <button data-mode="debug" class="mode-btn active-mode" data-tooltip-key="tipDebug" aria-label="Debug mode" aria-pressed="true" tabindex="0"><i class="fa-solid fa-wrench" aria-hidden="true"></i></button>
                     <button data-mode="optimize" class="mode-btn" data-tooltip-key="tipOptimize" aria-label="Optimize mode" aria-pressed="false" tabindex="0"><i class="fa-solid fa-gauge-high" aria-hidden="true"></i></button>
                     <button data-mode="explain" class="mode-btn" data-tooltip-key="tipExplain" aria-label="Explain mode" aria-pressed="false" tabindex="0"><i class="fa-solid fa-book-open" aria-hidden="true"></i></button>
@@ -258,7 +277,7 @@
         </header>
 
         <div class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
-            <div id="input-section" class="group flex-1 flex flex-col border-r border-gray-200 dark:border-slate-800 min-h-[40%] bg-white dark:bg-darkbg transition-all duration-200 group-focus-within:border-r-brand-500 group-focus-within:border-r-2">
+            <div id="input-section" class="group flex-1 flex flex-col border-r border-gray-200 dark:border-slate-800 min-h-[40%] md:min-h-0 bg-white dark:bg-darkbg transition-all duration-200 group-focus-within:border-r-brand-500 group-focus-within:border-r-2 md:group-focus-within:border-r-2" style="flex: 1 1 50%;">
                 <div id="file-tabs-container" class="px-2 py-1 bg-gray-50 dark:bg-darkpanel border-b border-gray-200 dark:border-slate-800 flex items-center space-x-1 overflow-x-auto custom-scrollbar">
                     <button id="new-file-btn" class="px-2 py-1 text-xs text-slate-500 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition flex items-center space-x-1 flex-shrink-0" title="New File">
                         <i class="fa-solid fa-plus text-[10px]"></i>
@@ -267,9 +286,9 @@
                     <div id="file-tabs" class="flex items-center space-x-1 flex-1 overflow-x-auto"></div>
                 </div>
                 
-                <div class="px-4 py-2 bg-gray-50 dark:bg-darkpanel border-b border-gray-200 dark:border-slate-800 flex justify-between items-center">
-                    <div class="flex items-center space-x-2">
-                        <select id="language-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-1.5 px-3 pr-8 rounded-lg transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat">
+                <div class="px-2 sm:px-4 py-2 bg-gray-50 dark:bg-darkpanel border-b border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
+                    <div class="flex items-center space-x-2 flex-1 min-w-0">
+                        <select id="language-select" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-2 px-3 pr-8 rounded-lg transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat flex-1 min-w-[120px]">
                             <optgroup label="Popular">
                                 <option value="JavaScript">JavaScript</option>
                                 <option value="TypeScript">TypeScript</option>
@@ -322,8 +341,8 @@
                             </optgroup>
                         </select>
                     </div>
-                    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar flex-1 min-w-0 justify-end" style="scrollbar-width: none; -ms-overflow-style: none;">
-                        <div class="flex items-center space-x-1 flex-shrink-0 bg-gray-100 dark:bg-slate-800 p-1 rounded-xl">
+                    <div class="flex items-center space-x-1 sm:space-x-2 overflow-x-auto no-scrollbar flex-1 min-w-0 justify-end" style="scrollbar-width: none; -ms-overflow-style: none;">
+                        <div class="flex items-center space-x-0.5 sm:space-x-1 flex-shrink-0 bg-gray-100 dark:bg-slate-800 p-0.5 sm:p-1 rounded-xl">
                             <button id="format-code-btn" class="toolbar-btn-icon" data-i18n="formatCode" data-tooltip-key="tipFormatCode" aria-label="Format Code">
                                 <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
                             </button>
@@ -423,9 +442,9 @@
                     <textarea id="input-code" class="code-font" placeholder="// Paste your code here..." spellcheck="false" aria-label="Code input area" aria-describedby="input-help-text" tabindex="0"></textarea>
                     <span id="input-help-text" class="sr-only">Enter your code here. Press Ctrl+Enter or Cmd+Enter to run analysis.</span>
                 </div>
-                <div class="p-3 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-darkpanel flex flex-col space-y-2">
-                    <input type="text" id="custom-wishes" class="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-xs rounded-lg px-3 py-2 focus:border-brand-500 focus:outline-none dark:text-white transition" placeholder="Додаткові побажання..." aria-label="Additional wishes or requirements" tabindex="0">
-                    <button id="run-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-brand-500/20 transition-all transform active:scale-[0.98] flex items-center justify-center relative overflow-hidden group" aria-label="Run AI analysis" tabindex="0">
+                <div class="p-2 sm:p-3 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-darkpanel flex flex-col space-y-2">
+                    <input type="text" id="custom-wishes" class="w-full bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 text-xs rounded-lg px-3 py-2.5 sm:py-2 focus:border-brand-500 focus:outline-none dark:text-white transition" placeholder="Додаткові побажання..." aria-label="Additional wishes or requirements" tabindex="0">
+                    <button id="run-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold py-3 sm:py-2.5 rounded-xl shadow-lg shadow-brand-500/20 transition-all transform active:scale-[0.98] flex items-center justify-center relative overflow-hidden group min-h-[44px]" aria-label="Run AI analysis" tabindex="0">
                         <span class="relative z-10 flex items-center">
                             <i class="fa-solid fa-wand-magic-sparkles mr-2 group-hover:animate-pulse" aria-hidden="true"></i> 
                             <span id="run-btn-text" data-i18n="runBtn">Запуск</span>
@@ -435,7 +454,12 @@
                 </div>
             </div>
 
-            <div class="flex-1 flex flex-col bg-gray-50 dark:bg-[#1e1e1e] min-h-[60%] relative">
+            <!-- Resize Handle -->
+            <div id="resize-handle" class="hidden md:block w-1 bg-gray-200 dark:bg-slate-700 hover:bg-brand-500 dark:hover:bg-brand-500 cursor-col-resize transition-colors relative z-10 group" title="Drag to resize">
+                <div class="absolute inset-y-0 left-1/2 transform -translate-x-1/2 w-1 bg-transparent hover:bg-brand-500 transition-colors"></div>
+            </div>
+
+            <div id="output-section" class="flex-1 flex flex-col bg-gray-50 dark:bg-[#1e1e1e] min-h-[60%] md:min-h-0 relative" style="flex: 1 1 50%;">
                 <div class="px-4 py-2 bg-white dark:bg-[#252526] border-b border-gray-200 dark:border-[#333] flex justify-between items-center h-[45px]">
                     <div class="flex space-x-1 bg-gray-100 dark:bg-black/20 p-0.5 rounded-lg">
                         <button id="tab-code" class="text-[10px] font-bold px-3 py-1 rounded-md bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm transition-all" onclick="switchTab('code')">
