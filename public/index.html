@@ -93,6 +93,13 @@
       }
     }
     </script>
+    <script>
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (prefersDark) {
+        document.documentElement.classList.add("dark");
+    }
+</script>
+
 </head>
 <body class="bg-gray-50 text-slate-800 dark:bg-darkbg dark:text-slate-300 h-screen flex overflow-hidden font-sans transition-colors duration-300 relative" style="touch-action: pan-y pinch-zoom;">
     <a href="#main-content" class="skip-link">Skip to main content</a>
