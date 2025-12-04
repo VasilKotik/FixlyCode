@@ -852,3 +852,26 @@ pre[class*="language-"] { margin: 0 !important; border-radius: 0 !important; bac
 .dark .version-item.active {
     background: #065f46;
 }
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.history-title {
+    flex-grow: 1;
+    padding-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-badge {
+    background: #10b981;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    margin-left: 8px;
+    flex-shrink: 0;
+}
