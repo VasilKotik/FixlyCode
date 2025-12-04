@@ -835,7 +835,9 @@ document.addEventListener('DOMContentLoaded', () => {
         els.fileUploadInput.addEventListener('change', handleFileUpload);
     }
     if (els.versionHistoryClose) els.versionHistoryClose.addEventListener('click', closeVersionHistory);
-    if (els.versionHistoryBtn) els.versionHistoryBtn.addEventListener('click', showVersionHistory);
+    // Передаємо анонімну функцію, щоб chatId був undefined (і спрацювала логіка currentChatId), 
+    // а не об'єкт події (PointerEvent)
+    if (els.versionHistoryBtn) els.versionHistoryBtn.addEventListener('click', () => showVersionHistory());
     
     // Tab buttons event listeners
     if (els.tabCode) els.tabCode.addEventListener('click', () => switchTab('code'));
@@ -929,6 +931,14 @@ function checkRateLimit() {
     RATE_LIMIT.requests.push(now);
     return true;
 }
+function updateHistoryCounter() {
+    const btn = document.getElementById("history-btn-top");
+    if (!btn) return;
+
+    const count = history.length || 0;
+    btn.textContent = `History (${count})`;
+}
+
 
 function generateCacheKey(code, mode, lang, model, wishes) {
     return `${mode}_${lang}_${model}_${wishes}_${code.substring(0, 100).replace(/\s/g, '')}`;
@@ -2245,18 +2255,14 @@ function renderHistory() {
         actionsDiv.appendChild(deleteBtn);
         
         // Show version count badge if versions exist
-        const versionCount = chat.versions ? chat.versions.length : 0;
-        const versionBadge = versionCount > 0 ? `<span class="absolute top-1 left-1 bg-brand-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">${versionCount}</span>` : '';
-        
-        // Show message count badge
-        const messageBadge = messageCount > 1 ? `<span class="absolute top-1 right-1 bg-blue-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">${messageCount}</span>` : '';
+        // Бейджики видалено за запитом
         
         contentDiv.innerHTML = `
             <div class="flex justify-between mb-1">
                 <span class="font-mono text-[10px] text-slate-400">${escapeHtml(displayTime)}</span>
                 <span class="text-[10px] font-bold text-brand-600 dark:text-brand-400">${escapeHtml(displayMode)}</span>
             </div>
-            <div class="text-xs truncate text-slate-500 dark:text-slate-400 relative">${versionBadge}${messageBadge}${escapeHtml(displayText)}...</div>
+            <div class="text-xs truncate text-slate-500 dark:text-slate-400 relative">${escapeHtml(displayText)}...</div>
         `;
         
         div.appendChild(contentDiv);
