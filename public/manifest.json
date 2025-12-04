@@ -1,0 +1,21 @@
+{
+    "name": "FixlyCode",
+    "short_name": "FixlyCode",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0B1120",
+    "theme_color": "#0B1120",
+    "description": "AI-Powered Code Assistant for debugging, optimizing, and converting code.",
+    "icons": [
+        {
+            "src": "https://fixlycode.com/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://fixlycode.com/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
