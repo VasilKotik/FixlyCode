@@ -1185,8 +1185,9 @@ async function runAI() {
 
     const controller = new AbortController();
     // Longer timeout for slower models
-    const slowModels = ['x-ai/grok-4.1-fast:free', 'tngtech/deepseek-r1t2-chimera:free'];
-    const timeoutDuration = slowModels.includes(selectedModel) ? 120000 : 60000; // 120s for slow models, 60s for others
+    const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'tngtech/deepseek-r1t2-chimera:free'];
+    // Use 5 minutes for slow models/OpenRouter, 60s for others to match backend
+    const timeoutDuration = (selectedModel.includes('/') || slowModels.includes(selectedModel)) ? 300000 : 60000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
 
     const targetLangName = t.langName || "English";
