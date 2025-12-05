@@ -5,7 +5,7 @@ const MODEL_CONFIG = {
     'gemini-2.5-flash': { provider: 'google', supportsJson: true, verified: true },
     'qwen/qwen3-coder:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'openai/gpt-oss-20b:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'x-ai/grok-4.1-fast:free': { provider: 'openrouter', supportsJson: true, verified: false },
+    'meta-llama/llama-3.3-70b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'tngtech/deepseek-r1t2-chimera:free': { provider: 'openrouter', supportsJson: true, verified: false }
 };
 
