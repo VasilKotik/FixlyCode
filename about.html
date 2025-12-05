@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - FixlyCode</title>
-    <meta name="description" content="About FixlyCode - Free, Open Source AI Coding Assistant">
+    <meta name="description" content="About FixlyCode - The Open Source AI Coding Assistant built for speed and privacy.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -13,43 +13,133 @@
 <body class="bg-gray-50 text-slate-800 font-inter">
     <div class="max-w-4xl mx-auto px-6 py-12">
         <header class="mb-12 text-center">
-            <a href="/" class="inline-block mb-6 text-brand-600 hover:text-green-600 transition">
+            <a href="/" class="inline-block mb-6 text-brand-600 hover:text-green-600 transition font-medium">
                 <i class="fa-solid fa-arrow-left mr-2"></i> Back to Editor
             </a>
-            <h1 class="text-4xl font-bold mb-4">About FixlyCode</h1>
-            <p class="text-slate-500">Open Source AI Assistant for Developers</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 tracking-tight">
+                About <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600">FixlyCode</span>
+            </h1>
+            <p class="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                An open-source, privacy-focused AI coding assistant designed to help developers write better code, faster.
+            </p>
         </header>
 
-        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 space-y-8">
-            <section>
-                <h2 class="text-2xl font-bold mb-4 text-slate-900">Our Mission</h2>
-                <p class="text-slate-600 leading-relaxed">
-                    FixlyCode is a free tool designed to help developers debug, optimize, and understand code instantly. Hosted on <strong>fixlycode.com</strong>, we provide a fast and private alternative to heavy coding assistants.
-                </p>
-            </section>
-
-            <section>
-                <h2 class="text-2xl font-bold mb-4 text-slate-900">How It Works</h2>
-                <p class="text-slate-600 leading-relaxed mb-4">
-                    We combine the power of multiple AI models (Google Gemini & OpenRouter) into a simple, user-friendly interface. No login required, no complex setup.
-                </p>
-            </section>
-
-            <section>
-                <h2 class="text-2xl font-bold mb-4 text-slate-900">Open Source & Community</h2>
-                <p class="text-slate-600 leading-relaxed">
-                    We believe in transparency. FixlyCode is open source, meaning anyone can inspect our code, verify our privacy claims, or contribute to the project.
-                </p>
-                <div class="mt-6">
-                    <a href="https://github.com/VasilKotik/fixlycode" target="_blank" class="inline-flex items-center px-6 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition shadow-lg shadow-slate-900/20">
-                        <i class="fa-brands fa-github mr-2"></i> View on GitHub
-                    </a>
+        <div class="space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">The Story</h2>
                 </div>
-            </section>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    FixlyCode was born out of frustration. Most AI coding tools today are either expensive, require heavy logins, or track your every move. We wanted something different: a tool that is <strong>instant</strong>, <strong>private</strong>, and <strong>accessible to everyone</strong>.
+                </p>
+                <p class="text-slate-600 leading-relaxed">
+                    Started in Ukraine 🇺🇦 by <strong>Vasil Kotik</strong>, this project aims to provide a lightweight alternative to GitHub Copilot or ChatGPT, specifically optimized for quick debugging and code explanation tasks directly in your browser.
+                </p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mr-4">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">Technology Stack</h2>
+                </div>
+                <p class="text-slate-600 mb-6">FixlyCode is built with modern, high-performance web technologies:</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 text-center hover:border-purple-200 transition">
+                        <i class="fa-brands fa-js text-yellow-500 text-2xl mb-2"></i>
+                        <h3 class="font-bold text-sm">Vanilla JS</h3>
+                        <p class="text-xs text-slate-500">Zero-dependency frontend</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 text-center hover:border-purple-200 transition">
+                        <i class="fa-brands fa-css3 text-blue-500 text-2xl mb-2"></i>
+                        <h3 class="font-bold text-sm">Tailwind CSS</h3>
+                        <p class="text-xs text-slate-500">Responsive Design</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 text-center hover:border-purple-200 transition">
+                        <i class="fa-brands fa-node text-green-500 text-2xl mb-2"></i>
+                        <h3 class="font-bold text-sm">Vercel</h3>
+                        <p class="text-xs text-slate-500">Serverless Functions</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-xl border border-gray-100 text-center hover:border-purple-200 transition">
+                        <i class="fa-solid fa-brain text-red-500 text-2xl mb-2"></i>
+                        <h3 class="font-bold text-sm">Gemini AI</h3>
+                        <p class="text-xs text-slate-500">Google's LLM Power</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                <div class="flex items-center mb-6">
+                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 mr-4">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900">What Can It Do?</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start">
+                        <i class="fa-solid fa-check-circle text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Smart Debugging</h3>
+                            <p class="text-sm text-slate-600">Identifies logic errors and syntax bugs that standard linters might miss.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fa-solid fa-check-circle text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Code Optimization</h3>
+                            <p class="text-sm text-slate-600">Rewrites your code to be more efficient (Big O notation) and readable.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fa-solid fa-check-circle text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Language Conversion</h3>
+                            <p class="text-sm text-slate-600">Instantly translates code between 30+ languages (e.g., Python to C++).</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <i class="fa-solid fa-check-circle text-green-500 mt-1 mr-3"></i>
+                        <div>
+                            <h3 class="font-bold text-slate-800">Security Analysis</h3>
+                            <p class="text-sm text-slate-600">Scans for vulnerabilities like SQL Injection or XSS risks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-4 opacity-10">
+                    <i class="fa-brands fa-github text-9xl"></i>
+                </div>
+                
+                <div class="relative z-10">
+                    <h2 class="text-2xl font-bold mb-4">Open Source & Community</h2>
+                    <p class="text-slate-300 leading-relaxed mb-6 max-w-lg">
+                        We believe code should be transparent. You can audit our security, suggest features, or contribute to the codebase directly on GitHub.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://github.com/VasilKotik/fixlycode" target="_blank" class="inline-flex items-center px-6 py-3 bg-white text-slate-900 font-bold rounded-xl hover:bg-gray-100 transition">
+                            <i class="fa-brands fa-github mr-2"></i> Star on GitHub
+                        </a>
+                        <a href="https://github.com/VasilKotik/fixlycode/issues" target="_blank" class="inline-flex items-center px-6 py-3 bg-slate-800 border border-slate-700 text-white font-semibold rounded-xl hover:bg-slate-700 transition">
+                            <i class="fa-solid fa-bug mr-2"></i> Report a Bug
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <footer class="mt-12 text-center text-slate-400 text-sm">
-            &copy; 2025 FixlyCode. All rights reserved.
+        <footer class="mt-12 text-center text-slate-400 text-sm pb-8">
+            <p>&copy; 2025 FixlyCode. Built with <i class="fa-solid fa-heart text-red-500 mx-1"></i> by Vasil Kotik.</p>
+            <div class="mt-4 space-x-4">
+                <a href="/privacy" class="hover:text-slate-600 transition">Privacy</a>
+                <span>•</span>
+                <a href="/terms" class="hover:text-slate-600 transition">Terms</a>
+            </div>
         </footer>
     </div>
 </body>
