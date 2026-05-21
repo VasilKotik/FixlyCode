@@ -6,8 +6,6 @@ const MODEL_CONFIG = {
     'qwen/qwen3-coder:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'openai/gpt-oss-20b:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'openai/gpt-oss-120b:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'meta-llama/llama-3.3-70b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'google/gemma-4-31b-it:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'poolside/laguna-m.1:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'nvidia/nemotron-3-super-120b-a12b:free': { provider: 'openrouter', supportsJson: true, verified: false }
 };
@@ -607,6 +605,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!TRANSLATIONS[currentLang]) currentLang = 'en';
     if (els.uiLang) els.uiLang.value = currentLang;
     updateTexts(currentLang);
+    if (els.modelSelect && !MODEL_CONFIG[els.modelSelect.value]) {
+        els.modelSelect.value = FALLBACK_MODELS.openrouter;
+    }
     renderHistory();
 
     if (localStorage.getItem('fixly_draft')) {
@@ -1224,7 +1225,7 @@ async function runAI() {
 
     const controller = new AbortController();
     // Longer timeout for slower models
-    const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'openai/gpt-oss-120b:free', 'nvidia/nemotron-3-super-120b-a12b:free'];
+    const slowModels = ['openai/gpt-oss-120b:free', 'nvidia/nemotron-3-super-120b-a12b:free'];
     // Use 5 minutes for slow models/OpenRouter, 60s for others to match backend
     const timeoutDuration = (selectedModel.includes('/') || slowModels.includes(selectedModel)) ? 300000 : 60000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);

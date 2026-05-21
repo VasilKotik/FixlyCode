@@ -327,20 +327,16 @@
                     <span id="mode-name">Debug</span>
                 </div>
 
-                <div
-                    class="hidden sm:flex items-center bg-gray-100 dark:bg-slate-800 rounded-lg p-1 border border-gray-200 dark:border-slate-700">
-                    <div class="px-1.5 text-slate-400"><i class="fa-solid fa-brain text-xs"></i></div>
-                    <select id="model-select"
-                        class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-1.5 px-2 pr-7 rounded-lg transition-colors w-auto max-w-[160px] min-w-[130px] appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:14px] bg-[right_6px_center] bg-no-repeat">
+                <div class="fc-select-wrap fc-select-wrap--model hidden sm:flex">
+                    <span class="fc-select-icon" aria-hidden="true"><i class="fa-solid fa-brain"></i></span>
+                    <select id="model-select" class="fc-select fc-select--compact" aria-label="AI model">
                         <optgroup label="Google (Direct)">
                             <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
                         </optgroup>
-                        <optgroup label="OpenRouter (Free Models)">
+                        <optgroup label="OpenRouter (Free)">
                             <option value="qwen/qwen3-coder:free">Qwen3 Coder</option>
                             <option value="openai/gpt-oss-20b:free">GPT-OSS 20B</option>
                             <option value="openai/gpt-oss-120b:free">GPT-OSS 120B</option>
-                            <option value="meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B</option>
-                            <option value="google/gemma-4-31b-it:free">Gemma 4 31B</option>
                             <option value="poolside/laguna-m.1:free">Poolside Laguna M.1</option>
                             <option value="nvidia/nemotron-3-super-120b-a12b:free">Nemotron 3 Super</option>
                         </optgroup>
@@ -370,8 +366,7 @@
                 </div>
                 <div class="h-6 w-px bg-gray-200 dark:bg-slate-700 mx-0.5 hidden sm:block"></div>
                 <div class="flex items-center space-x-1.5">
-                    <select id="interface-lang"
-                        class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 uppercase cursor-pointer focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 transition py-1.5 px-2 pr-7 rounded-lg appearance-none w-auto max-w-[65px] min-w-[55px] bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:14px] bg-[right_6px_center] bg-no-repeat">
+                    <select id="interface-lang" class="fc-select fc-select--compact fc-select--lang uppercase" aria-label="Interface language">
                         <option value="en">EN</option>
                         <option value="uk">UA</option>
                         <option value="pl">PL</option>
@@ -430,8 +425,7 @@
                 <div
                     class="px-2 sm:px-4 py-2 bg-gray-50 dark:bg-darkpanel border-b border-gray-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2">
                     <div class="flex items-center space-x-2 flex-1 min-w-0">
-                        <select id="language-select"
-                            class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 focus:outline-none focus:border-brand-500 dark:focus:border-brand-400 cursor-pointer py-2 px-3 pr-8 rounded-lg transition-colors appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_8px_center] bg-no-repeat w-auto max-w-[180px] min-w-[140px]">
+                        <select id="language-select" class="fc-select fc-select--wide" aria-label="Programming language">
                             <optgroup label="Popular">
                                 <option value="JavaScript">JavaScript</option>
                                 <option value="TypeScript">TypeScript</option>
@@ -531,7 +525,7 @@
                         <div class="convert-panel-flow">
                             <div class="convert-field">
                                 <span class="convert-label" data-i18n="convertFrom">From</span>
-                                <select id="convert-from-lang" class="convert-select" aria-label="Source language">
+                                <select id="convert-from-lang" class="fc-select convert-select" aria-label="Source language">
                                 <optgroup label="Popular">
                                     <option value="JavaScript">JavaScript</option>
                                     <option value="TypeScript">TypeScript</option>
@@ -563,7 +557,7 @@
                             </div>
                             <div class="convert-field">
                                 <span class="convert-label" data-i18n="convertTo">To</span>
-                                <select id="convert-to-lang" class="convert-select" aria-label="Target language">
+                                <select id="convert-to-lang" class="fc-select convert-select" aria-label="Target language">
                                 <optgroup label="Popular">
                                     <option value="JavaScript">JavaScript</option>
                                     <option value="TypeScript">TypeScript</option>
@@ -791,8 +785,7 @@
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-2"
                         data-i18n="fileType">File Type</label>
-                    <select id="new-file-type"
-                        class="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg focus:border-brand-500 focus:outline-none text-slate-700 dark:text-slate-300 text-sm appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e')] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-8">
+                    <select id="new-file-type" class="fc-select fc-select--block w-full text-sm" aria-label="File type">
                         <optgroup label="Popular">
                             <option value=".js">JavaScript (.js)</option>
                             <option value=".ts">TypeScript (.ts)</option>
