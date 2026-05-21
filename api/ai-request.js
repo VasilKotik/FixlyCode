@@ -387,7 +387,9 @@ ${languageReminder}`;
 
             const supportsJsonMode = model.includes('qwen') ||
                 model.includes('gpt-oss') ||
-                model.includes('deepseek');
+                model.includes('deepseek') ||
+                model.includes('gemma-4') ||
+                model.includes('nemotron');
 
             // Create few-shot example messages for better language adherence
             const fewShotExample = {
@@ -455,7 +457,7 @@ IMPORTANT: Respond in ${targetLangName} (${lang}) language. Use the example abov
         // Make API request with timeout
         const controller = new AbortController();
         // Longer timeout for slower models
-        const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'tngtech/deepseek-r1t2-chimera:free'];
+        const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'openai/gpt-oss-120b:free', 'nvidia/nemotron-3-super-120b-a12b:free'];
         const timeoutDuration = isOpenRouter ? 300000 : 60000; // 5 min for OpenRouter, 60s for others
         const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
 
