@@ -5,8 +5,11 @@ const MODEL_CONFIG = {
     'gemini-2.5-flash': { provider: 'google', supportsJson: true, verified: true },
     'qwen/qwen3-coder:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'openai/gpt-oss-20b:free': { provider: 'openrouter', supportsJson: true, verified: false },
+    'openai/gpt-oss-120b:free': { provider: 'openrouter', supportsJson: true, verified: false },
     'meta-llama/llama-3.3-70b-instruct:free': { provider: 'openrouter', supportsJson: true, verified: false },
-    'tngtech/deepseek-r1t2-chimera:free': { provider: 'openrouter', supportsJson: true, verified: false }
+    'google/gemma-4-31b-it:free': { provider: 'openrouter', supportsJson: true, verified: false },
+    'poolside/laguna-m.1:free': { provider: 'openrouter', supportsJson: true, verified: false },
+    'nvidia/nemotron-3-super-120b-a12b:free': { provider: 'openrouter', supportsJson: true, verified: false }
 };
 
 const FALLBACK_MODELS = {
@@ -177,7 +180,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Ваш персональний AI-асистент для роботи з кодом. Виправляйте помилки, оптимізуйте, конвертуйте мови та тестуйте код за допомогою штучного інтелекту.", startBtn: "Почати", startTutorialBtn: "Навчання", skipBtn: "Пропустити", nextTour: "Далі", finishTour: "Готово", emptyStatePrompt: "Оберіть режим та натисніть Запуск",
         featureDebug: "Виправлення", featureDebugDesc: "Знайдіть та виправте помилки автоматично", featureOptimize: "Оптимізація", featureOptimizeDesc: "Покращте продуктивність та якість коду", featureExplain: "Пояснення", featureExplainDesc: "Детально зрозумійте логіку коду", featureConvert: "Конвертація", featureConvertDesc: "Конвертуйте між мовами програмування", featureTest: "Міркування", featureTestDesc: "Подивіться на процес мислення AI крок за кроком", featureSecurity: "Безпека", featureSecurityDesc: "Знайдіть вразливості та проблеми безпеки", featureMultiLang: "6 Мов", featureMultiCodeLang: "30+ Мов Програмування", featureFast: "Швидко та Безкоштовно",
         tabHistory: "Історія", tabTips: "Поради", historyEmptyDesc: "Тут з'являться ваші запити.", funFactHeader: "Цікавий факт", mobileTabCode: "Код", mobileTabResult: "Результат",
-        tourStep1Title: "1. Введіть код", tourStep1Desc: "Вставте код у текстове поле.", tourStep2Title: "2. Оберіть мову", tourStep2Desc: "Виберіть мову програмування.", tourStep3Title: "3. Оберіть режим", tourStep3Desc: "Що має зробити AI (виправити, оптимізувати, пояснити).", tourStep4Title: "4. Запустіть", tourStep4Desc: "Натисніть Запуск для аналізу!"
+        tourBack: "Назад", tourStepOf: "{n} з {total}",
+        tourStep1Title: "Редактор коду", tourStep1Desc: "Вставте або напишіть код тут. Кілька файлів — через вкладки зверху редактора.",
+        tourStep2Title: "Мова програмування", tourStep2Desc: "Оберіть мову коду — AI точніше зрозуміє контекст і дасть релевантну відповідь.",
+        tourStep3Title: "Режим роботи", tourStep3Desc: "Виправлення, оптимізація, пояснення, конвертація чи тест — оберіть потрібний інструмент у панелі зверху.",
+        tourStep4Title: "Запуск аналізу", tourStep4Desc: "Натисніть «Запуск». За потреби додайте побажання у поле над кнопкою."
     },
     en: {
         newChatBtn: "New Chat", donateBtn: "Buy coffee", runBtn: "Run", analysisHeader: "Analysis", emptyTitle: "FixlyCode", loading: "Thinking...", errorEmpty: "Enter code!", clearHistory: "Clear", clearHistoryConfirm: "Clear all history?", placeholder: "// Paste code here...", langName: "English", wishesPlaceholder: "Additional wishes...", exportBtn: "Export MD", scoreTitle: "Score", analysisTimeLabel: "Analysis time:", aiDisclaimer: "Artificial intelligence may make mistakes. Please verify information and code before use.",
@@ -203,7 +210,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Your personal AI coding assistant. Fix bugs, optimize, convert languages, and test code with artificial intelligence.", startBtn: "Start", startTutorialBtn: "Tutorial", skipBtn: "Skip", nextTour: "Next", finishTour: "Done", emptyStatePrompt: "Ready to code.",
         featureDebug: "Debug & Fix", featureDebugDesc: "Find and fix bugs automatically", featureOptimize: "Optimize", featureOptimizeDesc: "Improve performance and code quality", featureExplain: "Explain", featureExplainDesc: "Understand code logic in detail", featureConvert: "Convert", featureConvertDesc: "Convert between programming languages", featureTest: "Reasoning", featureTestDesc: "See AI's step-by-step thinking process", featureSecurity: "Security", featureSecurityDesc: "Find vulnerabilities and security issues", featureMultiLang: "6 Languages", featureMultiCodeLang: "30+ Programming Languages", featureFast: "Fast & Free",
         tabHistory: "History", tabTips: "Tips", historyEmptyDesc: "No history yet.", funFactHeader: "Fun Fact", mobileTabCode: "Code", mobileTabResult: "Result",
-        tourStep1Title: "1. Enter code", tourStep1Desc: "Paste code in the text area.", tourStep2Title: "2. Select language", tourStep2Desc: "Choose programming language.", tourStep3Title: "3. Choose mode", tourStep3Desc: "What AI should do (fix, optimize, explain).", tourStep4Title: "4. Run", tourStep4Desc: "Click Run to start analysis!"
+        tourBack: "Back", tourStepOf: "{n} of {total}",
+        tourStep1Title: "Code editor", tourStep1Desc: "Paste or type your code here. Use tabs above for multiple files.",
+        tourStep2Title: "Programming language", tourStep2Desc: "Pick the language so AI understands context and gives relevant answers.",
+        tourStep3Title: "Work mode", tourStep3Desc: "Fix, optimize, explain, convert, or test — choose the tool in the top toolbar.",
+        tourStep4Title: "Run analysis", tourStep4Desc: "Click Run. Add optional instructions in the field above the button."
     },
     pl: {
         newChatBtn: "Nowy czat", donateBtn: "Kawa", runBtn: "Uruchom", analysisHeader: "Analiza", emptyTitle: "FixlyCode", loading: "Analizowanie...", errorEmpty: "Wprowadź kod!", clearHistory: "Wyczyść", clearHistoryConfirm: "Wyczyścić historię?", placeholder: "// Wklej kod tutaj...", tipHeader: "Wskazówka:", langName: "Polski", wishesPlaceholder: "Dodatkowe życzenia...", exportBtn: "Eksportuj MD", scoreTitle: "Ocena", analysisTimeLabel: "Czas analizy:", aiDisclaimer: "Sztuczna inteligencja może popełniać błędy. Proszę sprawdzić informacje i kod przed użyciem.",
@@ -229,7 +240,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Twój osobisty asystent AI do kodowania. Naprawiaj błędy, optymalizuj, konwertuj języki i testuj kod za pomocą sztucznej inteligencji.", startBtn: "Start", startTutorialBtn: "Samouczek", skipBtn: "Pomiń", nextTour: "Dalej", finishTour: "Gotowe", emptyStatePrompt: "Gotowy do kodowania.",
         featureDebug: "Debugowanie", featureDebugDesc: "Znajdź i napraw błędy automatycznie", featureOptimize: "Optymalizacja", featureOptimizeDesc: "Popraw wydajność i jakość kodu", featureExplain: "Wyjaśnienie", featureExplainDesc: "Zrozum logikę kodu szczegółowo", featureConvert: "Konwersja", featureConvertDesc: "Konwertuj między językami programowania", featureTest: "Rozumowanie", featureTestDesc: "Zobacz proces myślenia AI krok po kroku", featureSecurity: "Bezpieczeństwo", featureSecurityDesc: "Znajdź luki i problemy bezpieczeństwa", featureMultiLang: "6 Języków", featureMultiCodeLang: "30+ Języków Programowania", featureFast: "Szybko i Za Darmo",
         tabHistory: "Historia", tabTips: "Wskazówki", historyEmptyDesc: "Brak historii.", funFactHeader: "Ciekawostka", mobileTabCode: "Kod", mobileTabResult: "Wynik",
-        tourStep1Title: "1. Wprowadź kod", tourStep1Desc: "Wklej kod w obszarze tekstowym.", tourStep2Title: "2. Wybierz język", tourStep2Desc: "Wybierz język programowania.", tourStep3Title: "3. Wybierz tryb", tourStep3Desc: "Co AI ma zrobić (naprawić, zoptymalizować, wyjaśnić).", tourStep4Title: "4. Uruchom", tourStep4Desc: "Kliknij Uruchom, aby rozpocząć analizę!"
+        tourBack: "Wstecz", tourStepOf: "{n} z {total}",
+        tourStep1Title: "Edytor kodu", tourStep1Desc: "Wklej lub wpisz kod tutaj. Wiele plików — zakładki nad edytorem.",
+        tourStep2Title: "Język programowania", tourStep2Desc: "Wybierz język — AI lepiej zrozumie kontekst i da trafniejszą odpowiedź.",
+        tourStep3Title: "Tryb pracy", tourStep3Desc: "Naprawa, optymalizacja, wyjaśnienie, konwersja lub test — wybierz narzędzie na górnym pasku.",
+        tourStep4Title: "Uruchom analizę", tourStep4Desc: "Kliknij Uruchom. Opcjonalnie dodaj życzenia w polu nad przyciskiem."
     },
     de: {
         newChatBtn: "Neuer Chat", donateBtn: "Kaffee", runBtn: "Ausführen", analysisHeader: "Analyse", emptyTitle: "FixlyCode", loading: "Analysiere...", errorEmpty: "Code eingeben!", clearHistory: "Löschen", clearHistoryConfirm: "Verlauf löschen?", placeholder: "// Code hier einfügen...", tipHeader: "Tipp:", langName: "Deutsch", wishesPlaceholder: "Zusätzliche Wünsche...", exportBtn: "Export MD", scoreTitle: "Bewertung", analysisTimeLabel: "Analysezeit:", aiDisclaimer: "Künstliche Intelligenz kann Fehler machen. Bitte überprüfen Sie Informationen und Code vor der Verwendung.",
@@ -255,7 +270,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Ihr persönlicher KI-Code-Assistent. Beheben Sie Fehler, optimieren Sie, konvertieren Sie Sprachen und testen Sie Code mit künstlicher Intelligenz.", startBtn: "Start", startTutorialBtn: "Tutorial", skipBtn: "Überspringen", nextTour: "Weiter", finishTour: "Fertig", emptyStatePrompt: "Bereit zum Codieren.",
         featureDebug: "Debuggen", featureDebugDesc: "Fehler automatisch finden und beheben", featureOptimize: "Optimieren", featureOptimizeDesc: "Leistung und Codequalität verbessern", featureExplain: "Erklären", featureExplainDesc: "Code-Logik im Detail verstehen", featureConvert: "Konvertieren", featureConvertDesc: "Zwischen Programmiersprachen konvertieren", featureTest: "Argumentation", featureTestDesc: "Sehen Sie den Denkprozess der KI Schritt für Schritt", featureSecurity: "Sicherheit", featureSecurityDesc: "Schwachstellen und Sicherheitsprobleme finden", featureMultiLang: "6 Sprachen", featureMultiCodeLang: "30+ Programmiersprachen", featureFast: "Schnell & Kostenlos",
         tabHistory: "Verlauf", tabTips: "Tipps", historyEmptyDesc: "Kein Verlauf.", funFactHeader: "Fun Fact", mobileTabCode: "Code", mobileTabResult: "Ergebnis",
-        tourStep1Title: "1. Code eingeben", tourStep1Desc: "Code in das Textfeld einfügen.", tourStep2Title: "2. Sprache wählen", tourStep2Desc: "Programmiersprache wählen.", tourStep3Title: "3. Modus wählen", tourStep3Desc: "Was die KI tun soll (beheben, optimieren, erklären).", tourStep4Title: "4. Ausführen", tourStep4Desc: "Auf Ausführen klicken, um die Analyse zu starten!"
+        tourBack: "Zurück", tourStepOf: "{n} von {total}",
+        tourStep1Title: "Code-Editor", tourStep1Desc: "Code hier einfügen oder tippen. Mehrere Dateien — Tabs über dem Editor.",
+        tourStep2Title: "Programmiersprache", tourStep2Desc: "Sprache wählen — die KI versteht den Kontext besser und antwortet passender.",
+        tourStep3Title: "Arbeitsmodus", tourStep3Desc: "Beheben, optimieren, erklären, konvertieren oder testen — Werkzeug in der oberen Leiste.",
+        tourStep4Title: "Analyse starten", tourStep4Desc: "Auf Ausführen klicken. Optional Wünsche im Feld über dem Button ergänzen."
     },
     es: {
         newChatBtn: "Nuevo chat", donateBtn: "Café", runBtn: "Ejecutar", analysisHeader: "Análisis", emptyTitle: "FixlyCode", loading: "Analizando...", errorEmpty: "¡Ingresa código!", clearHistory: "Limpiar", clearHistoryConfirm: "¿Limpiar historial?", placeholder: "// Pega el código aquí...", tipHeader: "Consejo:", langName: "Español", wishesPlaceholder: "Deseos adicionales...", exportBtn: "Exportar MD", scoreTitle: "Puntuación", analysisTimeLabel: "Tiempo de análisis:", aiDisclaimer: "La inteligencia artificial puede cometer errores. Por favor, verifique la información y el código antes de usar.",
@@ -281,7 +300,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Tu asistente personal de código con IA. Corrige errores, optimiza, convierte lenguajes y prueba código con inteligencia artificial.", startBtn: "Iniciar", startTutorialBtn: "Tutorial", skipBtn: "Omitir", nextTour: "Siguiente", finishTour: "Listo", emptyStatePrompt: "Listo para codificar.",
         featureDebug: "Depurar", featureDebugDesc: "Encuentra y corrige errores automáticamente", featureOptimize: "Optimizar", featureOptimizeDesc: "Mejora el rendimiento y calidad del código", featureExplain: "Explicar", featureExplainDesc: "Entiende la lógica del código en detalle", featureConvert: "Convertir", featureConvertDesc: "Convierte entre lenguajes de programación", featureTest: "Razonamiento", featureTestDesc: "Ve el proceso de pensamiento de la IA paso a paso", featureSecurity: "Seguridad", featureSecurityDesc: "Encuentra vulnerabilidades y problemas de seguridad", featureMultiLang: "6 Idiomas", featureMultiCodeLang: "30+ Lenguajes de Programación", featureFast: "Rápido y Gratis",
         tabHistory: "Historial", tabTips: "Consejos", historyEmptyDesc: "Sin historial.", funFactHeader: "Dato curioso", mobileTabCode: "Código", mobileTabResult: "Resultado",
-        tourStep1Title: "1. Ingresa código", tourStep1Desc: "Pega código en el área de texto.", tourStep2Title: "2. Selecciona idioma", tourStep2Desc: "Elige lenguaje de programación.", tourStep3Title: "3. Elige modo", tourStep3Desc: "Qué debe hacer la IA (corregir, optimizar, explicar).", tourStep4Title: "4. Ejecutar", tourStep4Desc: "¡Haz clic en Ejecutar para comenzar el análisis!"
+        tourBack: "Atrás", tourStepOf: "{n} de {total}",
+        tourStep1Title: "Editor de código", tourStep1Desc: "Pega o escribe tu código aquí. Varios archivos — pestañas arriba del editor.",
+        tourStep2Title: "Lenguaje de programación", tourStep2Desc: "Elige el lenguaje para que la IA entienda mejor el contexto.",
+        tourStep3Title: "Modo de trabajo", tourStep3Desc: "Corregir, optimizar, explicar, convertir o probar — elige la herramienta en la barra superior.",
+        tourStep4Title: "Ejecutar análisis", tourStep4Desc: "Haz clic en Ejecutar. Añade instrucciones opcionales en el campo sobre el botón."
     },
     ru: {
         newChatBtn: "Новый чат", donateBtn: "Кофе", runBtn: "Запуск", analysisHeader: "Анализ", emptyTitle: "FixlyCode", loading: "Анализ...", errorEmpty: "Введите код!", clearHistory: "Очистить", clearHistoryConfirm: "Очистить историю?", placeholder: "// Вставьте код здесь...", tipHeader: "Совет:", langName: "Русский", wishesPlaceholder: "Дополнительные пожелания...", exportBtn: "Экспорт MD", scoreTitle: "Оценка", analysisTimeLabel: "Время анализа:", aiDisclaimer: "Искусственный интеллект может ошибаться. Пожалуйста, проверяйте информацию и код перед использованием.",
@@ -307,7 +330,11 @@ const TRANSLATIONS = {
         welcomeDesc: "Ваш персональный AI-ассистент для работы с кодом. Исправляйте ошибки, оптимизируйте, конвертируйте языки и тестируйте код с помощью искусственного интеллекта.", startBtn: "Начать", startTutorialBtn: "Обучение", skipBtn: "Пропустить", nextTour: "Далее", finishTour: "Готово", emptyStatePrompt: "Выберите режим и нажмите Запуск",
         featureDebug: "Исправление", featureDebugDesc: "Найдите и исправьте ошибки автоматически", featureOptimize: "Оптимизация", featureOptimizeDesc: "Улучшите производительность и качество кода", featureExplain: "Объяснение", featureExplainDesc: "Детально поймите логику кода", featureConvert: "Конвертация", featureConvertDesc: "Конвертируйте между языками программирования", featureTest: "Рассуждение", featureTestDesc: "Посмотрите на процесс мышления AI пошагово", featureSecurity: "Безопасность", featureSecurityDesc: "Найдите уязвимости и проблемы безопасности", featureMultiLang: "6 Языков", featureMultiCodeLang: "30+ Языков Программирования", featureFast: "Быстро и Бесплатно",
         tabHistory: "История", tabTips: "Советы", historyEmptyDesc: "Здесь появятся ваши запросы.", funFactHeader: "Интересный факт", mobileTabCode: "Код", mobileTabResult: "Результат",
-        tourStep1Title: "1. Введите код", tourStep1Desc: "Вставьте код в текстовое поле.", tourStep2Title: "2. Выберите язык", tourStep2Desc: "Выберите язык программирования.", tourStep3Title: "3. Выберите режим", tourStep3Desc: "Что должен сделать AI (исправить, оптимизировать, объяснить).", tourStep4Title: "4. Запустите", tourStep4Desc: "Нажмите Запуск, чтобы начать анализ!"
+        tourBack: "Назад", tourStepOf: "{n} из {total}",
+        tourStep1Title: "Редактор кода", tourStep1Desc: "Вставьте или напишите код здесь. Несколько файлов — через вкладки над редактором.",
+        tourStep2Title: "Язык программирования", tourStep2Desc: "Выберите язык — AI точнее поймёт контекст и даст релевантный ответ.",
+        tourStep3Title: "Режим работы", tourStep3Desc: "Исправление, оптимизация, объяснение, конвертация или тест — выберите инструмент на верхней панели.",
+        tourStep4Title: "Запуск анализа", tourStep4Desc: "Нажмите «Запуск». При необходимости добавьте пожелания в поле над кнопкой."
     }
 };
 
@@ -340,6 +367,8 @@ let isDark = getInitialTheme();
 let history = [];
 let currentChatId = null; // Track current active chat
 let currentTourStep = 0;
+let tourPositionTimer = null;
+let tourReflowHandler = null;
 let tooltipHideTimeout;
 let typingInterval;
 let saveTimeout; // For debounce
@@ -483,19 +512,26 @@ const els = {
     welcomeScreen: document.getElementById('welcome-screen'),
     startBtn: document.getElementById('start-btn'),
     tourOverlay: document.getElementById('tour-overlay'),
+    tourSpotlight: document.getElementById('tour-spotlight'),
     tourTooltip: document.getElementById('tour-tooltip'),
     tourTitle: document.getElementById('tour-title'),
     tourDesc: document.getElementById('tour-desc'),
     tourNextBtn: document.getElementById('tour-next-btn'),
+    tourBackBtn: document.getElementById('tour-back-btn'),
+    tourSkipBtn: document.getElementById('tour-skip-btn'),
+    tourBadge: document.getElementById('tour-badge'),
+    tourProgress: document.getElementById('tour-progress'),
     tabHistoryBtn: document.getElementById('tab-history-btn'),
     historyContent: document.getElementById('history-content'),
     clearHistoryBtn: document.getElementById('clear-history-btn'),
     activeModeDisplay: document.getElementById('active-mode-display'),
     modeIcon: document.getElementById('mode-icon'),
     modeName: document.getElementById('mode-name'),
-    targetInput: document.getElementById('input-code'),
+    targetModel: document.getElementById('model-select'),
+    targetInput: document.getElementById('input-section'),
     targetLang: document.getElementById('language-select'),
     targetModes: document.getElementById('mode-buttons-container'),
+    targetWishes: document.getElementById('custom-wishes'),
     targetRun: document.getElementById('run-btn'),
     helpBtn: document.getElementById('help-btn'),
     startTutorialBtn: document.getElementById('start-tutorial-btn'),
@@ -726,6 +762,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     if (els.tourNextBtn) els.tourNextBtn.addEventListener('click', nextTourStep);
+    if (els.tourBackBtn) els.tourBackBtn.addEventListener('click', prevTourStep);
+    if (els.tourSkipBtn) els.tourSkipBtn.addEventListener('click', endTour);
+    if (els.tourOverlay) els.tourOverlay.addEventListener('click', endTour);
     if (els.toggleSidebarBtn) els.toggleSidebarBtn.addEventListener('click', toggleSidebar);
     if (els.closeSidebarBtn) els.closeSidebarBtn.addEventListener('click', toggleSidebar);
 
@@ -1185,7 +1224,7 @@ async function runAI() {
 
     const controller = new AbortController();
     // Longer timeout for slower models
-    const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'tngtech/deepseek-r1t2-chimera:free'];
+    const slowModels = ['meta-llama/llama-3.3-70b-instruct:free', 'openai/gpt-oss-120b:free', 'nvidia/nemotron-3-super-120b-a12b:free'];
     // Use 5 minutes for slow models/OpenRouter, 60s for others to match backend
     const timeoutDuration = (selectedModel.includes('/') || slowModels.includes(selectedModel)) ? 300000 : 60000;
     const timeoutId = setTimeout(() => controller.abort(), timeoutDuration);
@@ -1573,7 +1612,96 @@ function renderOutput(data, lang, analysisTime) {
 }
 
 function nextTourStep() { currentTourStep++; showTourStep(currentTourStep); }
-function startTour() { currentTourStep = 0; els.tourOverlay.classList.remove('hidden'); requestAnimationFrame(() => els.tourOverlay.classList.remove('opacity-0')); showTourStep(0); }
+function prevTourStep() {
+    if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+    }
+}
+function startTour() {
+    currentTourStep = 0;
+    els.tourOverlay.classList.remove('hidden');
+    requestAnimationFrame(() => els.tourOverlay.classList.remove('opacity-0'));
+    if (!tourReflowHandler) {
+        tourReflowHandler = () => refreshTourLayout();
+        window.addEventListener('resize', tourReflowHandler);
+        window.addEventListener('scroll', tourReflowHandler, true);
+    }
+    showTourStep(0);
+}
+function updateTourCutout(targetEl) {
+    if (!targetEl) return;
+    const pad = 14;
+    const rect = targetEl.getBoundingClientRect();
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const x1 = Math.max(0, rect.left - pad);
+    const y1 = Math.max(0, rect.top - pad);
+    const x2 = Math.min(vw, rect.right + pad);
+    const y2 = Math.min(vh, rect.bottom + pad);
+
+    if (els.tourOverlay) {
+        const clip = `polygon(evenodd, 0 0, ${vw}px 0, ${vw}px ${vh}px, 0 ${vh}px, 0 0, ${x1}px ${y1}px, ${x2}px ${y1}px, ${x2}px ${y2}px, ${x1}px ${y2}px, ${x1}px ${y1}px)`;
+        els.tourOverlay.style.clipPath = clip;
+        els.tourOverlay.style.webkitClipPath = clip;
+    }
+
+    if (els.tourSpotlight) {
+        els.tourSpotlight.style.top = `${y1}px`;
+        els.tourSpotlight.style.left = `${x1}px`;
+        els.tourSpotlight.style.width = `${x2 - x1}px`;
+        els.tourSpotlight.style.height = `${y2 - y1}px`;
+        els.tourSpotlight.classList.remove('hidden');
+    }
+}
+function refreshTourLayout() {
+    if (!els.tourOverlay || els.tourOverlay.classList.contains('hidden')) return;
+    const step = tourSteps[currentTourStep];
+    if (!step) return;
+    const targetEl = els[step.target];
+    if (!targetEl) return;
+    updateTourCutout(targetEl);
+    if (els.tourTooltip && !els.tourTooltip.classList.contains('hidden')) {
+        positionTourTooltip(targetEl, step.pos);
+    }
+}
+function positionTourTooltip(targetEl, preferredPos) {
+    if (!els.tourTooltip || !targetEl) return;
+    const gap = 16;
+    const margin = 16;
+    const rect = targetEl.getBoundingClientRect();
+    const tooltipRect = els.tourTooltip.getBoundingClientRect();
+    const placements = preferredPos === 'top'
+        ? ['top', 'bottom', 'right', 'left']
+        : ['bottom', 'top', 'right', 'left'];
+
+    let top = margin;
+    let left = margin;
+    for (const pos of placements) {
+        if (pos === 'top') {
+            top = rect.top - tooltipRect.height - gap;
+            left = rect.left + rect.width / 2 - tooltipRect.width / 2;
+        } else if (pos === 'bottom') {
+            top = rect.bottom + gap;
+            left = rect.left + rect.width / 2 - tooltipRect.width / 2;
+        } else if (pos === 'right') {
+            top = rect.top + rect.height / 2 - tooltipRect.height / 2;
+            left = rect.right + gap;
+        } else {
+            top = rect.top + rect.height / 2 - tooltipRect.height / 2;
+            left = rect.left - tooltipRect.width - gap;
+        }
+        const fits = top >= margin && left >= margin
+            && top + tooltipRect.height <= window.innerHeight - margin
+            && left + tooltipRect.width <= window.innerWidth - margin;
+        if (fits) break;
+    }
+
+    left = Math.max(margin, Math.min(left, window.innerWidth - tooltipRect.width - margin));
+    top = Math.max(margin, Math.min(top, window.innerHeight - tooltipRect.height - margin));
+    els.tourTooltip.style.top = `${top}px`;
+    els.tourTooltip.style.left = `${left}px`;
+}
 function showTourStep(index) {
     if (index >= tourSteps.length) return endTour();
     const step = tourSteps[index];
@@ -1581,67 +1709,65 @@ function showTourStep(index) {
     if (!targetEl) return nextTourStep();
 
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en;
+    const total = tourSteps.length;
+    const stepNum = index + 1;
+
     document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
     targetEl.classList.add('tour-highlight');
 
-    // Scroll to element
     targetEl.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
 
-    // Handle Header Z-Index for Mode Buttons
-    const header = document.querySelector('header');
-    if (header) {
-        if (targetEl.closest('header')) {
-            header.style.zIndex = '1001'; // Bring header above overlay
-        } else {
-            header.style.zIndex = ''; // Reset
-        }
+    if (els.tourProgress) els.tourProgress.style.width = `${(stepNum / total) * 100}%`;
+    if (els.tourBadge) {
+        const badgeTpl = t.tourStepOf || '{n} / {total}';
+        els.tourBadge.textContent = badgeTpl.replace('{n}', stepNum).replace('{total}', total);
+    }
+    if (els.tourBackBtn) {
+        els.tourBackBtn.textContent = t.tourBack || 'Back';
+        els.tourBackBtn.disabled = index === 0;
+    }
+    if (els.tourTitle) els.tourTitle.textContent = t[step.titleKey] || step.titleKey;
+    if (els.tourDesc) els.tourDesc.textContent = t[step.descKey] || step.descKey;
+    if (els.tourNextBtn) {
+        els.tourNextBtn.textContent = index === total - 1 ? (t.finishTour || 'Finish') : (t.nextTour || 'Next');
     }
 
-    // Update tooltip content
-    els.tourTitle.textContent = t[step.titleKey] || step.titleKey;
-    els.tourDesc.textContent = t[step.descKey] || step.descKey;
-    els.tourNextBtn.textContent = index === tourSteps.length - 1 ? (t.finishTour || "Finish") : (t.nextTour || "Next");
-
-    // Show tooltip
     els.tourTooltip.classList.remove('hidden');
-    requestAnimationFrame(() => {
+    els.tourTooltip.classList.add('opacity-0', 'scale-95');
+    updateTourCutout(targetEl);
+
+    const revealTooltip = () => {
+        tourPositionTimer = null;
+        updateTourCutout(targetEl);
         els.tourTooltip.classList.remove('opacity-0', 'scale-95');
-        const rect = targetEl.getBoundingClientRect();
-        const tooltipRect = els.tourTooltip.getBoundingClientRect();
+        requestAnimationFrame(() => positionTourTooltip(targetEl, step.pos));
+    };
 
-        // Position tooltip based on step position preference
-        let top, left;
-        if (step.pos === 'top') {
-            top = `${rect.top - tooltipRect.height - 15}px`;
-            left = `${rect.left + (rect.width / 2) - (tooltipRect.width / 2)}px`;
-        } else if (step.pos === 'bottom') {
-            top = `${rect.bottom + 15}px`;
-            left = `${rect.left + (rect.width / 2) - (tooltipRect.width / 2)}px`;
-        } else if (step.pos === 'right') {
-            top = `${rect.top + (rect.height / 2) - (tooltipRect.height / 2)}px`;
-            left = `${rect.right + 15}px`;
-        } else {
-            top = `${rect.top + (rect.height / 2) - (tooltipRect.height / 2)}px`;
-            left = `${rect.left - tooltipRect.width - 15}px`;
-        }
-
-        // Ensure tooltip stays within viewport
-        const maxLeft = window.innerWidth - tooltipRect.width - 20;
-        const maxTop = window.innerHeight - tooltipRect.height - 20;
-        left = Math.max(20, Math.min(parseInt(left), maxLeft)) + 'px';
-        top = Math.max(20, Math.min(parseInt(top), maxTop)) + 'px';
-
-        els.tourTooltip.style.top = top;
-        els.tourTooltip.style.left = left;
-    });
+    if (tourPositionTimer) clearTimeout(tourPositionTimer);
+    tourPositionTimer = setTimeout(revealTooltip, 380);
 }
 function endTour() {
+    if (tourPositionTimer) {
+        clearTimeout(tourPositionTimer);
+        tourPositionTimer = null;
+    }
     document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
-    const header = document.querySelector('header');
-    if (header) header.style.zIndex = '';
-    els.tourOverlay.classList.add('opacity-0');
-    els.tourTooltip.classList.add('opacity-0');
-    setTimeout(() => { els.tourOverlay.classList.add('hidden'); els.tourTooltip.classList.add('hidden'); }, 300);
+    if (els.tourSpotlight) els.tourSpotlight.classList.add('hidden');
+    if (els.tourOverlay) {
+        els.tourOverlay.style.clipPath = '';
+        els.tourOverlay.style.webkitClipPath = '';
+        els.tourOverlay.classList.add('opacity-0');
+    }
+    if (tourReflowHandler) {
+        window.removeEventListener('resize', tourReflowHandler);
+        window.removeEventListener('scroll', tourReflowHandler, true);
+        tourReflowHandler = null;
+    }
+    els.tourTooltip.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+        els.tourOverlay.classList.add('hidden');
+        els.tourTooltip.classList.add('hidden');
+    }, 300);
     localStorage.setItem('fixly_tour_seen', 'true');
 }
 const tourSteps = [
@@ -1855,6 +1981,10 @@ function updateTexts(lang) {
         if (featureMultiLang && t.featureMultiLang) featureMultiLang.textContent = t.featureMultiLang;
         if (featureMultiCodeLang && t.featureMultiCodeLang) featureMultiCodeLang.textContent = t.featureMultiCodeLang;
         if (featureFast && t.featureFast) featureFast.textContent = t.featureFast;
+    }
+
+    if (els.tourOverlay && !els.tourOverlay.classList.contains('hidden')) {
+        showTourStep(currentTourStep);
     }
 
     setMode(currentMode);
