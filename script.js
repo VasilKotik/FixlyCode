@@ -768,6 +768,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (els.tourOverlay) els.tourOverlay.addEventListener('click', endTour);
     if (els.toggleSidebarBtn) els.toggleSidebarBtn.addEventListener('click', toggleSidebar);
     if (els.closeSidebarBtn) els.closeSidebarBtn.addEventListener('click', toggleSidebar);
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', toggleSidebar);
 
     initResize(); // Initialize resize handle functionality
 
@@ -1779,9 +1781,16 @@ const tourSteps = [
 ];
 
 function toggleSidebar() {
+    const willOpen = els.sidebar.classList.contains('hidden');
     els.sidebar.classList.toggle('hidden');
     els.sidebar.classList.toggle('flex');
-    if (!els.sidebar.classList.contains('hidden')) els.sidebar.classList.add('sidebar-animate-open');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (backdrop) {
+        backdrop.classList.toggle('hidden', !willOpen);
+        backdrop.setAttribute('aria-hidden', willOpen ? 'false' : 'true');
+    }
+    if (willOpen) els.sidebar.classList.add('sidebar-animate-open');
+    document.body.classList.toggle('sidebar-open', willOpen);
 }
 
 function showTooltip(e) { clearTimeout(tooltipHideTimeout); const key = e.currentTarget.dataset.tooltipKey; if (!key) return; const t = TRANSLATIONS[currentLang] || TRANSLATIONS.en; els.tooltip.textContent = t[key]; els.tooltip.classList.remove('hidden', 'opacity-0'); const rect = e.currentTarget.getBoundingClientRect(); els.tooltip.style.top = `${rect.bottom + 5}px`; els.tooltip.style.left = `${rect.left + rect.width / 2}px`; }
@@ -3718,21 +3727,24 @@ function initMobileViewToggle() {
     if (!els.mobileTabInput || !els.mobileTabOutput || !els.inputSection || !els.outputSection) return;
 
     const switchToView = (view) => {
-        if (view === 'input') {
-            els.inputSection.classList.remove('hidden');
-            els.outputSection.classList.add('hidden');
-            els.mobileTabInput.classList.add('active');
-            els.mobileTabOutput.classList.remove('active');
-        } else {
-            els.inputSection.classList.add('hidden');
-            els.outputSection.classList.remove('hidden');
-            els.mobileTabInput.classList.remove('active');
-            els.mobileTabOutput.classList.add('active');
+        const isInput = view === 'input';
+        els.inputSection.classList.toggle('hidden', !isInput);
+        els.outputSection.classList.toggle('hidden', isInput);
+        els.mobileTabInput.classList.toggle('active', isInput);
+        els.mobileTabOutput.classList.toggle('active', !isInput);
+        document.body.classList.toggle('mobile-view-input', isInput);
+        document.body.classList.toggle('mobile-view-output', !isInput);
+        if (!isInput) {
+            requestAnimationFrame(() => {
+                els.outputSection?.scrollTo?.({ top: 0, behavior: 'smooth' });
+                els.outputContainer?.scrollTo?.({ top: 0, behavior: 'smooth' });
+            });
         }
     };
 
     els.mobileTabInput.addEventListener('click', () => switchToView('input'));
     els.mobileTabOutput.addEventListener('click', () => switchToView('output'));
+    switchToView('input');
 
     // Store function globally for use in renderOutput
     window.switchMobileView = switchToView;
