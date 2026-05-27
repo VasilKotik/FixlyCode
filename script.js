@@ -1195,6 +1195,22 @@ async function runAI() {
 
     els.errorMsg.classList.add('hidden');
     els.loadingText.textContent = t.loading;
+    
+    // Reset terminal typing animation
+    const typingContainer = document.querySelector('.typing-animation-container');
+    if (typingContainer) {
+        typingContainer.style.animation = 'none';
+        typingContainer.offsetHeight; /* trigger reflow */
+        typingContainer.style.animation = null; 
+        // also reset inner type-lines
+        const lines = typingContainer.querySelectorAll('.type-line');
+        lines.forEach(line => {
+            line.style.animation = 'none';
+            line.offsetHeight;
+            line.style.animation = null;
+        });
+    }
+
     els.loadingOverlay.classList.remove('hidden');
     els.runBtn.classList.add('run-btn-glowing');
     els.runBtn.setAttribute('aria-busy', 'true');
@@ -3818,107 +3834,4 @@ if (els.input) {
 }
 
 
-async function testAIModel(modelId) {
-    const modelConfig = MODEL_CONFIG[modelId];
-    if (!modelConfig) {
-        return { success: false, error: 'Model not configured' };
-    }
-
-    const testCode = "console.log('test');";
-
-    try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout for test
-
-        const response = await fetch('/api/ai-request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                code: testCode,
-                mode: 'test',
-                lang: 'en',
-                model: modelId,
-                wishes: ''
-            }),
-            signal: controller.signal
-        });
-
-        clearTimeout(timeoutId);
-
-        if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            const errorMsg = errorData.error || errorData.message || `HTTP ${response.status}`;
-            MODEL_CONFIG[modelId].verified = false;
-            return { success: false, error: errorMsg };
-        }
-
-        const data = await response.json();
-        const hasContent = !!(data.rawText && data.rawText.trim().length > 0);
-
-        if (!hasContent) {
-            MODEL_CONFIG[modelId].verified = false;
-            return { success: false, error: 'Empty response' };
-        }
-
-        // Update verified status
-        MODEL_CONFIG[modelId].verified = true;
-        return { success: true };
-
-    } catch (error) {
-        const errorMsg = error.name === 'AbortError' ? 'Timeout' : error.message || 'Unknown error';
-        MODEL_CONFIG[modelId].verified = false;
-        return { success: false, error: errorMsg };
-    }
-}
-
-async function verifyAllModels() {
-    const results = {};
-    const modelSelect = els.modelSelect;
-    const originalOptions = Array.from(modelSelect.options);
-
-    for (const modelId of Object.keys(MODEL_CONFIG)) {
-        const result = await testAIModel(modelId);
-        results[modelId] = result.success;
-
-        const option = Array.from(modelSelect.options).find(opt => opt.value === modelId);
-        if (option) {
-            if (result.success) {
-                option.text = option.text.replace(/^[✗×]?\s*/, '✓ ');
-                option.style.color = '';
-            } else {
-                option.text = option.text.replace(/^[✓]?\s*/, '✗ ');
-                option.style.color = '#ef4444';
-                option.title = `Error: ${result.error || 'Failed'}`;
-            }
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 500));
-    }
-
-    try {
-        localStorage.setItem('fixly_model_verification', JSON.stringify({
-            results,
-            timestamp: Date.now()
-        }));
-    } catch (e) {
-    }
-
-    return results;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        const cached = localStorage.getItem('fixly_model_verification');
-        if (cached) {
-            const data = JSON.parse(cached);
-            if (Date.now() - data.timestamp > 24 * 60 * 60 * 1000) {
-                setTimeout(() => verifyAllModels(), 2000);
-            }
-        } else {
-            setTimeout(() => verifyAllModels(), 2000);
-        }
-    } catch (e) {
-    }
-});  
+  

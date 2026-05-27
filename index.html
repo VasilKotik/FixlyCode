@@ -650,10 +650,37 @@
                 </div>
 
                 <div id="loading-overlay"
-                    class="absolute inset-0 bg-white/80 dark:bg-[#1e1e1e]/90 z-30 flex flex-col items-center justify-center hidden backdrop-blur-sm">
-                    <div class="loader mb-3"></div>
-                    <p class="text-slate-500 dark:text-slate-400 text-xs font-bold animate-pulse" id="loading-text">
-                        THINKING...</p>
+                    class="absolute inset-0 liquid-glass-panel z-40 flex flex-col items-center justify-center hidden">
+                    
+                    <!-- Glowing AI Core -->
+                    <div class="w-16 h-16 mb-6 rounded-full flex items-center justify-center relative">
+                        <div class="absolute inset-0 rounded-full bg-brand-500/20 animate-ping" style="animation-duration: 2s;"></div>
+                        <div class="absolute inset-2 rounded-full bg-brand-500/40 animate-pulse"></div>
+                        <i class="fa-solid fa-microchip text-brand-500 text-2xl relative z-10 drop-shadow-md"></i>
+                    </div>
+                    
+                    <!-- Terminal Window -->
+                    <div class="w-72 bg-[#0f172a] rounded-xl border border-slate-700/60 shadow-2xl overflow-hidden flex flex-col backdrop-blur-md">
+                        <div class="flex px-3 py-2.5 border-b border-slate-700/50 bg-[#1e293b]/80 gap-1.5 items-center">
+                            <div class="w-2.5 h-2.5 rounded-full bg-rose-500/90 shadow-[0_0_8px_rgba(244,63,94,0.4)]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-amber-500/90 shadow-[0_0_8px_rgba(245,158,11,0.4)]"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500/90 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
+                            <div class="ml-auto text-[9px] font-mono text-slate-500 tracking-wider">AI_ENGINE.exe</div>
+                        </div>
+                        <div class="p-3.5 text-left font-mono text-[11px] leading-relaxed text-emerald-400 relative h-[100px] overflow-hidden flex flex-col justify-end pb-4">
+                             <div class="typing-animation-container w-full">
+                                 <div class="type-line delay-0">&gt; <span class="text-slate-300">Initializing neural context...</span> <span class="text-emerald-400">OK</span></div>
+                                 <div class="type-line delay-1">&gt; <span class="text-slate-300">Parsing Abstract Syntax Tree...</span></div>
+                                 <div class="type-line delay-2">&gt; <span class="text-slate-300">Evaluating complexity metrics...</span> <span class="text-emerald-400">DONE</span></div>
+                                 <div class="type-line delay-3 text-brand-400 font-bold">&gt; Synthesizing optimal solution...</div>
+                                 <div class="mt-1 cursor-blink text-brand-400">_</div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-6 text-slate-600 dark:text-slate-300 text-xs font-bold tracking-widest animate-pulse" id="loading-text">
+                        THINKING...
+                    </p>
                 </div>
 
                 <div id="output-container" class="flex-1 overflow-y-auto p-5 space-y-5 hidden custom-scrollbar">
